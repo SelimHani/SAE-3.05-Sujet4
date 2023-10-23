@@ -1,0 +1,34 @@
+
+    {% extends "home.html" %}{% block main %}
+    <h1>test</h1>
+<form
+  role="form"
+  method="POST"
+  action="{{ url_for('login') }}"
+>
+  {{ form.hidden_tag() }}
+  <div>
+    <label for="username"
+      >{{ form.username.label }}</label
+    >
+    <div>
+      {{ form.username(size =50, placeholder ="Username")
+      }}
+    </div>
+  </div>
+  <div>
+    <label for="password"
+      >{{ form.password.label }}</label
+    >
+    <div>
+      {{ form.password (size =50, placeholder
+      ="Password") }}
+    </div>
+  </div>
+  <div>
+    <div >
+      <button type="submit">Se connecter</button>
+    </div>
+  </div>
+</form>
+{% endblock main %}
