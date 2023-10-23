@@ -1,15 +1,24 @@
-body{
-    margin: 0;
+*{
+    margin:0px;
+    padding:0px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-header{
-    background-color: aqua;
-    width: 100%;
-    height:5%;
-    position:fixed;
-}
+
 a{
     text-decoration: none;
     color:white;
-    font-size: 20px;
+    font-size: 25px;
 }
+img{
+    height: 25px;
+}
+nav{
+    background-color: #C08F6F;
+    position:sticky;
+    top:0px;
+    display:flex;
+    justify-content: space-between;
+    padding:5px;
+}
+

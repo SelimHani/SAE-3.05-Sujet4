@@ -4,21 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
-    <title>Document</title>
+    <title>Home</title>
+    {% block styles %}{% endblock styles %}
 </head>
 <body>
     <header>
+    
+        
         <nav>
+        <img src="../static/images/menu.png" alt="" onClick="afficher()">
         <a href="{{ url_for('home') }}">Home</a>
         {% if not current_user.is_authenticated %}
         <a href="{{ url_for('login') }}">Login</a>
         {% endif%}
         
         {% if current_user.is_authenticated %}
-        <a href="{{ url_for('logout') }}">logout</a>
+        <a href="{{ url_for('logout') }}">Logout</a>
         {% endif%}
         </nav>
-    </header>
-    {% block main %}{% endblock main %}
+    {% block content %}{% endblock content %}
 </body>
 </html>
