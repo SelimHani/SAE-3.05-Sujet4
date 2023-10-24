@@ -1,0 +1,66 @@
+
+{% extends 'home.html' %} {% block styles %} 
+<link rel="stylesheet" href="{{ url_for('static', filename='login.css')}}" />
+{% endblock styles %} {% block content %}
+<h1>Inscription</h1>
+<div id="formulaire">
+  <form role="form" method="POST" action="{{ url_for('creer') }}">
+  {{ form.hidden_tag() }}
+    <div>
+    <p>Votre nom</p>
+    <div>
+      {{ form.nom(class_="test" ,placeholder ="caca")}}
+    </div>
+    </div>
+
+
+    <div>
+    <p>Votre prenom</p>
+    <div>
+      {{ form.prenom (class_="test", placeholder="Password") }}
+    </div>
+    </div>
+
+    <div>
+    <p>Votre date de naissance</p>
+    <div>
+      {{ form.date_nais(class_="test" ,placeholder ="caca")}}
+    </div>
+    </div>
+
+    <div>
+    <p>Votre mail</p>
+    <div>
+    {{ form.mail(class_="test" ,placeholder ="caca")}}
+    </div>
+    </div>
+
+    <div>
+    <p>Votre numero de telephone</p>
+    <div>
+      {{ form.num(class_="test" ,placeholder ="caca")}}
+    </div>
+    </div>
+
+    <div>
+    <p>Votre role</p>
+    <div>
+      {{ form.role(class_="test" ,placeholder ="caca")}}
+    </div>
+    </div>
+
+    <div>
+    <p>Votre mot de passe</p>
+    <div>
+      {{ form.password(class_="test" ,placeholder ="caca")}}
+    </div>
+    </div>
+
+
+    <div id="bouton">
+    <button type="submit">S'inscrire</button>
+    </div>
+  </form>
+</div>
+
+{% endblock content %}

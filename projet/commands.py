@@ -2,6 +2,7 @@ import click
 from .app import app, db
 
 @app.cli.command()
+
 def syncdb():
     db.create_all()
     
@@ -9,6 +10,7 @@ def syncdb():
 @click.argument("username")
 @click.argument("password")
 @click.argument("role")
+
 def newuser(username, password, role):
     from .models import User
     from hashlib import sha256
