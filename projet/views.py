@@ -10,7 +10,7 @@ from .models import User
 @app.route("/")
 def home():
     return render_template(
-        "home.html"
+        "acceuil.html"
     )
     
 class LoginForm(FlaskForm):

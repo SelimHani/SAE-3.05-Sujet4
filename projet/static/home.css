@@ -26,3 +26,12 @@ nav{
     height: 10%;
 }
 
+footer{
+    text-align: center;
+    background-color: #C08F6F;
+}
+
+footer p {
+    font-size: 0.8vw;
+}
+
