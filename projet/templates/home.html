@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
     <title>Home</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alata&family=Anton&display=swap" rel="stylesheet"> 
     {% block styles %}{% endblock styles %}
 </head>
 <body>
@@ -12,14 +15,15 @@
     
         
         <nav>
-        <img src="../static/images/menu.png" alt="" onClick="afficher()">
-        <a href="{{ url_for('home') }}">Home</a>
+        <img src="../static/images/menu.png" alt="">
+        <a href="{{ url_for('home') }}"><img src="../static/images/home.png" alt=""></a>
         {% if not current_user.is_authenticated %}
-        <a href="{{ url_for('login') }}">Login</a>
+        
+        <a href="{{ url_for('login') }}"><img src="../static/images/login.png" alt=""></a>
         {% endif%}
         
         {% if current_user.is_authenticated %}
-        <a href="{{ url_for('logout') }}">Logout</a>
+        <a href="{{ url_for('logout') }}"><img src="../static/images/logout.png" alt=""></a>
         {% endif%}
         </nav>
     {% block content %}{% endblock content %}

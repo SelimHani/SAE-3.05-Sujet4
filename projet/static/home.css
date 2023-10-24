@@ -1,17 +1,20 @@
 *{
     margin:0px;
     padding:0px;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Alata', sans-serif;
 }
-
-
-a{
-    text-decoration: none;
-    color:white;
-    font-size: 25px;
+body{
+    background-color: #F0E4D4;
+}
+h1{
+    font-family: 'Anton', sans-serif;
 }
 img{
-    height: 25px;
+    height:90%;
+    width: 80px;
+    margin: 0;
+    padding: 0;
+    margin: 2px;
 }
 nav{
     background-color: #C08F6F;
@@ -19,6 +22,7 @@ nav{
     top:0px;
     display:flex;
     justify-content: space-between;
-    padding:5px;
+    padding:0px;
+    height: 10%;
 }
 

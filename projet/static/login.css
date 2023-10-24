@@ -1,14 +1,40 @@
 #formulaire{
     background-color:#C08F6F;
-    text-align: center;
-    margin: 50px;
-    padding: 10px;
-    border-radius: 20px;
+    border-radius: 15px;
+    margin-left: 30%;
+    margin-right: 30%;
 }
 h1{
-    color:white;
-    padding: 5px;
+    color:#8A5741;
+    padding: 50px;
+    text-align: center;
+    font-size:100px;
 }
 div{
     padding: 5px;
+    position: relative;
+    
+}
+p{
+    color:#F0E4D4;
+}
+.test{
+    background:#F0E4D4;
+    border:none;
+    outline:none;
+    border-radius: 15px;
+    color:#8A5741;
+    padding:2px 5rem 5px 10px;
+    margin: 0;
+}
+#bouton{
+    text-align: center;
+}
+button{
+    color:#F0E4D4;
+    background-color: #8A5741;
+    border-radius: 15px;
+    border:none;
+    height: 40px;
+    width:90px;
 }

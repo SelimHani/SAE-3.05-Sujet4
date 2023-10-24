@@ -2,18 +2,24 @@
 {% extends 'home.html' %} {% block styles %} 
 <link rel="stylesheet" href="{{ url_for('static', filename='login.css')}}" />
 {% endblock styles %} {% block content %}
+<h1>Connexion</h1>
 <div id="formulaire">
-  <h1>Login</h1>
   <form role="form" method="POST" action="{{ url_for('login') }}">
   {{ form.hidden_tag() }}
     <div>
-      {{ form.username(size =50, placeholder ="Username")}}
+    <p>Votre email</p>
+    <div>
+      {{ form.username(class_="test" ,placeholder ="exemple@gmail.com")}}
+    </div>
     </div>
     <div>
-      {{ form.password (size =50, placeholder="Password") }}
+    <p>Votre mot de passe</p>
+    <div>
+      {{ form.password (class_="test", placeholder="Password") }}
     </div>
-    <div >
-      <button type="submit">Se connecter</button>
+    </div>
+    <div id="bouton">
+    <button type="submit">Se connecter</button>
     </div>
   </form>
 </div>
