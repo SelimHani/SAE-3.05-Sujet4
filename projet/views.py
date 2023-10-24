@@ -2,10 +2,10 @@ from .app import app, db
 from flask import render_template, url_for, redirect, request
 from flask_login import login_user, current_user, logout_user, login_required
 from flask_wtf import FlaskForm
-from wtforms import EmailField, StringField, HiddenField, PasswordField, DateField
+from wtforms import EmailField, StringField, HiddenField, PasswordField, DateField,SelectField
 from wtforms.validators import DataRequired
 from hashlib import sha256
-from .models import User
+from .models import User, Role, get_role_by_id
 
 @app.route("/")
 def home():
@@ -33,7 +33,7 @@ class RegisterForm(FlaskForm):
     mail = EmailField("Mail")
     num = StringField("Numero")
     password = PasswordField("Password")
-    role = StringField("Role")
+    role = SelectField('Role', choices=[('1', 'musicien'), ('2', 'directrice'),('3','responsable')])
     next = HiddenField()
     
     
@@ -63,8 +63,9 @@ def creer():
     form =RegisterForm()
     if form.is_submitted():
         password_hash = sha256(form.password.data.encode()).hexdigest()
-
-        new_personne = User(mail=form.mail.data, password = password_hash , role = form.role.data, nom = form.nom.data, prenom = form.prenom.data, ddn=form.date_nais.data, num_tel = form.num.data )
+        role_id = int(form.role.data)
+        r = get_role_by_id(role_id)
+        new_personne = User(mail=form.mail.data, password = password_hash , role_id = role_id, nom = form.nom.data, prenom = form.prenom.data, ddn=form.date_nais.data, num_tel = form.num.data )
 
         db.session.add(new_personne)
         db.session.commit()
@@ -73,4 +74,4 @@ def creer():
 
         return redirect(url_for("home"))
 
-    return render_template("register.html", form=form)
+    return render_template("register.html", form=form )
