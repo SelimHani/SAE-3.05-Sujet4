@@ -1,7 +1,16 @@
 {% extends 'home.html' %} {% block styles %} 
 <link rel="stylesheet" href="{{ url_for('static', filename='acceuil.css')}}" />
 {% endblock styles %} {% block content %}
-<h1>Bienvenue, <span> USER </span> ! 👋</h1>
+
+
+
+
+
+{% if current_user.is_authenticated %}
+<h1>Bienvenue, {{current_user.get_id()}} ! 👋</h1>
+{% else %}
+<h1>Bonjour !👋</h1>
+{% endif%}
 <main>
     <div id="pane1">
         <h2>Les derniers sondages :</h2>
