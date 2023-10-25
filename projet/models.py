@@ -9,6 +9,13 @@ participer = db.Table('participer',
     	db.ForeignKey('repetition.id'))
 )
 
+necessiter = db.Table('necessiter',
+    db.Column('repetition_id', db.String(50),
+    	db.ForeignKey('repetition.id')),
+    db.Column('equipement_id', db.Integer,
+    	db.ForeignKey('equipement.id'))
+)
+
     
 class Role(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -22,6 +29,7 @@ class Repetition(db.Model):
     lieu = db.Column(db.String(100))
     date = db.Column(db.String(100))
     description = db.Column(db.String(200))
+    equipements = db.relationship("Equipement",secondary=necessiter,backref='repetitions')
 
 class User(db.Model,UserMixin):
     mail = db.Column(db.String(50), primary_key=True)
@@ -33,44 +41,24 @@ class User(db.Model,UserMixin):
     role_id = db.Column(db.Integer, db.ForeignKey("role.id"))
     role = db.relationship("Role", backref = db.backref("users",lazy="dynamic"))
     repetitions = db.relationship("Repetition",secondary=participer,backref='users')
-    
-    def get_id(self):
-        return self.mail
-    
-
-
-
-
-
-
-
-
-sond = db.Table("sond", db.Column('sondage_id', db.Integer, db.ForeignKey('sondage.idSondage'), primary_key=True),
-        db.Column('activiter_id', db.Integer, db.ForeignKey('activiter.idActiviter'), primary_key=True)     )
 
 
 class Sondage(db.Model):
-    idSondage = db.Column(db.Integer, primary_key=True)
-    Jour = db.Column(db.String(100))
+    id = db.Column(db.Integer, primary_key=True)
+    activite = db.relationship("Activite", uselist=False,backref="sondage") 
 
-    act_id = db.relationship("Activiter", secondary = sond)   
-
-
-class Activiter(db.Model):
-    idActiviter = db.Column(db.Integer, primary_key=True)
-    nomAct = db.Column(db.String(50))
-    lieuAct = db.Column(db.String(50))
+class Activite(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    nom = db.Column(db.String(50))
+    lieu = db.Column(db.String(50))
     date = db.Column(db.String(50))
-    description = db.Column(db.String(50))
+    description = db.Column(db.String(100))
+    sondage_id = db.Column(db.Integer, db.ForeignKey("sondage.id"))
     
-    equipement_id = db.Column(db.Integer, db.ForeignKey('equipement.idEquipement'))
-    equipement = db.relationship("Equipement",backref= db.backref("equipements",lazy="dynamics"))
-
-    sond_id = db.relationship("Sondage", secondary = sond)
 
 class Equipement(db.Model):
-    idEquipement = db.Column(db.Integer, primary_key=True)
-    nomEquipement = db.Column(db.String(100))
+    id = db.Column(db.Integer, primary_key=True)
+    nom = db.Column(db.String(100))
 
 
 
