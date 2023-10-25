@@ -1,0 +1,51 @@
+{% extends 'home.html' %} {% block styles %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='newSondage.css')}}"
+/>
+{% endblock styles %} {% block content %}
+
+<div>
+  <form role="form" method="POST" action="{{ url_for('newSondage') }}">
+    {{ form.hidden_tag() }}
+    <div id="formulaireSondage">
+      <div class="divForm" id="nomActi">
+        <h2>Nom de l’activité</h2>
+        <div>
+          {{ form.nomActivite(id_="formNom" ,placeholder ="Concert ... ")}}
+        </div>
+      </div>
+
+      <div class="divForm" id="lieuActi">
+        <h2>Lieu de l’activité</h2>
+        <div>
+          {{ form.lieuActivite (id_="formLieu", placeholder="3 rue du fun, Orléans 45000") }}
+        </div>
+      </div>
+
+      <div class="divForm" id="dateActi">
+        <h2>Date de l’activité</h2>
+        <div>{{ form.dateActivite (id_="formDate", placeholder="") }}</div>
+      </div>
+
+      <div class="divForm" id="matActi">
+        <h2>Materiel nécessaire</h2>
+        <div>A VOIR APRES</div>
+      </div>
+
+      <div class="divForm" id="descrActi">
+        <h2>Description de l’activité</h2>
+        <div>
+          {{ form.descriptionActivite (id_="formDesc", placeholder=". . .") }}
+        </div>
+      </div>
+    </div>
+    <div id="actionbutton">
+      <button type="reset" id="bAnnuler" onclick="location.href = '{{ url_for('home') }}';">[ ANNULER ]</button>
+      <button type="reset" id="bReset">[ RESET ]</button>
+      <button type="submit" id="bValider">[ VALIDER ]</button>
+    </div>
+  </form>
+</div>
+
+{% endblock content %}
