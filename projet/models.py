@@ -10,15 +10,15 @@ participer = db.Table('participer',
 )
 
 necessiter = db.Table('necessiter',
-    db.Column('activite_id', db.String(50),
-    	db.ForeignKey('activite.id')),
+    db.Column('repetition_id', db.String(50),
+    	db.ForeignKey('repetition.id')),
     db.Column('equipement_id', db.Integer,
     	db.ForeignKey('equipement.id'))
 )
 
 exiger = db.Table('exiger',
-    db.Column('repetition_id', db.String(50),
-    	db.ForeignKey('repetition.id')),
+    db.Column('activite_id', db.String(50),
+    	db.ForeignKey('activite.id')),
     db.Column('equipement_id', db.Integer,
     	db.ForeignKey('equipement.id'))
 )
