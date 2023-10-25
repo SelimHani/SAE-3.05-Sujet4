@@ -7,7 +7,7 @@
 
 
 {% if current_user.is_authenticated %}
-<h1>Bienvenue, {{current_user.get_id()}} ! 👋</h1>
+<h1>Bienvenue, <span>{{current_user.get_id()}} </span> ! 👋</h1>
 {% else %}
 <h1>Bonjour !👋</h1>
 {% endif%}
