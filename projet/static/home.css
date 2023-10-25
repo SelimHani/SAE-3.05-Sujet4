@@ -49,3 +49,18 @@ footer p {
     margin-top: 0.8vh;
    
 }
+
+.texte, .closebtn{
+    color: #F0E4D4 ;
+    text-decoration: none;
+}
+
+li{
+    list-style-type: none;
+    padding: 2vw;
+    flex-grow: 1;   
+}
+
+ul{
+    background-color: #C08F6F;
+}
