@@ -4,7 +4,9 @@ main {
     grid-template-columns: repeat(5, 1fr);
     grid-gap: 0px;
     grid-auto-rows: minmax(50px, auto);
-    margin: 0vw 10vw 0.5vw 10vw
+    margin-left: 2em;
+    margin-right: 2em;
+    
 }
 
 div {
@@ -14,6 +16,7 @@ div {
 }
 
 #pane1 {
+    margin-left: 1em;
     grid-column: 1 / 2;
     grid-row: 1 / 11;
     background-color: #8A5741;
@@ -26,6 +29,9 @@ div {
     grid-row: 1 / 6;
     background-color: #9F5C45;
     box-shadow: 4px 4px 4px #4e2d22;
+    background-image: url('../static/images/fond_pane2.png');
+    background-repeat: no-repeat;
+    background-size: cover;
     
 }
 
@@ -45,20 +51,14 @@ div {
     
 }
 
-#pane1 h2, #pane4 h2 {
+h2 {
     text-align: left;
-    font-size: 2 rem;
+    font-size: 2rem;
     color: #F0E4D4;
     margin: 0.5vw;
     font-family: 'Anton', sans-serif;
 }
 
-#pane3 h2 {
-    text-align: left;
-    font-size: 1.5vw;
-    color: #F0E4D4;
-    margin-left: 2%;
-}
 
 #pane4 p {
     margin: 0.5vw;
@@ -69,6 +69,7 @@ div {
 ul{
     display: flex;
     flex-wrap: wrap;
+    align-items: center;
     
 }
 
@@ -76,13 +77,14 @@ a{
     color: #F0E4D4 ;
 }
 
-li button {
+button {
     width: 26vw;
     height: 8vh;
     color: #9F5C45;
     background-color: #F0E4D4;
     border-radius: 15px;
     border: none;
+    font-size: 1.5em;
     
 }
 
@@ -102,8 +104,14 @@ p{
     color : #F0E4D4;
 }
 h1{
-    margin-left: 2em;
+    margin-left: 1em;
     margin-top: 1em;
     font-size: 3em;
+    font-family: 'Anton', sans-serif;
+    color: #9F5C45;
 }
 
+h1> span{
+    font-family: 'Anton', sans-serif;
+    color: #AB5250;
+}

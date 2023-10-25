@@ -7,19 +7,6 @@ body{
     background-color: #F0E4D4;
 }
 
-h1{
-    font-family: 'Anton', sans-serif;
-    font-size: 2 em;
-    color: #9F5C45;
-}
-
-h1> span{
-    font-family: 'Anton', sans-serif;
-    font-size: 2 em;
-    color: #AB5250;
-}
-
-
 nav{
     background-color: #C08F6F;
     position:sticky;
