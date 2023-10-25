@@ -10,25 +10,23 @@ participer = db.Table('participer',
 )
 
 necessiter = db.Table('necessiter',
-    db.Column('repetition_id', db.String(50),
+    db.Column('repetition_id', db.Integer,
     	db.ForeignKey('repetition.id')),
     db.Column('equipement_id', db.Integer,
     	db.ForeignKey('equipement.id'))
 )
 
 exiger = db.Table('exiger',
-    db.Column('activite_id', db.String(50),
+    db.Column('activite_id', db.Integer,
     	db.ForeignKey('activite.id')),
     db.Column('equipement_id', db.Integer,
     	db.ForeignKey('equipement.id'))
 )
+
     
 class Role(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20))
-    
-    def get_id(self):
-        return self.id
     
 class Repetition(db.Model):
     id = db.Column(db.Integer, primary_key = True)
@@ -37,6 +35,15 @@ class Repetition(db.Model):
     description = db.Column(db.String(200))
     equipements = db.relationship("Equipement",secondary=necessiter,backref='repetitions')
 
+
+#class Reponse_sondage(db.Model):
+#    user_id = db.Column(db.String(50), db.ForeignKey('user.mail'), primary_key=True)
+#    sondage_id = db.Column(db.Integer, db.ForeignKey('sondage.id'), primary_key=True)
+#    reponse = db.Column(db.String(50))
+#    user = db.relationship("User", back_populates="users")
+#    sondage = db.relationship("Sondage", back_populates="sondages")
+    
+    
 class User(db.Model,UserMixin):
     mail = db.Column(db.String(50), primary_key=True)
     password = db.Column(db.String(200))
@@ -47,12 +54,15 @@ class User(db.Model,UserMixin):
     role_id = db.Column(db.Integer, db.ForeignKey("role.id"))
     role = db.relationship("Role", backref = db.backref("users",lazy="dynamic"))
     repetitions = db.relationship("Repetition",secondary=participer,backref='users')
+    #sondages = db.relationship("Reponse_sondage",back_populates="user")
 
 
 class Sondage(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     activite = db.relationship("Activite", uselist=False,backref="sondage") 
-
+    #users = db.relationship("Reponse_sondage",back_populates="sondage")
+    
+    
 class Activite(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nom = db.Column(db.String(50))
@@ -65,6 +75,7 @@ class Activite(db.Model):
 class Equipement(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nom = db.Column(db.String(100))
+
 
 
 

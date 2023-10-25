@@ -2,7 +2,7 @@ from .app import app, db
 from flask import render_template, url_for, redirect, request
 from flask_login import login_user, current_user, logout_user, login_required
 from flask_wtf import FlaskForm
-from wtforms import EmailField, StringField, HiddenField, PasswordField, DateField,SelectField
+from wtforms import EmailField, StringField, HiddenField, PasswordField, DateField,SelectField,SelectMultipleField
 from wtforms.validators import DataRequired
 from hashlib import sha256
 from .models import User, get_role_by_id, get_repetitions, Repetition
