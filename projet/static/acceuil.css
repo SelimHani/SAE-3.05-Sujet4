@@ -46,9 +46,11 @@ div {
 }
 
 #pane1 h2, #pane4 h2 {
-    text-align: center;
-    font-size: 1.5vw;
+    text-align: left;
+    font-size: 2 rem;
     color: #F0E4D4;
+    margin: 0.5vw;
+    font-family: 'Anton', sans-serif;
 }
 
 #pane3 h2 {
@@ -58,6 +60,10 @@ div {
     margin-left: 2%;
 }
 
+#pane4 p {
+    margin: 0.5vw;
+    text-align: left;
+}
 
 
 ul{
@@ -82,7 +88,7 @@ li button {
 
 button:hover{
     transform: scale(1.02);
-    transition: 0.5s;
+    color: #af4f50;
 }
 
 li{

@@ -24,6 +24,9 @@ nav{
 footer{
     text-align: center;
     background-color: #C08F6F;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
 }
 
 footer p {
