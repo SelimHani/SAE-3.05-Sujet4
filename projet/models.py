@@ -10,12 +10,18 @@ participer = db.Table('participer',
 )
 
 necessiter = db.Table('necessiter',
+    db.Column('activite_id', db.String(50),
+    	db.ForeignKey('activite.id')),
+    db.Column('equipement_id', db.Integer,
+    	db.ForeignKey('equipement.id'))
+)
+
+exiger = db.Table('exiger',
     db.Column('repetition_id', db.String(50),
     	db.ForeignKey('repetition.id')),
     db.Column('equipement_id', db.Integer,
     	db.ForeignKey('equipement.id'))
 )
-
     
 class Role(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -54,7 +60,7 @@ class Activite(db.Model):
     date = db.Column(db.String(50))
     description = db.Column(db.String(100))
     sondage_id = db.Column(db.Integer, db.ForeignKey("sondage.id"))
-    
+    equipements = db.relationship("Equipement",secondary=exiger,backref='activites')
 
 class Equipement(db.Model):
     id = db.Column(db.Integer, primary_key=True)
