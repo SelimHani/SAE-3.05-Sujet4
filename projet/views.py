@@ -47,3 +47,7 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for("home"))
+
+@app.route("/stats/")
+def stats():
+    return render_template("statistique.html")

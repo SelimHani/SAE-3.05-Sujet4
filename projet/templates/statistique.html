@@ -1,0 +1,27 @@
+
+{% extends 'home.html' %} 
+{% block styles %} 
+    <link rel="stylesheet" href="{{ url_for('static', filename='login.css')}}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='stats.css')}}" />
+{% endblock styles %} 
+{% block content %}
+    <button type="submit"> RETOUR </button> 
+    <h1>Statistiques</h1>
+    <div id="stats">
+        <section> 
+            <h2> 10 </h2>
+            <h3> COURS PARTICIPER </h3>
+        </section>
+        <section id="red"> 
+            <h2> 10 </h2>
+            <h3> COURS MANQUÉS </h3>
+        </section>
+        <section> 
+            <h2> 10 </h2>
+            <h3> CLASSEMENT </h3>
+        </section>
+
+    </div>
+{% endblock content %}
+
+
