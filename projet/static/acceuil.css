@@ -18,7 +18,7 @@ div {
     grid-row: 1 / 11;
     background-color: #8A5741;
     box-shadow: 4px 4px 4px #442b20;
-    
+    z-index: 1;
 }
 
 #pane2 {
@@ -26,7 +26,7 @@ div {
     grid-row: 1 / 6;
     background-color: #9F5C45;
     box-shadow: 4px 4px 4px #4e2d22;
-    
+    z-index: 1;
 }
 
 #pane3 {
@@ -34,7 +34,7 @@ div {
     grid-row: 6 / 11;
     background-color: #B1725B;
     box-shadow: 4px 4px 4px #58392d;
-    
+    z-index: 1;
 }
 
 #pane4 {
@@ -42,7 +42,7 @@ div {
     grid-row: 6 / 11;
     background-color: #954A33;
     box-shadow: 4px 4px 4px #492419;
-    
+    z-index: 1;
 }
 
 #pane1 h2, #pane4 h2 {
@@ -66,9 +66,7 @@ ul{
     
 }
 
-a{
-    color: #F0E4D4 ;
-}
+
 
 li button {
     width: 26vw;
@@ -99,4 +97,3 @@ h1{
     margin-left: 12vw;
     margin-top: 1.9vh;
 }
-

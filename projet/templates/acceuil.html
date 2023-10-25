@@ -1,8 +1,10 @@
 {% extends 'home.html' %} {% block styles %} 
 <link rel="stylesheet" href="{{ url_for('static', filename='acceuil.css')}}" />
-{% endblock styles %} {% block content %}
+{% endblock styles %}
+{% block content %}
 <h1>Bienvenue, [nom login] ! 👋</h1>
 <main>
+    
     <div id="pane1">
         <h2>Les derniers sondages :</h2>
     </div>

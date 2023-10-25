@@ -24,6 +24,9 @@ nav{
 footer{
     text-align: center;
     background-color: #C08F6F;
+    bottom: 0;
+    position: absolute;
+    width: 100%;
 }
 
 footer p {
@@ -49,4 +52,19 @@ footer p {
     height:6vh;
     margin-top: 0.8vh;
    
+}
+
+a{
+    color: #F0E4D4 ;
+    text-decoration: none;
+}
+
+li{
+    list-style-type: none;
+    padding: 2vw;
+    flex-grow: 1;   
+}
+
+ul{
+    background-color: #C08F6F;
 }
