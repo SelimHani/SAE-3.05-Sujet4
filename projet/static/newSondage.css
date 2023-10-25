@@ -103,3 +103,26 @@ button{
     padding: 1vw 3vw 1vw 3vw;
     margin: 0.5vw 5vw 0.5vw 5vw;
 }
+
+#gestionAdd{
+    background-color: #F0E4D4;
+    border-radius: 15px;
+    height: 20rem;
+    padding: 1vh;
+    display: grid;
+}
+
+#search{
+    border-radius: 10px;
+    border-color: black ;
+    background-color: #B1725B;
+    border: solid;
+    border-width: 2px;
+    width: 45rem;
+
+}
+#recherche{
+    height: 100%;
+    width: 90%;
+    margin:2%;
+}
