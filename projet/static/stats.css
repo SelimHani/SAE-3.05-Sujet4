@@ -38,3 +38,8 @@ h1{
 button{
   margin: 2rem;
 }
+
+button:hover{
+    transform: scale(1.02);
+    transition: 0.5s;
+}
