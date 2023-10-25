@@ -28,3 +28,13 @@ def newrole(id, name):
     db.session.add(u)
     db.session.commit()
     
+@app.cli.command()
+@click.argument("id")
+@click.argument("lieu")
+@click.argument("date")
+@click.argument("description")
+def newrepetition(id,lieu,date,description):
+    from .models import Repetition
+    r = Repetition(id=id,lieu=lieu,date=date,description=description)
+    db.session.add(r)
+    db.session.commit()

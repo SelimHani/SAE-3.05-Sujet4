@@ -5,7 +5,7 @@ from flask_wtf import FlaskForm
 from wtforms import EmailField, StringField, HiddenField, PasswordField, DateField,SelectField
 from wtforms.validators import DataRequired
 from hashlib import sha256
-from .models import User, Role, get_role_by_id
+from .models import User, get_role_by_id, get_repetitions, Repetition
 
 @app.route("/")
 def home():
@@ -25,19 +25,21 @@ class LoginForm(FlaskForm):
         passwd= m.hexdigest()
         return user if passwd == user.password else None
 
-class RegisterForm(FlaskForm):
-
+class RegisterForm(FlaskForm):    
     nom = StringField("Nom")
     prenom = StringField("Prenom")
     date_nais = DateField("Date_de_naissance")
     mail = EmailField("Mail")
     num = StringField("Numero")
     password = PasswordField("Password")
-    role = SelectField('Role', choices=[('1', 'musicien'), ('2', 'directrice'),('3','responsable')])
+    role = SelectField('Role', choices=[("1","Musicien"),("2","Directrice"),("3","Responsable")])
     next = HiddenField()
     
-    
-
+class RepetitionForm(FlaskForm):
+    id = HiddenField("Id")
+    lieu = StringField("Lieu")
+    date = DateField("Date")
+    description = StringField("Description")
 
 @app.route("/login/", methods=("GET","POST",))
 def login():
@@ -58,13 +60,12 @@ def logout():
     return redirect(url_for("home"))
 
 
-@app.route("/register/", methods=("GET","POST",))
-def creer():
+@app.route("/create/user/", methods=("GET","POST",))
+def creer_user():
     form =RegisterForm()
     if form.is_submitted():
         password_hash = sha256(form.password.data.encode()).hexdigest()
         role_id = int(form.role.data)
-        r = get_role_by_id(role_id)
         new_personne = User(mail=form.mail.data, password = password_hash , role_id = role_id, nom = form.nom.data, prenom = form.prenom.data, ddn=form.date_nais.data, num_tel = form.num.data )
 
         db.session.add(new_personne)
@@ -75,3 +76,19 @@ def creer():
         return redirect(url_for("home"))
 
     return render_template("register.html", form=form )
+
+@app.route("/repetitions/")
+def repetitions():
+    repetitions = get_repetitions()
+    return render_template("repetitions.html", repetitions=repetitions)
+
+
+@app.route("/create/repetition/", methods=("GET","POST",))
+def creer_repetition():
+    form =RepetitionForm()
+    if form.is_submitted():
+        r = Repetition(lieu=form.lieu.data,date=form.date.data,description=form.description.data)
+        db.session.add(r)
+        db.session.commit()
+        return redirect(url_for("home"))
+    return render_template("create_repetition.html", form=form )
