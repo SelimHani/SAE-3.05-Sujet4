@@ -4,7 +4,7 @@ main {
     grid-template-columns: repeat(5, 1fr);
     grid-gap: 0px;
     grid-auto-rows: minmax(50px, auto);
-    margin: 1vw 10vw 0.5vw 10vw
+    margin: 0vw 10vw 0.5vw 10vw
 }
 
 div {
@@ -96,6 +96,7 @@ p{
     color : #F0E4D4;
 }
 h1{
-    margin-left: 3vw;
+    margin-left: 12vw;
+    margin-top: 1.9vh;
 }
 

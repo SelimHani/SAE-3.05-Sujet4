@@ -6,16 +6,11 @@
 body{
     background-color: #F0E4D4;
 }
+
 h1{
     font-family: 'Anton', sans-serif;
 }
-img{
-    height:90%;
-    width: 80px;
-    margin: 0;
-    padding: 0;
-    margin: 2px;
-}
+
 nav{
     background-color: #C08F6F;
     position:sticky;
@@ -23,7 +18,7 @@ nav{
     display:flex;
     justify-content: space-between;
     padding:0px;
-    height: 10%;
+    height: 8vh;
 }
 
 footer{
@@ -35,3 +30,23 @@ footer p {
     font-size: 0.8vw;
 }
 
+
+#homeImg{
+    height:8.8vh;
+    
+}
+
+#menuImg{
+    height:5vh;
+    margin: 0.8vw;
+}
+#loginImg{
+    height:7vh;
+    margin-top: 0.4vh;
+   
+}
+#logoutImg{
+    height:6vh;
+    margin-top: 0.8vh;
+   
+}
