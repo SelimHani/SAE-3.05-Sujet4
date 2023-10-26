@@ -52,7 +52,7 @@ main{
 
 
 #sideNavBar{
-    background-color: #C08F6F;
+    background-color: rgba(0, 0, 0, 0);
     border: none;
     z-index: 0;
 }

@@ -24,9 +24,10 @@ footer{
     text-align: center;
     margin-top: auto;
     background-color: #C08F6F;
+    width: 100%;
     position: absolute;
     bottom: 0;
-    width: 100%;
+    
 }
 
 footer p {

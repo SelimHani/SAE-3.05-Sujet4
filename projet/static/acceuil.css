@@ -90,7 +90,7 @@ li button {
     
 }
 
-button:hover{
+#pane2 button:hover{
     transform: scale(1.02);
     color: #af4f50;
 }
@@ -101,10 +101,14 @@ li{
     flex-grow: 1;
     
 }
-p{
-    text-align: center;
+
+
+#pane4 p {
+    text-align: left;
     color : #F0E4D4;
 }
+
+
 h1{
     margin-left: 1em;
     margin-top: 1em;
