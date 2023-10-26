@@ -1,18 +1,20 @@
 #formulaire{
     background-color:#C08F6F;
     border-radius: 15px;
-    margin-left: 30%;
+    margin-left: 39%;
     margin-right: 30%;
 }
 h1{
     color:#8A5741;
     padding: 50px;
     text-align: center;
-    font-size:100px;
+    font-size:7rem;
 }
+
 div{
-    padding: 5px;
+    padding: 0.5rem;
     position: relative;
+    width: 20rem;;
     
 }
 p{
@@ -38,4 +40,85 @@ button{
     height: 40px;
     width:90px;
 }
+@media(max-width: 1000px) { 
+    #formulaire{
+        margin-left: 28%;
+        padding: 20px;
+        width: 20rem;
+    }
+    footer{
+        height: 5%;    
+    }
+    footer p{
+        font-size: 0.5rem;
+    }
+}
+@media(max-width: 700px) { 
+    #formulaire{
+        margin-left: 20%;
+        padding: 20px;
+        width: 20rem;
+    }
+    footer{
+        height: 5%;    
+    }
+    footer p{
+        font-size: 0.5rem;
+    }
+}
 
+@media(max-width: 540px) { 
+    #formulaire{
+        margin-right: auto;
+        width: 20rem;
+
+    }
+    h1{
+        font-size: 5rem;
+        margin-left : 2rem;
+    }
+}
+
+@media (max-width: 490px) {
+    #formulaire{
+        margin-left: 16%;
+        width: 20rem;
+    }
+    h1{
+        font-size: 5rem;
+        margin-left : auto;
+    }
+    footer{
+        height: 5%;    
+    }
+    footer p{
+        font-size: 0.5rem;
+    }
+    
+}
+
+@media (max-width: 490px) {
+    #formulaire{
+        margin-left: 12%;
+        width: 20rem;
+    }
+    h1{
+        font-size: 4rem;
+        margin-left : auto;
+    }
+    
+}
+
+@media (max-width: 403px) {
+    #formulaire{
+        margin-left: 5%;
+        width: 20rem;
+        padding: 5px;
+    }
+    h1{
+        font-size: 2rem;
+        margin-left : auto;
+    }
+   
+    
+}
