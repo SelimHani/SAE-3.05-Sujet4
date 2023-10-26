@@ -5,6 +5,9 @@
 }
 body{
     background-color: #F0E4D4;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 nav{
@@ -19,6 +22,7 @@ nav{
 
 footer{
     text-align: center;
+    margin-top: auto;
     background-color: #C08F6F;
     position: absolute;
     bottom: 0;
