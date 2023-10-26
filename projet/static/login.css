@@ -1,40 +1,39 @@
-#formulaire{
-    background-color:#C08F6F;
-    border-radius: 15px;
-    margin-left: 30%;
-    margin-right: 30%;
+#formulaire {
+  background-color: #c08f6f;
+  border-radius: 15px;
+  margin-left: 30%;
+  margin-right: 30%;
 }
-h1{
-    color:#8A5741;
-    padding: 50px;
-    text-align: center;
-    font-size:100px;
+h1 {
+  color: #8a5741;
+  padding: 50px;
+  text-align: center;
+  font-size: 100px;
 }
-div{
-    padding: 5px;
-    position: relative;
-    
+div {
+  padding: 5px;
+  position: relative;
 }
-p{
-    color:#F0E4D4;
+p {
+  color: #f0e4d4;
 }
-.test{
-    background:#F0E4D4;
-    border:none;
-    outline:none;
-    border-radius: 15px;
-    color:#8A5741;
-    padding:2px 5rem 5px 10px;
-    margin: 0;
+.test {
+  background: #f0e4d4;
+  border: none;
+  outline: none;
+  border-radius: 15px;
+  color: #8a5741;
+  padding: 2px 5rem 5px 10px;
+  margin: 0;
 }
-#bouton{
-    text-align: center;
+#bouton {
+  text-align: center;
 }
-button{
-    color:#F0E4D4;
-    background-color: #8A5741;
-    border-radius: 15px;
-    border:none;
-    height: 40px;
-    width:90px;
+button {
+  color: #f0e4d4;
+  background-color: #8a5741;
+  border-radius: 15px;
+  border: none;
+  height: 40px;
+  width: 90px;
 }

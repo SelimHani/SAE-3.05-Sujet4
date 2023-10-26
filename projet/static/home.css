@@ -5,6 +5,9 @@
 }
 body{
     background-color: #F0E4D4;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 h1{
@@ -23,6 +26,7 @@ nav{
 
 footer{
     text-align: center;
+    margin-top: auto;
     background-color: #C08F6F;
 }
 
