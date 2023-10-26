@@ -36,12 +36,12 @@ class Repetition(db.Model):
     equipements = db.relationship("Equipement",secondary=necessiter,backref='repetitions')
 
 
-#class Reponse_sondage(db.Model):
-#    user_id = db.Column(db.String(50), db.ForeignKey('user.mail'), primary_key=True)
-#    sondage_id = db.Column(db.Integer, db.ForeignKey('sondage.id'), primary_key=True)
-#    reponse = db.Column(db.String(50))
-#    user = db.relationship("User", back_populates="users")
-#    sondage = db.relationship("Sondage", back_populates="sondages")
+class Reponse_sondage(db.Model):
+    user_id = db.Column(db.String(50), db.ForeignKey('user.mail'), primary_key=True)
+    sondage_id = db.Column(db.Integer, db.ForeignKey('sondage.id'), primary_key=True)
+    reponse = db.Column(db.String(50))
+    user = db.relationship("User", back_populates="sondages")
+    sondage = db.relationship("Sondage", back_populates="users")
     
     
 class User(db.Model,UserMixin):
@@ -54,13 +54,13 @@ class User(db.Model,UserMixin):
     role_id = db.Column(db.Integer, db.ForeignKey("role.id"))
     role = db.relationship("Role", backref = db.backref("users",lazy="dynamic"))
     repetitions = db.relationship("Repetition",secondary=participer,backref='users')
-    #sondages = db.relationship("Reponse_sondage",back_populates="user")
+    sondages = db.relationship("Reponse_sondage", back_populates="user")
 
 
 class Sondage(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     activite = db.relationship("Activite", uselist=False,backref="sondage") 
-    #users = db.relationship("Reponse_sondage",back_populates="sondage")
+    users = db.relationship("Reponse_sondage",back_populates="sondage")
     
     
 class Activite(db.Model):
