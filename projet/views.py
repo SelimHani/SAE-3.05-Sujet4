@@ -14,7 +14,6 @@ def home():
         "acceuil.html"
     )
 
-
 class LoginForm(FlaskForm):
     username = StringField("Username")
     password = PasswordField("Password")
@@ -62,7 +61,6 @@ def login():
     return render_template(
         "login.html", form=f
     )
-
 
 @app.route("/logout/")
 def logout():
