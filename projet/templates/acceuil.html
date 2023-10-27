@@ -1,0 +1,44 @@
+{% extends 'home.html' %} {% block styles %} 
+<link rel="stylesheet" href="{{ url_for('static', filename='acceuil.css')}}" />
+{% endblock styles %} {% block content %}
+
+
+
+
+
+{% if current_user.is_authenticated %}
+<h1>Bienvenue, <span>{{current_user.get_id()}} </span> ! 👋</h1>
+{% else %}
+<h1>Bonjour !👋</h1>
+{% endif%}
+<main id="tdb">
+    <div id="pane1">
+        <h2>Les derniers sondages :</h2>
+    </div>
+    <div id="pane2">
+        <ul>
+            <li>
+                <button onclick="location.href = '{{ url_for('newSondage') }}';">CRÉER UN SONDAGE</button>
+            </li>
+            <li>
+                <button>GÉRER SON COMPTE</button>
+            </li>
+            <li>
+                <button>VOIR LES SONDAGES</button>
+            </li>
+            <li>
+                <button>AJOUTER UN COMPTE</button>
+            </li>
+        </ul>
+    </div>
+    <div id="pane3">
+        <h2>Prochain événement</h2>
+    </div>
+    <div id="pane4">
+        <h2>Un problème technique ?</h2>
+        <p>Merci de nous contacter sur 
+        <a href = "mailto:iuto45@orleans.fr? subject = Feedback&body">iuto45@orleans.fr</a>
+        </p>
+</div>
+</main>
+{% endblock content %}

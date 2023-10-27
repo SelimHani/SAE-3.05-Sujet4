@@ -2,15 +2,17 @@ from .app import app, db
 from flask import render_template, url_for, redirect, request
 from flask_login import login_user, current_user, logout_user, login_required
 from flask_wtf import FlaskForm
-from wtforms import EmailField, StringField, HiddenField, PasswordField, DateField,SelectField,SelectMultipleField
+from wtforms import EmailField, StringField, HiddenField, PasswordField, DateField,SelectField,SelectMultipleField,TextAreaField
 from wtforms.validators import DataRequired
 from hashlib import sha256
 from .models import User, get_role_by_id, get_repetitions, Repetition
 
+
 @app.route("/")
 def home():
-    return render_template("home.html")
-    
+    return render_template(
+        "acceuil.html"
+    )
 class LoginForm(FlaskForm):
     mail = StringField("Email")
     password = PasswordField("Password")
@@ -20,9 +22,9 @@ class LoginForm(FlaskForm):
         user = User.query.get(self.mail.data)
         if user is None:
             return None
-        m=sha256()
+        m = sha256()
         m.update(self.password.data.encode())
-        passwd= m.hexdigest()
+        passwd = m.hexdigest()
         return user if passwd == user.password else None
 
 class RegisterForm(FlaskForm):    
@@ -41,9 +43,27 @@ class RepetitionForm(FlaskForm):
     date = DateField("Date")
     description = StringField("Description")
 
-@app.route("/login/", methods=("GET","POST",))
+class SondageForm(FlaskForm):
+    nomActivite = StringField("nomActivite")
+    lieuActivite = StringField("LieuActivite")
+    dateActivite = DateField()
+    descriptionActivite = TextAreaField("descriptionActivite")
+    next = HiddenField()
+
+
+@app.route("/newSondage/", methods=("GET", "POST",))
+def newSondage():
+    f = SondageForm()
+    if not f.is_submitted():
+        f.next.data = request.args.get("next")
+    return render_template(
+        "newSondage.html", form=f
+    )
+
+
+@app.route("/login/", methods=("GET", "POST",))
 def login():
-    f =LoginForm()
+    f = LoginForm()
     if not f.is_submitted():
         f.next.data = request.args.get("next")
     elif f.validate_on_submit():

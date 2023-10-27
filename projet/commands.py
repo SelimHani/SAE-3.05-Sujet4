@@ -4,7 +4,7 @@ from .app import app, db
 @app.cli.command()
 def syncdb():
     db.create_all()
-    
+
 @app.cli.command()
 @click.argument("username")
 @click.argument("password")
@@ -12,11 +12,13 @@ def syncdb():
 def newuser(username, password, role):
     from .models import User
     from hashlib import sha256
-    m=sha256()
+    m = sha256()
     m.update(password.encode())
-    u=User(username=username, password=m.hexdigest(), role=role)
+    u = User(username=username, password=m.hexdigest(), role=role)
     db.session.add(u)
     db.session.commit()
+
+
 
 @app.cli.command()
 @click.argument("id")
@@ -38,3 +40,4 @@ def newrepetition(id,lieu,date,description):
     r = Repetition(id=id,lieu=lieu,date=date,description=description)
     db.session.add(r)
     db.session.commit()
+

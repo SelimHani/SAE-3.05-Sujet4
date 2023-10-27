@@ -99,3 +99,4 @@ def get_roles():
 def get_repetitions():
     return Repetition.query.all()
 
+

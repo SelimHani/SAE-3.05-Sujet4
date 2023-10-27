@@ -1,0 +1,59 @@
+.sidenav {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 5;
+    top: -3vh;
+    left: 0vh;
+    background-color: #954A33;
+    overflow-x: hidden;
+    transition: 0.5s;
+    display: flex;
+    flex-wrap: wrap;
+    border-radius: 0%;
+    align-items: center;
+    padding: 0;
+    padding-top: 3vh;
+}
+
+.sidenav a:hover {
+    color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 2vh;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+.sidenav .texte{
+    color: #f1f1f1;
+    margin: 0;
+    padding: 0;
+    padding-left: 1vw;
+    padding-right: 1vw;
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+    width: 100%;
+    text-align: center;
+    border-bottom: 1px solid #954A33;
+}
+
+#noteNavBar{
+    mix-blend-mode: soft-light;
+    display: block;
+    margin: auto;
+}
+
+
+#sideNavBar{
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+    z-index: 0;
+}
+
+footer{
+    z-index: -1;
+}
