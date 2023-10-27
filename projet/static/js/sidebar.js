@@ -1,3 +1,6 @@
+
+
+
 function openNav() {
     const sidenav = document.querySelector('.sidenav');
 
@@ -7,10 +10,20 @@ function openNav() {
     } else {
         sidenav.style.width = "250px";
     }
+
+    document.getElementById("tdb").style.zIndex = "-1";
 }
   
 function closeNav() {
+    
+
+    setTimeout(function() {
+        console.log("test");
+        document.getElementById("tdb").style.zIndex = "0";
+        
+    }, 300);
     document.getElementById("mySidenav").style.width = "0";
+    
     
 }
 
