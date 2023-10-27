@@ -121,3 +121,27 @@ def profil(id):
     return render_template(
         "profil.html", user= u, role=role
     )    
+
+class ChangeProfilForm(FlaskForm):
+    nom = StringField("Nom")
+    prenom = StringField("Prenom")
+    date_nais = DateField("Date_de_naissance")
+    num = StringField("Numero")
+    password = PasswordField("Password")
+    next = HiddenField()
+
+
+@app.route("/change-profil/<id>",methods=("GET","POST",))
+def changer_profil(id):
+    u  = get_user_by_id(id)
+    f = ChangeProfilForm()
+    
+    if f.is_submitted():
+        password_hash = sha256(f.password.data.encode()).hexdigest()
+        u.nom = f.nom.data
+        u.prenom = f.prenom.data
+        u.num =  f.num.data
+        u.password = password_hash
+        db.session.commit()
+        return redirect(url_for("profil",id = id))
+    return render_template("changer_profil.html", form=f,user=u )
