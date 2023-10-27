@@ -17,3 +17,27 @@ def newuser(username, password, role):
     u = User(username=username, password=m.hexdigest(), role=role)
     db.session.add(u)
     db.session.commit()
+
+
+
+@app.cli.command()
+@click.argument("id")
+@click.argument("name")
+def newrole(id, name):
+    from .models import Role
+
+    u=Role(id=id, name=name)
+    db.session.add(u)
+    db.session.commit()
+    
+@app.cli.command()
+@click.argument("id")
+@click.argument("lieu")
+@click.argument("date")
+@click.argument("description")
+def newrepetition(id,lieu,date,description):
+    from .models import Repetition
+    r = Repetition(id=id,lieu=lieu,date=date,description=description)
+    db.session.add(r)
+    db.session.commit()
+
