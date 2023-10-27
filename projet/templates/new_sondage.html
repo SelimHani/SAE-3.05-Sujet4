@@ -1,12 +1,12 @@
 {% extends 'home.html' %} {% block styles %}
 <link
   rel="stylesheet"
-  href="{{ url_for('static', filename='newSondage.css')}}"
+  href="{{ url_for('static', filename='new_sondage.css')}}"
 />
 {% endblock styles %} {% block content %}
 
 <div>
-  <form role="form" method="POST" action="{{ url_for('newSondage') }}">
+  <form role="form" method="POST" action="{{ url_for('creer_sondage') }}">
     {{ form.hidden_tag() }}
     <div id="formulaireSondage">
       <div class="divForm" id="nomActi">

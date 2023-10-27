@@ -56,7 +56,12 @@ class User(db.Model,UserMixin):
     repetitions = db.relationship("Repetition",secondary=participer,backref='users')
     sondages = db.relationship("Reponse_sondage", back_populates="user")
 
+    def get_id(self):
+        return self.mail
 
+    def get_prenom(self):
+        return self.prenom
+    
 class Sondage(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     activite = db.relationship("Activite", uselist=False,backref="sondage") 

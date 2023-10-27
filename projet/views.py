@@ -51,13 +51,13 @@ class SondageForm(FlaskForm):
     next = HiddenField()
 
 
-@app.route("/newSondage/", methods=("GET", "POST",))
-def newSondage():
+@app.route("/create/sondage/", methods=("GET", "POST",))
+def creer_sondage():
     f = SondageForm()
     if not f.is_submitted():
         f.next.data = request.args.get("next")
     return render_template(
-        "newSondage.html", form=f
+        "new_sondage.html", form=f
     )
 
 
