@@ -1,0 +1,64 @@
+*{
+    margin:0px;
+    padding:0px;
+    font-family: 'Alata', sans-serif;
+}
+body{
+    background-color: #F0E4D4;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+nav{
+    background-color: #C08F6F;
+    position:sticky;
+    top:0px;
+    display:flex;
+    justify-content: space-between;
+    padding:0px;
+    height: 8vh;
+}
+
+footer{
+    text-align: center;
+    margin-top: auto;
+    background-color: #C08F6F;
+    width: 100%;
+}
+
+footer p {
+    font-size: 0.8vw;
+}
+
+
+#homeImg{
+    height:8.8vh;
+    
+}
+
+#menuImg{
+    height:5vh;
+    margin: 0.8vw;
+}
+#loginImg{
+    height:7vh;
+    margin-top: 0.4vh;
+   
+}
+#logoutImg{
+    height:6vh;
+    margin-top: 0.8vh;
+   
+}
+
+.texte, .closebtn{
+    color: #F0E4D4 ;
+    text-decoration: none;
+}
+
+li{
+    list-style-type: none;
+    padding: 2vw;
+    flex-grow: 1;   
+}
