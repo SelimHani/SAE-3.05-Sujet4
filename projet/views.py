@@ -5,7 +5,7 @@ from flask_wtf import FlaskForm
 from wtforms import EmailField, StringField, HiddenField, PasswordField, DateField,SelectField,SelectMultipleField,TextAreaField
 from wtforms.validators import DataRequired
 from hashlib import sha256
-from .models import User, get_role_by_id, get_repetitions, Repetition
+from .models import User, get_role_by_id, get_repetitions, Repetition, get_user_by_id
 
 
 @app.route("/")
@@ -112,3 +112,12 @@ def creer_repetition():
         db.session.commit()
         return redirect(url_for("home"))
     return render_template("create_repetition.html", form=form )
+
+@app.route("/profil/<id>")
+def profil(id):
+    u = get_user_by_id(id)
+    r = u.role_id
+    role = get_role_by_id(r)
+    return render_template(
+        "profil.html", user= u, role=role
+    )    

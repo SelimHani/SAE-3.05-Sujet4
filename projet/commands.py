@@ -1,9 +1,17 @@
 import click
 from .app import app, db
+from .models import Role
 
 @app.cli.command()
 def syncdb():
     db.create_all()
+    r1 = Role(id=1, name="Musicien")
+    r2 = Role(id=2, name="Directrice")
+    r3 = Role(id=3, name="Responsable")
+    db.session.add(r1)
+    db.session.add(r2)
+    db.session.add(r3)
+    db.session.commit()
 
 @app.cli.command()
 @click.argument("username")

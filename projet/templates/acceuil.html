@@ -21,7 +21,9 @@
                 <button onclick="location.href = '{{ url_for('creer_sondage') }}';">CRÉER UN SONDAGE</button>
             </li>
             <li>
-                <button>GÉRER SON COMPTE</button>
+                {% if current_user.is_authenticated %}
+                <button onclick="location.href = '{{ url_for('profil', id=current_user.get_id()) }}';">GÉRER SON COMPTE</button>
+                {% endif%}
             </li>
             <li>
                 <button>VOIR LES SONDAGES</button>

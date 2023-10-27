@@ -28,6 +28,9 @@ class Role(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20))
     
+    def get_name(self):
+        return self.name
+    
 class Repetition(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     lieu = db.Column(db.String(100))
@@ -103,5 +106,8 @@ def get_roles():
 
 def get_repetitions():
     return Repetition.query.all()
+
+def get_user_by_id(mail):
+    return User.query.get(mail)
 
 
