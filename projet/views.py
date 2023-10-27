@@ -51,7 +51,7 @@ class SondageForm(FlaskForm):
     next = HiddenField()
 
 
-@app.route("/create/sondage/", methods=("GET", "POST",))
+@app.route("/create-sondage/", methods=("GET", "POST",))
 def creer_sondage():
     f = SondageForm()
     if not f.is_submitted():
@@ -80,7 +80,7 @@ def logout():
     return redirect(url_for("home"))
 
 
-@app.route("/create/user/", methods=("GET","POST",))
+@app.route("/create-user/", methods=("GET","POST",))
 def creer_user():
     form =RegisterForm()
     if form.is_submitted():
@@ -103,7 +103,7 @@ def repetitions():
     return render_template("repetitions.html", repetitions=repetitions)
 
 
-@app.route("/create/repetition/", methods=("GET","POST",))
+@app.route("/create-repetition/", methods=("GET","POST",))
 def creer_repetition():
     form =RepetitionForm()
     if form.is_submitted():
