@@ -117,6 +117,6 @@ def get_equipement_by_name(name):
     res=Equipement.query.filter_by(nom=name).first()
     return res
 
-
-
+def get_sondages():
+    return Sondage.query.all()
 

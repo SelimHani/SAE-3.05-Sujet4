@@ -13,6 +13,13 @@ def home():
     return render_template(
         "acceuil.html"
     )
+    
+@app.route("/sondages/")
+def sondages():
+    sondages = get_sondages()
+    return render_template(
+        "sondages.html",sondages=sondages
+    )
 class LoginForm(FlaskForm):
     mail = StringField("Email")
     password = PasswordField("Password")
@@ -49,16 +56,37 @@ class SondageForm(FlaskForm):
     lieuActivite = StringField("LieuActivite")
     dateActivite = DateField()
     descriptionActivite = TextAreaField("descriptionActivite")
+    equipements = SelectMultipleField("Choisis des équipements", choices=[])
     next = HiddenField()
 
 
 @app.route("/create-sondage/", methods=("GET", "POST",))
 def creer_sondage():
-    f = SondageForm()
-    if not f.is_submitted():
-        f.next.data = request.args.get("next")
+    form = SondageForm()
+    equipements = get_equipements()
+    l = []
+    for e in equipements:
+        l.append(e.nom)
+    form.equipements.choices = l
+    if not form.is_submitted():
+        form.next.data = request.args.get("next")
+    else:
+        a = Activite(nom=form.nomActivite.data, lieu=form.lieuActivite.data, date=form.dateActivite.data,description=form.descriptionActivite.data)
+        s = Sondage(activite=a)
+        a.sondage_id= s.id
+        
+        noms_e = form.equipements.data
+        for nom in noms_e:
+            equipement=get_equipement_by_name(nom)
+            a.equipements.append(equipement)
+            equipement.activites.append(a)
+        
+        db.session.add(a) 
+        db.session.add(s)
+        db.session.commit()  
+        return redirect(url_for("home"))
     return render_template(
-        "new_sondage.html", form=f
+        "new_sondage.html", form=form
     )
 
 
