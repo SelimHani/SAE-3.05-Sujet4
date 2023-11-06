@@ -110,4 +110,13 @@ def get_repetitions():
 def get_user_by_id(mail):
     return User.query.get(mail)
 
+def get_equipements():
+    return Equipement.query.all()
+
+def get_equipement_by_name(name):
+    res=Equipement.query.filter_by(nom=name).first()
+    return res
+
+
+
 

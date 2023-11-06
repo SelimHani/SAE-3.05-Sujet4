@@ -1,6 +1,6 @@
 import click
 from .app import app, db
-from .models import Role
+from .models import Role, Equipement
 
 @app.cli.command()
 def syncdb():
@@ -8,6 +8,16 @@ def syncdb():
     r1 = Role(id=1, name="Musicien")
     r2 = Role(id=2, name="Directrice")
     r3 = Role(id=3, name="Responsable")
+    e1 = Equipement(id=1, nom="Costume1")
+    e2 = Equipement(id=2, nom="Piano")
+    e3 = Equipement(id=3, nom="Violon")
+    e4 = Equipement(id=4, nom="Flute")
+    e5 = Equipement(id=5, nom="Clarinette")
+    db.session.add(e1)
+    db.session.add(e2)
+    db.session.add(e3)
+    db.session.add(e4)
+    db.session.add(e5)
     db.session.add(r1)
     db.session.add(r2)
     db.session.add(r3)

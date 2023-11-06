@@ -25,7 +25,9 @@ p {
   color: #8a5741;
   padding: 2px 5rem 5px 10px;
   margin: 0;
+  text-decoration: none;
 }
+
 #bouton {
   text-align: center;
 }

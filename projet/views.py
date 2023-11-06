@@ -5,7 +5,7 @@ from flask_wtf import FlaskForm
 from wtforms import EmailField, StringField, HiddenField, PasswordField, DateField,SelectField,SelectMultipleField,TextAreaField
 from wtforms.validators import DataRequired
 from hashlib import sha256
-from .models import User, get_role_by_id, get_repetitions, Repetition, get_user_by_id
+from .models import *
 
 
 @app.route("/")
@@ -42,6 +42,7 @@ class RepetitionForm(FlaskForm):
     lieu = StringField("Lieu")
     date = DateField("Date")
     description = StringField("Description")
+    equipements = SelectMultipleField("Choisis des équipements", choices=[])
 
 class SondageForm(FlaskForm):
     nomActivite = StringField("nomActivite")
@@ -105,9 +106,23 @@ def repetitions():
 
 @app.route("/create-repetition/", methods=("GET","POST",))
 def creer_repetition():
+    equipements = get_equipements()
+    l = []
+    for e in equipements:
+        l.append(e.nom)
     form =RepetitionForm()
+    form.equipements.choices = l
     if form.is_submitted():
-        r = Repetition(lieu=form.lieu.data,date=form.date.data,description=form.description.data)
+        r = Repetition(lieu=form.lieu.data,date=form.date.data,description=form.description.data, equipements=[])
+        noms_e = form.equipements.data
+        print(noms_e)
+        for nom in noms_e:
+            print(type(nom))
+            equipement=get_equipement_by_name(nom)
+            print(equipement)
+            print(r)
+            r.equipements.append(equipement)
+            equipement.repetitions.append(r)
         db.session.add(r)
         db.session.commit()
         return redirect(url_for("home"))
