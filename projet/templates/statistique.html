@@ -1,30 +1,43 @@
 
 {% extends 'home.html' %} 
 {% block styles %} 
-    <link rel="stylesheet" href="{{ url_for('static', filename='login.css')}}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='statistique.css')}}" />
+
     <script src ="../static/js/sidebar.js"></script> 
 {% endblock styles %} 
 {% block content %}
+<button type="submit"> RETOUR </button> 
+<div>
+  <div class="info">
+    <section>
+        <p id="lastname">Nom</p>
+        <p id="name">Prénom</p>
+        <p id="email">exemple@gmail.com</p>
+        <p id="date">10/10/2023</p>
+        <p id="number"> 07 68 20 30 15</p>
+        <button type="submit"> Changer le mot de passe </button> 
+        <button type="submit"> Se deconnecter </button> 
+    </section>
+    <img src="../static/images/violon.png" alt="image de violon">
+  </div>
+  <h1>Statistiques</h1>
+
+  <div id="stats">
+    <section> 
+        <h2> 10 </h2>
+        <h3> COURS PARTICIPER </h3>
+    </section>
+    <section id="red"> 
+        <h2> 10 </h2>
+        <h3> COURS MANQUÉS </h3>
+    </section>
+    <section> 
+        <h2> 10 </h2>
+        <h3> CLASSEMENT </h3>
+    </section>
+  </div>
+</div>
 
 {% endblock content %}
 
 
-<!-->
-    <button type="submit"> RETOUR </button> 
-    <h1>Statistiques</h1>
-    <div id="stats">
-        <section> 
-            <h2> 10 </h2>
-            <h3> COURS PARTICIPER </h3>
-        </section>
-        <section id="red"> 
-            <h2> 10 </h2>
-            <h3> COURS MANQUÉS </h3>
-        </section>
-        <section> 
-            <h2> 10 </h2>
-            <h3> CLASSEMENT </h3>
-        </section>
-
-    </div>
--->
