@@ -59,6 +59,13 @@ def creer_sondage():
     return render_template(
         "new_sondage.html", form=f
     )
+    
+@app.route("/calendrier/")
+def calendrier():
+    return render_template(
+        "calendrier.html"
+    )
+    
 
 
 @app.route("/login/", methods=("GET", "POST",))
