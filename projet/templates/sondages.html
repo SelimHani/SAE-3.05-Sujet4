@@ -1,8 +1,10 @@
 {% extends 'home.html' %} {% block content %}
 {% for s in sondages %}
 <div>
+    <a href="{{ url_for('repondre_sondage',id=s.id)}}">
     <p>{{s}}</p>
     <p>{{s.activite.nom}}</p>
+</a>
 </div>
 {% endfor%}
 {% endblock content %}

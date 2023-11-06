@@ -70,6 +70,8 @@ class Sondage(db.Model):
     activite = db.relationship("Activite", uselist=False,backref="sondage") 
     users = db.relationship("Reponse_sondage",back_populates="sondage")
     
+    def get_id(self):
+        return self.id
     
 class Activite(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -120,3 +122,9 @@ def get_equipement_by_name(name):
 def get_sondages():
     return Sondage.query.all()
 
+def get_sondage_by_id(id):
+    return Sondage.query.get(id)
+
+def a_deja_repondu(idu, ids):
+    reponse = Reponse_sondage.query.filter_by(user_id=idu, sondage_id=ids).first()
+    return reponse is not None

@@ -173,6 +173,8 @@ class ChangeProfilForm(FlaskForm):
     password = PasswordField("Password")
     next = HiddenField()
 
+class RepondreSondageForm(FlaskForm):
+    reponse = SelectField('Participer?', choices=[("oui","Oui"),("non","Non")])
 
 @app.route("/change-profil/<id>",methods=("GET","POST",))
 def changer_profil(id):
@@ -188,3 +190,20 @@ def changer_profil(id):
         db.session.commit()
         return redirect(url_for("profil",id = id))
     return render_template("changer_profil.html", form=f,user=u )
+
+@app.route("/repondre-sondage/<id>",methods=("GET","POST",))
+def repondre_sondage(id):
+    s  = get_sondage_by_id(id)
+    f = RepondreSondageForm()
+    if f.is_submitted():
+        reponse = f.reponse.data
+        if  a_deja_repondu(current_user.get_id(),s.get_id()):
+            r = Reponse_sondage.query.filter_by(user_id=current_user.get_id(), sondage_id=s.get_id()).first()
+            r.reponse = reponse
+        else:
+            r = Reponse_sondage(user_id=current_user.get_id(), sondage_id=s.get_id(), user=current_user, sondage=s, reponse=reponse)
+            db.session.add(r)
+        
+        db.session.commit()
+        return redirect(url_for("home"))
+    return render_template("repondre_sondage.html", form=f,sondage=s )
