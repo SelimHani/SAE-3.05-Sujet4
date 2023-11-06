@@ -11,7 +11,7 @@ from .models import User, get_role_by_id, get_repetitions, Repetition
 @app.route("/")
 def home():
     return render_template(
-        "acceuil.html"
+        "acceuil_non_connecte.html"
     )
 class LoginForm(FlaskForm):
     mail = StringField("Email")
