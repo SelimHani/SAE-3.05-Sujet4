@@ -1,0 +1,12 @@
+{% extends 'home.html' %} {% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='login.css')}}" />
+{% endblock styles %} {% block content %}
+<h1>Sondages</h1>
+    {% for s in sondages%}
+    <div>
+    <a href="{{ url_for('repondre_sondage',id=s.id)}}">
+        <p>{{s.activite.nom}} {% if s.question%}{{s.question}}{%endif%}</p>
+    </a>
+    </div>
+    {%endfor%}
+{% endblock content %}
