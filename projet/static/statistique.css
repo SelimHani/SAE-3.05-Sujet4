@@ -111,10 +111,20 @@ h1{
 }
 
 .statistique {
-  /* Initial state: hidden */
   opacity: 0;
   max-height: 0;
-  /* Transition effect */
   transition: opacity 0.5s, max-height 1s;
   overflow: hidden;
+  
+}
+
+#violon{
+  animation: animate 1700ms infinite alternate;
+  height: 50rem;
+}
+
+@keyframes animate {
+  100%{
+    transform: translateY(-30px);
+  }
 }
