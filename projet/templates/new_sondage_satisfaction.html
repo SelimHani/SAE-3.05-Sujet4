@@ -1,0 +1,29 @@
+{% extends 'home.html' %} {% block styles %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='new_sondage.css')}}"
+/>
+{% endblock styles %} {% block content %}
+
+<div>
+  <form role="form" method="POST" action="{{ url_for('creer_sondage_satisfaction') }}">
+    {{ form.hidden_tag() }}
+    <div id="formulaireSondage">
+      <div class="divForm" id="nomActi">
+        <h2>Question</h2>
+        <div>
+          {{ form.question(id_="formNom" ,placeholder ="Question..")}}
+        </div>
+        <div>
+            {{ form.reponses(id_="formNom" ,placeholder ="réponse possible..")}}
+            <button type="submit" id="bValider">[AJOUTER REPONSE POSSIBLE ]</button>
+            <button type="reset" id="bAnnuler" onclick="location.href = '{{ url_for('home') }}';">[ ANNULER ]</button>
+          </div>
+          
+    
+  </form>
+    
+
+</div>
+
+{% endblock content %}

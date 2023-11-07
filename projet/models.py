@@ -23,6 +23,13 @@ exiger = db.Table('exiger',
     	db.ForeignKey('equipement.id'))
 )
 
+repondre = db.Table('repondre',
+    db.Column('sondage_id', db.Integer,
+    	db.ForeignKey('sondage.id')),
+    db.Column('reponse_id', db.Integer,
+    	db.ForeignKey('reponses_possibles.id'))
+)
+
     
 class Role(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -72,6 +79,8 @@ class Sondage(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     activite = db.relationship("Activite", uselist=False,backref="sondage") 
     users = db.relationship("Reponse_sondage",back_populates="sondage")
+    reponses_possibles = db.relationship("Reponses_possibles", secondary=repondre, backref="sondages")
+    question = db.Column(db.String(100))
     
     def get_id(self):
         return self.id
@@ -89,7 +98,9 @@ class Equipement(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nom = db.Column(db.String(100))
 
-
+class Reponses_possibles(db.Model):
+    id = db.Column(db.Integer, primary_key= True)
+    nom = db.Column(db.String(100))
 
 
 
@@ -131,3 +142,12 @@ def get_sondage_by_id(id):
 def a_deja_repondu(idu, ids):
     reponse = Reponse_sondage.query.filter_by(user_id=idu, sondage_id=ids).first()
     return reponse is not None
+
+def get_reponses_possibles_by_id(id):
+    return Reponses_possibles.query.get(id)
+
+def get_sondage_by_question(question):
+    return Sondage.query.filter_by(question=question).first()
+
+def get_reponses_possibles_by_sondage(sondage):
+    return sondage.reponses_possibles

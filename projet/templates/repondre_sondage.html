@@ -1,7 +1,9 @@
 {% extends 'home.html' %} {% block styles %}
 
 {% endblock styles %} {% block content %}
-<h1>repondre sondage</h1>
+{% if sondage.question%}
+<h1>{{sondage.question}}</h1>
+{%endif%}
 <p>{{sondage.activite.nom}}</p>
 <p>{{sondage.activite.lieu}}</p>
 <p>{{sondage.activite.date}}</p>
