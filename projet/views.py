@@ -117,5 +117,10 @@ def creer_repetition():
 
 @app.route("/sondage-musicien/", methods=("GET","POST",))
 def sondage_musicien():
-    
+
     return render_template("sondage_musicien.html")
+
+@app.route("/sondages/", methods=("GET","POST",))
+def sondages():
+
+    return render_template("sondages.html")
