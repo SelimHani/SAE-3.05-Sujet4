@@ -32,8 +32,8 @@
 
 
                 {% if current_user.is_authenticated %}
-                <a href="{{ url_for('login')}}" class="texte">CRÉER UN SONDAGE</a>
-                <a href="{{ url_for('login')}}" class="texte" >VOIR LES SONDAGES</a>
+                <a href="{{ url_for('creer_sondage')}}" class="texte">CRÉER UN SONDAGE</a>
+                <a href="{{ url_for('sondages')}}" class="texte" >VOIR LES SONDAGES</a>
                 <a href="{{ url_for('profil',id=current_user.get_id())}}" class="texte" >GERER SON COMPTE</a>
                 {% endif%}
                 
