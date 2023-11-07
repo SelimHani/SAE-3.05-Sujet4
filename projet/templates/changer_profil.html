@@ -1,0 +1,51 @@
+
+{% extends 'home.html' %} {% block styles %} 
+<link rel="stylesheet" href="{{ url_for('static', filename='login.css')}}" />
+{% endblock styles %} {% block content %}
+<h1>Changer profil</h1>
+<div id="formulaire">
+  <form role="form" method="POST" action="{{ url_for('changer_profil', id=user.mail) }}">
+  {{ form.hidden_tag() }}
+    <div>
+    <p>Votre nom</p>
+    <div>
+      {{ form.nom(class_="test" ,placeholder ="nom")}}
+    </div>
+    </div>
+
+
+    <div>
+    <p>Votre prenom</p>
+    <div>
+      {{ form.prenom (class_="test", placeholder="prenom") }}
+    </div>
+    </div>
+
+    <div>
+    <p>Votre date de naissance</p>
+    <div>
+      {{ form.date_nais(class_="test" ,placeholder ="date")}}
+    </div>
+    </div>
+
+    <div>
+    <p>Votre numero de telephone</p>
+    <div>
+      {{ form.num(class_="test" ,placeholder ="XXXXXXXXXX")}}
+    </div>
+    </div>
+
+    <div>
+    <p>Votre mot de passe</p>
+    <div>
+      {{ form.password(class_="test" ,placeholder ="mot de passe")}}
+    </div>
+    </div>
+
+    <div id="bouton">
+    <button type="submit">Mettre à jour</button>
+    </div>
+  </form>
+</div>
+
+{% endblock content %}

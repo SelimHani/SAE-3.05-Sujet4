@@ -1,0 +1,22 @@
+{% extends 'home.html' %} {% block styles %}
+
+{% endblock styles %} {% block content %}
+<h1>repondre sondage</h1>
+<p>{{sondage.activite.nom}}</p>
+<p>{{sondage.activite.lieu}}</p>
+<p>{{sondage.activite.date}}</p>
+<p>{{sondage.activite.description}}</p>
+{% for e in sondage.activite.equipements%}
+<p>{{e.nom}}</p>
+{% endfor%}
+<div id="formulaire">
+    <form role="form" method="POST" action="{{ url_for('repondre_sondage',id=sondage.id) }}">
+      <div>
+         {{form.reponse()}}
+      </div>
+      <div id="bouton">
+        <button type="submit">Valider</button>
+      </div>
+    </form>
+  </div>
+{% endblock content %}

@@ -1,0 +1,27 @@
+{% extends 'home.html' %} {% block styles %}
+<link rel="stylesheet" href="dycalendar.css" />
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='calendrier.css')}}"
+/>
+
+{% endblock styles %} {% block content %}
+<main>
+  <div class="box">
+    <div class="container">
+      <div id="dycalendar"></div>
+    </div>
+  </div>
+  <script src="../static/js/dycalendar.js"></script>
+  <script>
+    dycalendar.draw({
+      target: "#dycalendar",
+      type: "month",
+      dayformat: "full",
+      monthformat: "full",
+      highlighttargetdate: true,
+      prevnextbutton: "show",
+    });
+  </script>
+</main>
+{% endblock content %}

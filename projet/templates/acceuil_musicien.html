@@ -1,5 +1,5 @@
 {% extends 'home.html' %} {% block styles %} 
-<link rel="stylesheet" href="{{ url_for('static', filename='acceuil.css')}}" />
+<link rel="stylesheet" href="{{ url_for('static', filename='acceuil_musicien.css')}}" />
 {% endblock styles %} {% block content %}
 
 
@@ -18,18 +18,10 @@
     <div id="pane2">
         <ul>
             <li>
-                <button onclick="location.href = '{{ url_for('creer_sondage') }}';">CRÉER UN SONDAGE</button>
-            </li>
-            <li>
-                {% if current_user.is_authenticated %}
-                <button onclick="location.href = '{{ url_for('profil', id=current_user.get_id()) }}';">GÉRER SON COMPTE</button>
-                {% endif%}
+                <button onclick="location.href = '{{ url_for('profil', id = current_user.get_id()) }}';">GÉRER SON COMPTE</button>
             </li>
             <li>
                 <button onclick="location.href = '{{ url_for('sondages') }}';">VOIR LES SONDAGES</button>
-            </li>
-            <li>
-                <button onclick="location.href = '{{ url_for('creer_user') }}';">AJOUTER UN COMPTE</button>
             </li>
         </ul>
     </div>
@@ -37,7 +29,7 @@
         <h2>Prochain événement</h2>
     </div>
     <div id="pane4">
-        <h2>Un problème technique ?</h2>
+        <h2>Un problème technique ? </h2>
         <p>Merci de nous contacter sur 
         <a href = "mailto:iuto45@orleans.fr? subject = Feedback&body">iuto45@orleans.fr</a>
         </p>
