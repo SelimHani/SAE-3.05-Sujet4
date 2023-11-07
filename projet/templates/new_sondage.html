@@ -6,7 +6,7 @@
 {% endblock styles %} {% block content %}
 
 <div>
-  <form role="form" method="POST" action="{{ url_for('creer_sondage') }}">
+  <form role="form" method="POST" action="{{ url_for('creer_sondage_participation') }}">
     {{ form.hidden_tag() }}
     <div id="formulaireSondage">
       <div class="divForm" id="nomActi">
