@@ -27,6 +27,7 @@
     border: rgba(192,143,111,0.3) solid 2px;
     backdrop-filter: blur(20px);
     justify-content: center;
+
     
 }
 
@@ -45,7 +46,8 @@
 a{
     text-decoration: none;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
+    flex: 1;
     
 }
 h1{
