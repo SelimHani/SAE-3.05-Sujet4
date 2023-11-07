@@ -3,7 +3,7 @@
 {% endblock styles %} {% block content %}
 <h1>Sondages</h1>
     {% for s in sondages%}
-    <div>
+    <div id="formulaire">
     <a href="{{ url_for('repondre_sondage',id=s.id)}}">
         <p>{{s.activite.nom}} {% if s.question%}{{s.question}}{%endif%}</p>
     </a>
