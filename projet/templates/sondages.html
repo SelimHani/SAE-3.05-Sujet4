@@ -1,9 +1,6 @@
 {% extends 'home.html' %} {% block styles %} 
 <link rel="stylesheet" href="{{ url_for('static', filename='sondages.css')}}" />
 {% endblock styles %} {% block content %}
-
-
-{% extends 'home.html' %} {% block content %}
 {% for s in sondages %}
 <div>
     <a href="{{ url_for('repondre_sondage',id=s.id)}}">

@@ -127,7 +127,7 @@ def creer_sondage_participation():
     
 @app.route("/create-sondage-satisfaction/", methods=("GET", "POST",))
 def creer_sondage_satisfaction():
-   try:
+    try:
         if current_user.get_id_role()==1:
             return redirect(url_for("home")) 
     except AttributeError:

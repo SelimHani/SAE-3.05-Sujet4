@@ -1,43 +1,19 @@
 {% extends 'home.html' %} {% block styles %} 
 <link rel="stylesheet" href="{{ url_for('static', filename='sondage_musicien.css')}}" />
 {% endblock styles %} {% block content %}
-
-{% if sondage.question%}
-<h1>{{sondage.question}}</h1>
-{%endif%}
-<p>{{sondage.activite.nom}}</p>
-<p>{{sondage.activite.lieu}}</p>
-<p>{{sondage.activite.date}}</p>
-<p>{{sondage.activite.description}}</p>
-{% for e in sondage.activite.equipements%}
-<p>{{e.nom}}</p>
-{% endfor%}
-<div id="formulaire">
-    <form role="form" method="POST" action="{{ url_for('repondre_sondage',id=sondage.id) }}">
-      <div>
-         {{form.reponse()}}
-      </div>
-      <div id="bouton">
-        <button type="submit">Valider</button>
-      </div>
-    </form>
-  </div>
-{% endblock content %}
-
-
-
-
-
-
 <main>
+ <form role="form" method="POST" action="{{ url_for('repondre_sondage',id=sondage.id) }}">
     <div id="top"> 
         <button class="bouton" id="boutonRetour" onclick="location.href = '{{ url_for('sondages') }}';">RETOUR</button>
         <h1> {{sondage.activite.nom}} </h1>
+        {% if sondage.question%}
+          <h1>{{sondage.question}}</h1>
+        {%endif%}
     </div>
 
     
     <div id="pane">
-        
+        {% if not sondage.question %}
         <section>
             <h2 id="Description">Description </h2>
             <p> {{sondage.activite.description}} </p>
@@ -48,14 +24,6 @@
                 {% for e in sondage.activite.equipements%}
                 <li>{{e.nom}}</li>
                 {% endfor%}
-                <!-- <li>Violon</li>
-                <li>Costume</li>
-                <li>Protéction</li>
-                <li>Partition</li>
-                <li>Chapeau</li>
-                <li>Chaussure</li>
-                <li>Masque</li>
-                <li>Trompette</li> -->
             </ul>
         </section>
         <section>
@@ -64,18 +32,17 @@
             <h3>{{sondage.activite.lieu}}</h3>
         </section>
         <h2 id="date"> Le {{sondage.activite.date}}</h2>
-
+        {% endif%}
         <div id="consentement">
-            <input type="checkbox" id="check">
-            <label for="check"> J’ai bien pris connaissance des informations sur l’activité et je m’engage à être présent.</label>
+          <div>
+            {{form.reponse()}}
+         </div>
+         <div id="bouton">
+           <button type="submit">Valider</button>
+         </div>
         </div>
-
-        <div id ="participation">
-            <button class="bouton" id="boutonJeNeParticipePas">JE NE PARTICIPE PAS</button>
-            <button class="bouton" id="boutonJeParticipe">JE PARTICIPE</button>
-        </div>
-
     </div>
+  </form>
 </main>
 {% endblock content %}
 
