@@ -11,7 +11,7 @@ from .models import *
 @app.route("/")
 def home():
     return render_template(
-        "acceuil.html"
+        "acceuil_non_connecte.html"
     )
     
 @app.route("/sondages/")
@@ -88,6 +88,13 @@ def creer_sondage():
     return render_template(
         "new_sondage.html", form=form
     )
+    
+@app.route("/calendrier/")
+def calendrier():
+    return render_template(
+        "calendrier.html"
+    )
+    
 
 
 @app.route("/login/", methods=("GET", "POST",))
