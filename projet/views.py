@@ -48,6 +48,7 @@ class LoginForm(FlaskForm):
         passwd = m.hexdigest()
         return user if passwd == user.password else None
 
+
 class RegisterForm(FlaskForm):    
     nom = StringField("Nom", validators=[InputRequired()])
     prenom = StringField("Prenom", validators=[InputRequired()])
@@ -55,9 +56,10 @@ class RegisterForm(FlaskForm):
     mail = EmailField("Mail", validators=[InputRequired()])
     num = StringField("Numéro", validators=[InputRequired(),Regexp('^[0-9]{10}$', message="Le numéro doit contenir uniquement des chiffres."),Length(min=10, max=10, message="Le numéro doit contenir 10 chiffres.")])    
     password = PasswordField("Password", validators=[InputRequired()])
+
     role = SelectField('Role', choices=[("1","Musicien"),("2","Directrice"),("3","Responsable")])
     next = HiddenField()
-    
+
 class RepetitionForm(FlaskForm):
     id = HiddenField("Id")
     lieu = StringField("Lieu",validators=[InputRequired()])
@@ -128,7 +130,7 @@ def login():
             next = f.next.data or url_for("home")
             return redirect(next)
     return render_template("login.html",form=f)
-    
+
 @app.route("/logout/")
 def logout():
     logout_user()
@@ -150,7 +152,7 @@ def creer_user():
 
         db.session.add(new_personne)
         db.session.commit()
-        
+
         login_user(new_personne)
 
         return redirect(url_for("home"))
@@ -258,3 +260,4 @@ def repondre_sondage(id):
         db.session.commit()
         return redirect(url_for("home"))
     return render_template("repondre_sondage.html", form=f,sondage=s )
+
