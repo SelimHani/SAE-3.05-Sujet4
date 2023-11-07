@@ -5,20 +5,18 @@
     <script src="../static/js/affichage.js" defer></script>
 {% endblock styles %} 
 {% block content %}
-<button type="submit"> RETOUR </button> 
   <div class="info">
     <section>
-        <p id="lastname">Nom</p>
-        <p id="name">Prénom</p>
-        <p id="email">exemple@gmail.com</p>
-        <p id="date">10/10/2023</p>
-        <p id="number"> 07 68 20 30 15</p>
+        <p id="lastname">{{user.nom}}</p>
+        <p id="name">{{user.prenom}}</p>
+        <p id="email">{{user.mail}}</p>
+        <p id="date">{{user.ddn}}</p>
+        <p id="number">{{user.num_tel}}</p>
     </section>
     <img id="violon" src="../static/images/violon.png" alt="image de violon">
   </div>
   <div class="btnChange">
-    <button type="submit"> Changer le mot de passe </button> 
-    <button type="submit"> Se deconnecter </button> 
+    <button type="submit" onclick="location.href = '{{ url_for('changer_profil',id=user.mail) }}';"> Changer profil </button> 
   </div>
   <div class="btn">
     <p>Voir les statistiques</p>

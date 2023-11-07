@@ -124,11 +124,6 @@ def logout():
     return redirect(url_for("home"))
 
 
-@app.route("/stats/")
-def stats():
-    return render_template("statistique.html")
-
-
 @app.route("/create-user/", methods=("GET","POST",))
 def creer_user():
     form =RegisterForm()
@@ -182,7 +177,7 @@ def profil(id):
     r = u.role_id
     role = get_role_by_id(r)
     return render_template(
-        "profil.html", user= u, role=role
+        "statistique.html", user= u, role=role
     )    
 
 class ChangeProfilForm(FlaskForm):
