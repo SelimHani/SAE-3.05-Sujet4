@@ -5,10 +5,9 @@
 }
 body{
     background-color: #F0E4D4;
-}
-
-h1{
-    font-family: 'Anton', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 nav{
@@ -23,9 +22,8 @@ nav{
 
 footer{
     text-align: center;
+    margin-top: auto;
     background-color: #C08F6F;
-    bottom: 0;
-    position: absolute;
     width: 100%;
 }
 
@@ -54,7 +52,7 @@ footer p {
    
 }
 
-a{
+.texte, .closebtn{
     color: #F0E4D4 ;
     text-decoration: none;
 }
@@ -63,8 +61,4 @@ li{
     list-style-type: none;
     padding: 2vw;
     flex-grow: 1;   
-}
-
-ul{
-    background-color: #C08F6F;
 }

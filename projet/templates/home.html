@@ -1,20 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='nav.css') }}">
-
     <title>Home</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Alata&family=Anton&display=swap" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css2?family=Alata&family=Anton&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet"> 
     <script src ="../static/js/sidebar.js" defer></script> 
+
     {% block styles %}{% endblock styles %}
-</head>
-<body>
-    <header>    
+  </head>
+  <body>
+    <header>
+    
         <nav>
             <div id="mySidenav" class="sidenav">
                 <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
@@ -28,21 +31,26 @@
                 <img src="../static/images/menu.png" alt="" id="menuImg">
             </button>
         <a href="{{ url_for('home') }}"><img src="../static/images/home.png" alt="" id="homeImg"></a>
+
         {% if not current_user.is_authenticated %}
-        
-        <a href="{{ url_for('login') }}"><img src="../static/images/login.png" alt="" id="loginImg"></a>
+
+        <a href="{{ url_for('login') }}"
+          ><img src="../static/images/login.png" alt="" id="loginImg"
+        /></a>
+        {% endif%} {% if current_user.is_authenticated %}
+        <a href="{{ url_for('logout') }}"
+          ><img src="../static/images/logout.png" alt="" id="logoutImg"
+        /></a>
         {% endif%}
-        
-        {% if current_user.is_authenticated %}
-        <a href="{{ url_for('logout') }}"><img src="../static/images/logout.png" alt="" id="logoutImg"></a>
-        {% endif%}
-        </nav>
-    </header> 
-    {% block content %}
-        {% endblock content %}
+      </nav>
+    </header>
+    {% block content %}{% endblock content %}
     <footer>
-        <p>SAE 3.05 Sujet n°4</p>
-        <p>FERDOEL Titouan | HANI Selim | FOURNIER Cyprien | GNANESWARAN Roshan | JORITE Jean-marc</p>
+      <p>SAE 3.05 Sujet n°4</p>
+      <p>
+        FERDOEL Titouan | HANI Selim | FOURNIER Cyprien | GNANESWARAN Roshan |
+        JORITE Jean-marc
+      </p>
     </footer>
-</body>
+  </body>
 </html>

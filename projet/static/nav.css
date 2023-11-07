@@ -19,10 +19,7 @@
 .sidenav a:hover {
     color: #f1f1f1;
 }
-main{
-    z-index: -1;
-    position: absolute;
-}
+
 .sidenav .closebtn {
   position: absolute;
   top: 2vh;
@@ -52,7 +49,7 @@ main{
 
 
 #sideNavBar{
-    background-color: #C08F6F;
+    background-color: rgba(0, 0, 0, 0);
     border: none;
     z-index: 0;
 }
@@ -60,4 +57,3 @@ main{
 footer{
     z-index: -1;
 }
-
