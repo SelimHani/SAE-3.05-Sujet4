@@ -1,12 +1,16 @@
-{% extends 'home.html' %} {% block styles %}
-<link rel="stylesheet" href="{{ url_for('static', filename='login.css')}}" />
-{% endblock styles %} {% block content %}
-<h1>Sondages</h1>
-    {% for s in sondages%}
-    <div id="formulaire">
-    <a href="{{ url_for('repondre_sondage',id=s.id)}}">
-        <p>{{s.activite.nom}} {% if s.question%}{{s.question}}{%endif%}</p>
+<link rel="stylesheet" href="{{ url_for('static', filename='sondages.css')}}" />
+{% extends 'home.html' %} {% block content %}
+<div id="scroll">
+    <h1>Prochainement  :</h1>
+    {% for s in sondages %}
+    <div class="sondage">
+        <a href="{{ url_for('repondre_sondage',id=s.id)}}">
+        {% if s.question %}<p>{{s.question}}</p>
+        <p>{{s.activite.nom}}</p>
+        <p>{{s.activite.lieu}}</p>
+        <p>{{s.activite.date}}</p>
     </a>
     </div>
-    {%endfor%}
+    {% endfor%}
+</div>
 {% endblock content %}

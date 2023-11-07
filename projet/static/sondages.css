@@ -1,3 +1,60 @@
+
+#scroll{
+    width: 90%;
+    height: 50rem;
+    overflow-y: scroll;
+    scrollbar-color: rgba(0,0,0,0) rgba(0,0,0,0);
+    scrollbar-width: thin;
+    background-color:rgba(138, 87, 65, 0.8);
+    border-radius: 15px;
+    align-self: center;
+    margin-top: 1.5em;
+    background-image: url('../static/images/font_notes2.png');
+    background-repeat: repeat;
+    background-size: cover;
+    border:rgba(138, 87, 65, 1) solid 2.5px ;
+}
+
+
+.sondage{
+    margin: 1em;
+    padding: 0em;
+    background-color: rgba(240,228,212,0.75);
+    width: fit-content + 1em;
+    height: fit-content + 1em;
+    text-align: center;
+    border-radius: 15px;
+    border: rgba(192,143,111,0.3) solid 2px;
+    backdrop-filter: blur(20px);
+    
+    
+    
+}
+
+.sondage p {
+    margin: 0.5em;
+    color: rgba(149,74,51,1);
+    font-size: 2em;
+    flex: 1;
+}
+
+.sondage:hover{
+    transform: scale(1.01);
+    
+}
+
+a{
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    
+}
+h1{
+    margin: 0.3em;
+    margin-left: 2em;
+    color: rgba(240,228,212,1)
+}
+=======
 h1{
     color: #F0E4D4;
     font-family: Alata;
@@ -44,4 +101,5 @@ main{
     transform: scale(1.02);
     background: rgba(240, 228, 212, 0.90);  
 }
+
 
