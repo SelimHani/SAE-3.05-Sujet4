@@ -42,7 +42,7 @@ class LoginForm(FlaskForm):
         passwd = m.hexdigest()
         return user if passwd == user.password else None
 
-class RegisterForm(FlaskForm):    
+class RegisterForm(FlaskForm):
     nom = StringField("Nom")
     prenom = StringField("Prenom")
     date_nais = DateField("Date_de_naissance")
@@ -51,7 +51,7 @@ class RegisterForm(FlaskForm):
     password = PasswordField("Password")
     role = SelectField('Role', choices=[("1","Musicien"),("2","Directrice"),("3","Responsable")])
     next = HiddenField()
-    
+
 class RepetitionForm(FlaskForm):
     id = HiddenField("Id")
     lieu = StringField("Lieu")
@@ -117,7 +117,7 @@ def login():
             next = f.next.data or url_for("home")
             return redirect(next)
     return render_template("login.html",form=f)
-    
+
 @app.route("/logout/")
 def logout():
     logout_user()
@@ -134,7 +134,7 @@ def creer_user():
 
         db.session.add(new_personne)
         db.session.commit()
-        
+
         login_user(new_personne)
 
         return redirect(url_for("home"))
