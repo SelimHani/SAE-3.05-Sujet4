@@ -1,5 +1,5 @@
 
-
+r
 
 function openNav() {
     const sidenav = document.querySelector('.sidenav');
