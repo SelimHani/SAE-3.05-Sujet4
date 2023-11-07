@@ -26,8 +26,7 @@
     border-radius: 15px;
     border: rgba(192,143,111,0.3) solid 2px;
     backdrop-filter: blur(20px);
-    
-    
+    justify-content: center;
     
 }
 
@@ -54,7 +53,7 @@ h1{
     margin-left: 2em;
     color: rgba(240,228,212,1)
 }
-=======
+
 h1{
     color: #F0E4D4;
     font-family: Alata;
