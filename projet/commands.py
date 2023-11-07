@@ -1,6 +1,7 @@
 import click
 from .app import app, db
-from .models import Role, Equipement
+from .models import Role, Equipement,Reponses_possibles, User
+from hashlib import sha256
 
 @app.cli.command()
 def syncdb():
@@ -13,6 +14,11 @@ def syncdb():
     e3 = Equipement(id=3, nom="Violon")
     e4 = Equipement(id=4, nom="Flute")
     e5 = Equipement(id=5, nom="Clarinette")
+    re1 = Reponses_possibles(id=1, nom= "Oui")
+    re2 = Reponses_possibles(id=2, nom="Non")
+    admin = User(mail = "admin@gmail.com", password=sha256("admin".encode()).hexdigest(), role_id=3)
+    db.session.add(re1)
+    db.session.add(re2)
     db.session.add(e1)
     db.session.add(e2)
     db.session.add(e3)
@@ -21,6 +27,7 @@ def syncdb():
     db.session.add(r1)
     db.session.add(r2)
     db.session.add(r3)
+    db.session.add(admin)
     db.session.commit()
 
 @app.cli.command()

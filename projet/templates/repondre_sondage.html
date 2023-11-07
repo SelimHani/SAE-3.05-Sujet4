@@ -2,6 +2,29 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='sondage_musicien.css')}}" />
 {% endblock styles %} {% block content %}
 
+{% if sondage.question%}
+<h1>{{sondage.question}}</h1>
+{%endif%}
+<p>{{sondage.activite.nom}}</p>
+<p>{{sondage.activite.lieu}}</p>
+<p>{{sondage.activite.date}}</p>
+<p>{{sondage.activite.description}}</p>
+{% for e in sondage.activite.equipements%}
+<p>{{e.nom}}</p>
+{% endfor%}
+<div id="formulaire">
+    <form role="form" method="POST" action="{{ url_for('repondre_sondage',id=sondage.id) }}">
+      <div>
+         {{form.reponse()}}
+      </div>
+      <div id="bouton">
+        <button type="submit">Valider</button>
+      </div>
+    </form>
+  </div>
+{% endblock content %}
+
+
 
 
 
@@ -55,3 +78,4 @@
     </div>
 </main>
 {% endblock content %}
+

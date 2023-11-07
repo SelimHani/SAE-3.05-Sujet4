@@ -67,6 +67,12 @@ class RepetitionForm(FlaskForm):
     description = StringField("Description")
     equipements = SelectMultipleField("Choisis des équipements", choices=[])
 
+
+class SondageParticipationForm(FlaskForm):
+    nomActivite = StringField("nomActivite")
+    lieuActivite = StringField("LieuActivite")
+    dateActivite = DateField()
+
 class SondageForm(FlaskForm):
     nomActivite = StringField("nomActivite",validators=[InputRequired()])
     lieuActivite = StringField("LieuActivite",validators=[InputRequired()])
@@ -74,10 +80,16 @@ class SondageForm(FlaskForm):
     descriptionActivite = TextAreaField("descriptionActivite")
     equipements = SelectMultipleField("Choisis des équipements", choices=[])
     next = HiddenField()
+    
+class SondageSatisfactionForm(FlaskForm):
+    question =  StringField("Question")
+    reponses = StringField("Reponses_possibles")
+    next = HiddenField()
 
 
-@app.route("/create-sondage/", methods=("GET", "POST",))
-def creer_sondage():
+
+@app.route("/create-sondage-participation/", methods=("GET", "POST",))
+def creer_sondage_participation():
     try:
         if current_user.get_id_role()==1:
             return redirect(url_for("home")) 
@@ -85,7 +97,7 @@ def creer_sondage():
         return redirect(url_for("home"))
     form = SondageForm()
     equipements = get_equipements()
-    l = []
+    l = []  
     for e in equipements:
         l.append(e.nom)
     form.equipements.choices = l
@@ -95,7 +107,10 @@ def creer_sondage():
         a = Activite(nom=form.nomActivite.data, lieu=form.lieuActivite.data, date=form.dateActivite.data,description=form.descriptionActivite.data)
         s = Sondage(activite=a)
         a.sondage_id= s.id
-        
+        r1 = get_reponses_possibles_by_id(1)
+        r2 = get_reponses_possibles_by_id(2)
+        s.reponses_possibles.append(r1)
+        s.reponses_possibles.append(r2)
         noms_e = form.equipements.data
         for nom in noms_e:
             equipement=get_equipement_by_name(nom)
@@ -109,6 +124,34 @@ def creer_sondage():
     return render_template(
         "new_sondage.html", form=form
     )
+    
+@app.route("/create-sondage-satisfaction/", methods=("GET", "POST",))
+def creer_sondage_satisfaction():
+   try:
+        if current_user.get_id_role()==1:
+            return redirect(url_for("home")) 
+    except AttributeError:
+        return redirect(url_for("home"))
+    form = SondageSatisfactionForm()
+    if not form.is_submitted():
+        form.next.data = request.args.get("next")
+    else:
+        question = form.question.data
+        reponse = form.reponses.data
+        r = Reponses_possibles(nom=reponse)
+        db.session.add(r)
+        if get_sondage_by_question(question) == None:   
+            s = Sondage(question = form.question.data)
+            s.reponses_possibles.append(r)
+            db.session.add(s)
+            db.session.commit()
+        else:
+            s = get_sondage_by_question(question)
+            s.reponses_possibles.append(r)
+            db.session.commit()   
+        form.reponses.data=""
+    return render_template("new_sondage_satisfaction.html",form=form)
+    
     
 @app.route("/calendrier/")
 def calendrier():
@@ -217,7 +260,7 @@ class ChangeProfilForm(FlaskForm):
     next = HiddenField()
 
 class RepondreSondageForm(FlaskForm):
-    reponse = SelectField('Participer?', choices=[("oui","Oui"),("non","Non")])
+    reponse = SelectField('Participer?', choices=[])
 
 @app.route("/change-profil/<id>",methods=("GET","POST",))
 def changer_profil(id):
@@ -247,7 +290,14 @@ def repondre_sondage(id):
     except AttributeError:
         return redirect(url_for("home"))
     s  = get_sondage_by_id(id)
+    reponses = get_reponses_possibles_by_sondage(s)
+    l=[]
+    print(reponses)
+    for r in reponses:
+        l.append((r.id,r.nom))
+    print(l)
     f = RepondreSondageForm()
+    f.reponse.choices= l
     if f.is_submitted():
         reponse = f.reponse.data
         if  a_deja_repondu(current_user.get_id(),s.get_id()):
@@ -260,4 +310,9 @@ def repondre_sondage(id):
         db.session.commit()
         return redirect(url_for("home"))
     return render_template("repondre_sondage.html", form=f,sondage=s )
+
+
+@app.route("/type-sondage/")
+def type_sondage():
+    return render_template("choix_type_sondage.html")
 
