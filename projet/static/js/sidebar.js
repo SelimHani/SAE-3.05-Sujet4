@@ -1,23 +1,31 @@
-const divFormulaire = document.querySelector('#formulaire');
+
 
 
 function openNav() {
     const sidenav = document.querySelector('.sidenav');
-    if (window.innerWidth <= 600) { 
+
+
+    if (window.innerWidth <= 600) { // Ajout de la condition pour changer la largeur en 100% si la taille de l'écran est inférieure ou égale à 600 pixels
         sidenav.style.width = "100%";
         sidenav.style.height = "100%";
-        divFormulaire.style.zIndex = "-1";
     } else {
         sidenav.style.width = "250px";
-        divFormulaire.style.zIndex = "0";
-
     }
+
+    document.getElementById("tdb").style.zIndex = "-1";
 }
   
 function closeNav() {
-    document.getElementById("mySidenav").style.width = "0";
-    divFormulaire.style.zIndex = "0";
     
+
+    setTimeout(function() {
+        console.log("test");
+        document.getElementById("tdb").style.zIndex = "0";
+        
+    }, 300);
+    document.getElementById("mySidenav").style.width = "0";
+    
+
 }
 
 let url = window.location.href;

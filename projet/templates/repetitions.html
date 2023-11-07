@@ -1,0 +1,11 @@
+{% extends 'home.html' %} {% block content %}
+{% for r in repetitions %}
+<div>
+<p>{{r.lieu}} ------- {{ r.date }}</p>
+<p>{{ r.description }}</p>
+{% for e in r.equipements%}
+<p>{{e.nom}}</p>
+{% endfor%}
+</div>
+{% endfor%}
+{% endblock content %}
