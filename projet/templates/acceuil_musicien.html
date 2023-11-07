@@ -18,10 +18,10 @@
     <div id="pane2">
         <ul>
             <li>
-                <button onclick="location.href = '{{ url_for('creer_sondage') }}';">GÉRER SON COMPTE</button>
+                <button onclick="location.href = '{{ url_for('profil', id = current_user.get_id()) }}';">GÉRER SON COMPTE</button>
             </li>
             <li>
-                <button>VOIR LES SONDAGES</button>
+                <button onclick="location.href = '{{ url_for('sondages') }}';">VOIR LES SONDAGES</button>
             </li>
         </ul>
     </div>

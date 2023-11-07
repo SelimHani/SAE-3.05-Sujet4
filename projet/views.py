@@ -10,8 +10,16 @@ from .models import *
 
 @app.route("/")
 def home():
+    if not current_user.is_authenticated:
+        return render_template(
+            "acceuil_non_connecte.html"
+        )
+    elif current_user.get_id_role()==1:
+        return render_template(
+            "acceuil_musicien.html"
+        )
     return render_template(
-        "acceuil_non_connecte.html"
+        "acceuil.html"
     )
     
 @app.route("/sondages/")

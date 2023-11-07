@@ -65,6 +65,9 @@ class User(db.Model,UserMixin):
     def get_prenom(self):
         return self.prenom
     
+    def get_id_role(self):
+        return self.role_id
+    
 class Sondage(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     activite = db.relationship("Activite", uselist=False,backref="sondage") 
