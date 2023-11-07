@@ -1,0 +1,54 @@
+{% extends 'home.html' %} {% block styles %} 
+<link rel="stylesheet" href="{{ url_for('static', filename='sondage_musicien.css')}}" />
+{% endblock styles %} {% block content %}
+
+
+
+
+
+<main>
+    <div id="top"> 
+        <button class="bouton" id="boutonRetour" onclick="location.href="{{ url_for('home') }}">RETOUR</button>
+        <h1> Nom de l'activité </h1>
+    </div>
+
+    
+    <div id="pane">
+        
+        <section>
+            <h2 id="Description">Description </h2>
+            <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas placerat egestas mollis. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Morbi vulputate nisi ut justo mollis rutrum. Vivamus eget suscipit tortor.  </p>
+        </section>
+        <section id="materiel">
+            <h2>Matériel nécessaire </h2>
+            <ul>
+                <li>Violon</li>
+                <li>Costume</li>
+                <li>Protéction</li>
+                <li>Partition</li>
+                <li>Chapeau</li>
+                <li>Chaussure</li>
+                <li>Masque</li>
+                <li>Trompette</li>
+            </ul>
+        </section>
+        <section>
+            <h2>Lieu </h2>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2678.223293585451!2d2.1094762763313746!3d47.83526737121176!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e51bd6c6686cdf%3A0x5050c749efed8421!2sUnion%20Musicale%20de%20F%C3%A9rolles!5e0!3m2!1sfr!2sfr!4v1699281624287!5m2!1sfr!2sfr" width="300" height="225" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            <h3>Place de l'Église, 45150 Férolles</h3>
+        </section>
+        <h2 id="date"> Le 10/10/2023</h2>
+
+        <div id="consentement">
+            <input type="checkbox" id="check">
+            <label for="check"> J’ai bien pris connaissance des informations sur l’activité et je m’engage à être présent.</label>
+        </div>
+
+        <div id ="participation">
+            <button class="bouton" id="boutonJeNeParticipePas">JE NE PARTICIPE PAS</button>
+            <button class="bouton" id="boutonJeParticipe">JE PARTICIPE</button>
+        </div>
+
+    </div>
+</main>
+{% endblock content %}

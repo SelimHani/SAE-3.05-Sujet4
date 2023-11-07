@@ -1,0 +1,152 @@
+h1{
+    color: #8A5741;
+    text-align: center;
+    font-family: Anton;
+    font-size: 6rem;
+    font-weight: 400;
+}
+
+h2{
+    color: rgba(240, 228, 212, 0.90);
+    font-family: Alata;
+    font-size: 2.5rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin-bottom: 0.5em;
+}
+
+section{
+
+    background-color: #C08F6F;
+    margin: 1vw;
+}
+
+
+h3{
+    color: rgba(240, 228, 212, 0.90);
+    font-family: Alata;
+    font-size: 1.5rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+p{
+    margin-left: 1em;
+    color: rgba(240, 228, 212, 0.90);
+    font-family: Alata;
+    font-size: 1.25rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+#materiel ul{
+   
+    margin-left: 1em;
+
+}
+
+#materiel li{
+    color: rgba(240, 228, 212, 0.90);
+    font-family: Alata;
+    font-size: 1.25rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    list-style: circle;
+    padding: 0;
+}
+
+
+#pane{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr ;
+    grid-gap: 1vw;
+    margin: 1.7em;
+    background-color: #C08F6F;
+    box-shadow: 4px 4px 4px #442b20;
+    border-radius: 1vw;
+}
+
+#date{
+    margin: 1em;
+}
+
+#Description{
+    margin-left: 0.5em;
+}
+
+#consentement label{
+    color: rgba(240, 228, 212, 0.90);
+    font-family: Alata;
+    font-size: 1.25rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+
+
+#check:checked{
+    accent-color: #8a5741;
+}
+
+
+#participation{
+    text-align: right;
+
+}
+
+#participation button{
+    width: 14.125rem;
+    height: 3.0625rem;
+    flex-shrink: 0;
+    margin: 0.5rem;
+    border: none;
+    border-radius: 0.625rem;
+    color: #F0E4D4;
+    font-family: Alata;
+    font-size: 1.5rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+#participation button:hover{
+    transform: scale(1.02);
+    cursor: pointer;
+}
+
+
+
+#boutonJeNeParticipePas{
+    background-color: #953333;
+}
+
+#boutonJeParticipe{
+    background-color: #4C9533;
+}
+
+
+#boutonRetour{
+    width: 5.5rem;
+    height: 2rem;
+    flex-shrink: 0;
+    color: #F0E4D4;
+    font-family: Alata;
+    font-size: 1rem;
+    font-style: normal;
+    line-height: normal;
+    border: none;
+    border-radius: 0.625rem;
+    background: #954A33;    
+    margin-top: 0.5em;
+    margin-left: 0.5em;
+}
+
+#boutonRetour:hover{
+    transform: scale(1.02);
+    cursor: pointer;
+}

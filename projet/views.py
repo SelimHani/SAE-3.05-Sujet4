@@ -27,7 +27,7 @@ class LoginForm(FlaskForm):
         passwd = m.hexdigest()
         return user if passwd == user.password else None
 
-class RegisterForm(FlaskForm):    
+class RegisterForm(FlaskForm):
     nom = StringField("Nom")
     prenom = StringField("Prenom")
     date_nais = DateField("Date_de_naissance")
@@ -36,7 +36,7 @@ class RegisterForm(FlaskForm):
     password = PasswordField("Password")
     role = SelectField('Role', choices=[("1","Musicien"),("2","Directrice"),("3","Responsable")])
     next = HiddenField()
-    
+
 class RepetitionForm(FlaskForm):
     id = HiddenField("Id")
     lieu = StringField("Lieu")
@@ -73,7 +73,7 @@ def login():
             next = f.next.data or url_for("home")
             return redirect(next)
     return render_template("login.html",form=f)
-    
+
 @app.route("/logout/")
 def logout():
     logout_user()
@@ -90,7 +90,7 @@ def creer_user():
 
         db.session.add(new_personne)
         db.session.commit()
-        
+
         login_user(new_personne)
 
         return redirect(url_for("home"))
@@ -105,10 +105,17 @@ def repetitions():
 
 @app.route("/create-repetition/", methods=("GET","POST",))
 def creer_repetition():
-    form =RepetitionForm()
+    form = RepetitionForm()
     if form.is_submitted():
-        r = Repetition(lieu=form.lieu.data,date=form.date.data,description=form.description.data)
+        r = Repetition(lieu=form.lieu.data,
+                       date=form.date.data,
+                       description=form.description.data)
         db.session.add(r)
         db.session.commit()
         return redirect(url_for("home"))
-    return render_template("create_repetition.html", form=form )
+    return render_template("create_repetition.html", form=form)
+
+@app.route("/sondage-musicien/", methods=("GET","POST",))
+def sondage_musicien():
+    
+    return render_template("sondage_musicien.html")
