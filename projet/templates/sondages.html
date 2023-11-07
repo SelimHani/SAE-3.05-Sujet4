@@ -1,3 +1,39 @@
+{% extends 'home.html' %} {% block styles %} 
+<link rel="stylesheet" href="{{ url_for('static', filename='sondages.css')}}" />
+{% endblock styles %} {% block content %}
+
+
+<main>
+    <div id="pane">
+        <h1> Prochainement : </h1>
+        <div class="sondage" onclick="location.href = '{{ url_for('sondage_musicien') }}';" >
+            <p>Nom de l'activité</p>
+            <p >Lieu de l'activité</p>
+            <p>Date de l'activité</p>
+        </div>
+        <div class="sondage">
+            <p>Nom de l'activité</p>
+            <p>Lieu de l'activité</p>
+            <p>Date de l'activité</p>
+        </div>
+        <div class="sondage">
+            <p>Nom de l'activité</p>
+            <p>Lieu de l'activité</p>
+            <p>Date de l'activité</p>
+        </div>
+        <div class="sondage">
+            <p>Nom de l'activité</p>
+            <p>Lieu de l'activité</p>
+            <p>Date de l'activité</p>
+        </div>
+        <div class="sondage">
+            <p>Nom de l'activité</p>
+            <p>Lieu de l'activité</p>
+            <p>Date de l'activité</p>
+        </div>
+    </div>
+</main>
+
 {% extends 'home.html' %} {% block content %}
 {% for s in sondages %}
 <div>

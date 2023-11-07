@@ -1,0 +1,47 @@
+h1{
+    color: #F0E4D4;
+    font-family: Alata;
+    font-size: 3rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin-left: 1rem;
+}
+
+main{
+    margin: auto;
+}
+
+#pane{
+    border-radius: 0.9375rem;
+    background: rgba(138, 87, 65, 0.75);
+    padding: 1em;
+}
+
+#pane p{
+    margin: 1em;
+    color: #954A33;
+    font-family: Alata;
+    font-size: 2rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.sondage{
+    display: flex;
+    flex-wrap: nowrap;  
+    border-radius: 0.9375rem;
+    background: rgba(240, 228, 212, 0.75);  
+    align-items: center;
+    margin: 1em;
+    height: 5rem;
+    cursor: pointer;
+
+}
+
+.sondage:hover{
+    transform: scale(1.02);
+    background: rgba(240, 228, 212, 0.90);  
+}
+
