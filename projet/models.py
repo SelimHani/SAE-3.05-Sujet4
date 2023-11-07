@@ -28,6 +28,9 @@ class Role(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20))
     
+    def get_name(self):
+        return self.name
+    
 class Repetition(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     lieu = db.Column(db.String(100))
@@ -62,11 +65,16 @@ class User(db.Model,UserMixin):
     def get_prenom(self):
         return self.prenom
     
+    def get_id_role(self):
+        return self.role_id
+    
 class Sondage(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     activite = db.relationship("Activite", uselist=False,backref="sondage") 
     users = db.relationship("Reponse_sondage",back_populates="sondage")
     
+    def get_id(self):
+        return self.id
     
 class Activite(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -104,4 +112,22 @@ def get_roles():
 def get_repetitions():
     return Repetition.query.all()
 
+def get_user_by_id(mail):
+    return User.query.get(mail)
 
+def get_equipements():
+    return Equipement.query.all()
+
+def get_equipement_by_name(name):
+    res=Equipement.query.filter_by(nom=name).first()
+    return res
+
+def get_sondages():
+    return Sondage.query.all()
+
+def get_sondage_by_id(id):
+    return Sondage.query.get(id)
+
+def a_deja_repondu(idu, ids):
+    reponse = Reponse_sondage.query.filter_by(user_id=idu, sondage_id=ids).first()
+    return reponse is not None

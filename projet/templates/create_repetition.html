@@ -1,5 +1,6 @@
 
 {% extends 'home.html' %} {% block styles %} 
+  {{ bootstrap.load_css() }}
 <link rel="stylesheet" href="{{ url_for('static', filename='login.css')}}" />
 {% endblock styles %} {% block content %}
 <h1>Créer répétition</h1>
@@ -19,14 +20,14 @@
       {{ form.date(class_="test" ,placeholder ="date")}}
     </div>
     </div>
-
-    <div>
-
     <div>
     <p>description</p>
     <div>
       {{ form.description(class_="test" ,placeholder ="description")}}
     </div>
+    </div>
+    <div>
+      {{ form.equipements(class_="test", placeholder="equipement")}}
     </div>
     <div id="bouton">
     <button type="submit">Enregistrer</button>

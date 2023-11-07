@@ -1,0 +1,14 @@
+{% extends 'home.html' %} {% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='login.css')}}" />
+{% endblock styles %} {% block content %}
+<h1>Profil</h1>
+<div id="formulaire">
+  {{user.nom}}
+  {{user.prenom}}
+  {{user.mail}}
+  {{user.ddn}}
+  {{user.numtel}}
+  {{role.name}}
+  <button onclick="location.href = '{{ url_for('changer_profil',id=user.mail) }}';">Changer profil</button>
+</div>
+{% endblock content %}
