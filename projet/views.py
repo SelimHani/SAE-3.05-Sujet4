@@ -221,4 +221,4 @@ def repondre_sondage(id):
         
         db.session.commit()
         return redirect(url_for("home"))
-    return render_template("repondre_sondage.html", form=f,sondage=s )
+    return render_template("sondage_musicien.html", form=f,sondage=s )
