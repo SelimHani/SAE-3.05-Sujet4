@@ -1,0 +1,23 @@
+{% extends 'home.html' %} {% block styles %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='choix_sondages.css')}}"
+/>
+{% endblock styles %} {% block content %}
+<main>
+  <h1>Choix du type de sondage</h1>
+  <div id="formulaire">
+    <button
+      onclick="location.href = '{{ url_for('creer_sondage_participation') }}';"
+    >
+      Sondage de participation
+    </button>
+    <button
+      onclick="location.href = '{{ url_for('creer_sondage_satisfaction') }}';"
+    >
+      Sondage de satisfaction
+    </button>
+  </div>
+</main>
+
+{% endblock content %}

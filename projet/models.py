@@ -23,6 +23,13 @@ exiger = db.Table('exiger',
     	db.ForeignKey('equipement.id'))
 )
 
+repondre = db.Table('repondre',
+    db.Column('sondage_id', db.Integer,
+    	db.ForeignKey('sondage.id')),
+    db.Column('reponse_id', db.Integer,
+    	db.ForeignKey('reponses_possibles.id'))
+)
+
     
 class Role(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -33,6 +40,7 @@ class Role(db.Model):
     
 class Repetition(db.Model):
     id = db.Column(db.Integer, primary_key = True)
+    nom = db.Column(db.String(100))
     lieu = db.Column(db.String(100))
     date = db.Column(db.String(100))
     description = db.Column(db.String(200))
@@ -72,6 +80,8 @@ class Sondage(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     activite = db.relationship("Activite", uselist=False,backref="sondage") 
     users = db.relationship("Reponse_sondage",back_populates="sondage")
+    reponses_possibles = db.relationship("Reponses_possibles", secondary=repondre, backref="sondages")
+    question = db.Column(db.String(100))
     
     def get_id(self):
         return self.id
@@ -89,7 +99,9 @@ class Equipement(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nom = db.Column(db.String(100))
 
-
+class Reponses_possibles(db.Model):
+    id = db.Column(db.Integer, primary_key= True)
+    nom = db.Column(db.String(100))
 
 
 
@@ -109,8 +121,12 @@ def get_repetition_by_id(id):
 def get_roles():
     return Role.query.all()
 
-def get_repetitions():
-    return Repetition.query.all()
+def get_calendrier():
+    a= Activite.query.all()
+    b = Repetition.query.all()
+    res = a+b
+    res = sorted(res,key=lambda item: item.date)
+    return res
 
 def get_user_by_id(mail):
     return User.query.get(mail)
@@ -131,3 +147,13 @@ def get_sondage_by_id(id):
 def a_deja_repondu(idu, ids):
     reponse = Reponse_sondage.query.filter_by(user_id=idu, sondage_id=ids).first()
     return reponse is not None
+
+def get_reponses_possibles_by_id(id):
+    return Reponses_possibles.query.get(id)
+
+def get_sondage_by_question(question):
+    return Sondage.query.filter_by(question=question).first()
+
+def get_reponses_possibles_by_sondage(sondage):
+    return sondage.reponses_possibles
+

@@ -1,22 +1,52 @@
-{% extends 'home.html' %} {% block styles %}
-
+{% extends 'home.html' %} {% block styles %} 
+<link rel="stylesheet" href="{{ url_for('static', filename='repondre_sondage.css')}}" />
 {% endblock styles %} {% block content %}
-<h1>repondre sondage</h1>
-<p>{{sondage.activite.nom}}</p>
-<p>{{sondage.activite.lieu}}</p>
-<p>{{sondage.activite.date}}</p>
-<p>{{sondage.activite.description}}</p>
-{% for e in sondage.activite.equipements%}
-<p>{{e.nom}}</p>
-{% endfor%}
-<div id="formulaire">
-    <form role="form" method="POST" action="{{ url_for('repondre_sondage',id=sondage.id) }}">
-      <div>
-         {{form.reponse()}}
-      </div>
-      <div id="bouton">
-        <button type="submit">Valider</button>
-      </div>
-    </form>
-  </div>
+<main>
+  <button class="bouton" id="boutonRetour" onclick="location.href = '{{ url_for('sondages') }}';">RETOUR</button>
+ <form role="form" method="POST" action="{{ url_for('repondre_sondage',id=sondage.id) }}">
+    <div id="top"> 
+        
+        <h1> {{sondage.activite.nom}} </h1>
+        {% if sondage.question%}
+          <h1>{{sondage.question}}</h1>
+        {%endif%}
+    </div>
+
+    
+    <div id="pane">
+        {% if not sondage.question %}
+        <section>
+            <h2 id="Description">Description </h2>
+            <p> {{sondage.activite.description}} </p>
+        </section>
+        <section id="materiel">
+            <h2>Matériel nécessaire </h2>
+            <ul>
+                {% for e in sondage.activite.equipements%}
+                <li>{{e.nom}}</li>
+                {% endfor%}
+            </ul>
+        </section>
+        <section>
+            <h2>Lieu </h2>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2678.223293585451!2d2.1094762763313746!3d47.83526737121176!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e51bd6c6686cdf%3A0x5050c749efed8421!2sUnion%20Musicale%20de%20F%C3%A9rolles!5e0!3m2!1sfr!2sfr!4v1699281624287!5m2!1sfr!2sfr" width="300" height="225" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            <h3>{{sondage.activite.lieu}}</h3>
+        </section>
+        <h2 id="date"> Le {{sondage.activite.date}}</h2>
+        {% endif%}
+        <div>
+            
+        </div>
+        <div id="consentement">
+            {{form.reponse()}}
+
+           <button id=boutonValider type="submit">Valider</button>
+        </div>
+    </div>
+  </form>
+  {% if current_user.get_id_role !=1 %}
+         <button class="bouton" id="boutonRetour" onclick="location.href = '{{ url_for('delete_sondage', id=sondage.id) }}';">Supprimer</button>
+         {% endif %}
+</main>
 {% endblock content %}
+
