@@ -83,8 +83,8 @@ class SondageForm(FlaskForm):
     next = HiddenField()
     
 class SondageSatisfactionForm(FlaskForm):
-    question =  StringField("Question")
-    reponses = StringField("Reponses_possibles")
+    question =  StringField("Question",validators=[InputRequired()])
+    reponses = StringField("Reponses_possibles",validators=[InputRequired()])
     next = HiddenField()
 
 
