@@ -2,9 +2,10 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='repondre_sondage.css')}}" />
 {% endblock styles %} {% block content %}
 <main>
+  <button class="bouton" id="boutonRetour" onclick="location.href = '{{ url_for('sondages') }}';">RETOUR</button>
  <form role="form" method="POST" action="{{ url_for('repondre_sondage',id=sondage.id) }}">
     <div id="top"> 
-        <button class="bouton" id="boutonRetour" onclick="location.href = '{{ url_for('sondages') }}';">RETOUR</button>
+        
         <h1> {{sondage.activite.nom}} </h1>
         {% if sondage.question%}
           <h1>{{sondage.question}}</h1>
@@ -38,10 +39,14 @@
         </div>
         <div id="consentement">
             {{form.reponse()}}
+
            <button id=boutonValider type="submit">Valider</button>
         </div>
     </div>
   </form>
+  {% if current_user.get_id_role !=1 %}
+         <button onclick="location.href = '{{ url_for('delete_sondage', id=sondage.id) }}';">Supprimer sondage</button>
+         {% endif %}
 </main>
 {% endblock content %}
 

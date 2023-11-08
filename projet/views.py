@@ -62,6 +62,7 @@ class RegisterForm(FlaskForm):
 
 class RepetitionForm(FlaskForm):
     id = HiddenField("Id")
+    nom = StringField("Nom",validators=[InputRequired()])
     lieu = StringField("Lieu",validators=[InputRequired()])
     date = DateField("Date", validators=[InputRequired()])
     description = StringField("Description")
@@ -152,15 +153,6 @@ def creer_sondage_satisfaction():
         form.reponses.data=""
     return render_template("new_sondage_satisfaction.html",form=form)
     
-    
-@app.route("/calendrier/")
-def calendrier():
-    return render_template(
-        "calendrier.html"
-    )
-    
-
-
 @app.route("/login/", methods=("GET", "POST",))
 def login():
     f = LoginForm()
@@ -202,11 +194,14 @@ def creer_user():
 
     return render_template("register.html", form=form )
 
-@app.route("/repetitions/")
-def repetitions():
-    repetitions = get_repetitions()
-    return render_template("repetitions.html", repetitions=repetitions)
+@app.route("/calendrier/")
+def calendrier():
+    return render_template("calendrier.html")
 
+@app.route("/repetitions")
+def repetitions():
+    repetitions = get_calendrier()
+    return render_template("repetitions.html", repetitions=repetitions)
 
 @app.route("/create-repetition/", methods=("GET","POST",))
 def creer_repetition():
@@ -222,7 +217,7 @@ def creer_repetition():
     form =RepetitionForm()
     form.equipements.choices = l
     if form.is_submitted():
-        r = Repetition(lieu=form.lieu.data,date=form.date.data,description=form.description.data, equipements=[])
+        r = Repetition(nom = form.nom.data,lieu=form.lieu.data,date=form.date.data,description=form.description.data, equipements=[])
         noms_e = form.equipements.data
         print(noms_e)
         for nom in noms_e:
@@ -316,3 +311,38 @@ def repondre_sondage(id):
 def type_sondage():
     return render_template("choix_type_sondage.html")
 
+class EquipementForm(FlaskForm):
+    nom = StringField("nom")
+    
+    
+@app.route("/ajoute-equipement",methods=("GET","POST",))
+def ajoute_equipement():
+    try:
+        if current_user.get_id_role()==1:
+            return redirect(url_for("home")) 
+    except AttributeError:
+        return redirect(url_for("home"))
+    form =EquipementForm()
+    if form.is_submitted():
+        e = Equipement(nom=form.nom.data)
+        db.session.add(e)
+        db.session.commit()
+        form.nom.data  = ""
+    return render_template("ajoute_equipement.html", form=form )
+    
+@app.route("/delete-sondage/<id>")
+def delete_sondage(id):
+    try:
+        if current_user.get_id_role()==1:
+            return redirect(url_for("home")) 
+    except AttributeError:
+        return redirect(url_for("home"))
+    s = Sondage.query.get(id)
+    reponses = Reponse_sondage.query.filter_by(sondage_id=id).all()
+    for r in reponses:
+        db.session.delete(r)
+    db.session.commit()
+    db.session.delete(s)
+    db.session.commit()
+    print("aaaaaaaaaaaaaaa")
+    return redirect(url_for("sondages"))
