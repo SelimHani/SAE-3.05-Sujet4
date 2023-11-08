@@ -62,6 +62,7 @@ class RegisterForm(FlaskForm):
 
 class RepetitionForm(FlaskForm):
     id = HiddenField("Id")
+    nom = StringField("Nom",validators=[InputRequired()])
     lieu = StringField("Lieu",validators=[InputRequired()])
     date = DateField("Date", validators=[InputRequired()])
     description = StringField("Description")
@@ -152,15 +153,6 @@ def creer_sondage_satisfaction():
         form.reponses.data=""
     return render_template("new_sondage_satisfaction.html",form=form)
     
-    
-@app.route("/calendrier/")
-def calendrier():
-    return render_template(
-        "calendrier.html"
-    )
-    
-
-
 @app.route("/login/", methods=("GET", "POST",))
 def login():
     f = LoginForm()
@@ -202,11 +194,14 @@ def creer_user():
 
     return render_template("register.html", form=form )
 
-@app.route("/repetitions/")
-def repetitions():
-    repetitions = get_repetitions()
-    return render_template("repetitions.html", repetitions=repetitions)
+@app.route("/calendrier/")
+def calendrier():
+    return render_template("calendrier.html")
 
+@app.route("/repetitions")
+def repetitions():
+    repetitions = get_calendrier()
+    return render_template("repetitions.html", repetitions=repetitions)
 
 @app.route("/create-repetition/", methods=("GET","POST",))
 def creer_repetition():
@@ -222,7 +217,7 @@ def creer_repetition():
     form =RepetitionForm()
     form.equipements.choices = l
     if form.is_submitted():
-        r = Repetition(lieu=form.lieu.data,date=form.date.data,description=form.description.data, equipements=[])
+        r = Repetition(nom = form.nom.data,lieu=form.lieu.data,date=form.date.data,description=form.description.data, equipements=[])
         noms_e = form.equipements.data
         print(noms_e)
         for nom in noms_e:
