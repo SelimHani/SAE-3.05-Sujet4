@@ -40,6 +40,7 @@ class Role(db.Model):
     
 class Repetition(db.Model):
     id = db.Column(db.Integer, primary_key = True)
+    nom = db.Column(db.String(100))
     lieu = db.Column(db.String(100))
     date = db.Column(db.String(100))
     description = db.Column(db.String(200))
@@ -120,8 +121,12 @@ def get_repetition_by_id(id):
 def get_roles():
     return Role.query.all()
 
-def get_repetitions():
-    return Repetition.query.all()
+def get_calendrier():
+    a= Activite.query.all()
+    b = Repetition.query.all()
+    res = a+b
+    res = sorted(res,key=lambda item: item.date)
+    return res
 
 def get_user_by_id(mail):
     return User.query.get(mail)
@@ -151,3 +156,4 @@ def get_sondage_by_question(question):
 
 def get_reponses_possibles_by_sondage(sondage):
     return sondage.reponses_possibles
+

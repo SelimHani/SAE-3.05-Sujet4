@@ -7,6 +7,12 @@
 <div id="formulaire">
   <form role="form" method="POST" action="{{ url_for('creer_repetition') }}">
   {{ form.hidden_tag() }}
+  <div>
+    <p>nom</p>
+    <div>
+      {{ form.nom(class_="test" ,placeholder ="nom")}}
+    </div>
+    </div>
     <div>
     <p>lieu</p>
     <div>
