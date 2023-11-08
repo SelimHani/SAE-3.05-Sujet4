@@ -316,3 +316,33 @@ def repondre_sondage(id):
 def type_sondage():
     return render_template("choix_type_sondage.html")
 
+class EquipementForm(FlaskForm):
+    nom = StringField("nom")
+    
+    
+@app.route("/ajoute-equipement",methods=("GET","POST",))
+def ajoute_equipement():
+    try:
+        if current_user.get_id_role()==1:
+            return redirect(url_for("home")) 
+    except AttributeError:
+        return redirect(url_for("home"))
+    form =EquipementForm()
+    if form.is_submitted():
+        e = Equipement(nom=form.nom.data)
+        db.session.add(e)
+        db.session.commit()
+        form.nom.data  = ""
+    return render_template("ajoute_equipement.html", form=form )
+    
+@app.route("/delete-sondage/<id>")
+def delete_sondage(id):
+    s = Sondage.query.get(id)
+    reponses = Reponse_sondage.query.filter_by(sondage_id=id).all()
+    for r in reponses:
+        db.session.delete(r)
+    db.session.commit()
+    db.session.delete(s)
+    db.session.commit()
+    print("aaaaaaaaaaaaaaa")
+    return redirect(url_for("sondages"))
