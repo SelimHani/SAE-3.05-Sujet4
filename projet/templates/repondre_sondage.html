@@ -1,5 +1,5 @@
 {% extends 'home.html' %} {% block styles %} 
-<link rel="stylesheet" href="{{ url_for('static', filename='sondage_musicien.css')}}" />
+<link rel="stylesheet" href="{{ url_for('static', filename='repondre_sondage.css')}}" />
 {% endblock styles %} {% block content %}
 <main>
  <form role="form" method="POST" action="{{ url_for('repondre_sondage',id=sondage.id) }}">
@@ -33,13 +33,12 @@
         </section>
         <h2 id="date"> Le {{sondage.activite.date}}</h2>
         {% endif%}
+        <div>
+            
+        </div>
         <div id="consentement">
-          <div>
             {{form.reponse()}}
-         </div>
-         <div id="bouton">
-           <button type="submit">Valider</button>
-         </div>
+           <button id=boutonValider type="submit">Valider</button>
         </div>
     </div>
   </form>
