@@ -1,6 +1,76 @@
-{% if current_user and (current_user.role_id == 2 or current_user.role_id == 3) %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='nav.css') }}">
+    <title>Home</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Alata&family=Anton&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet"> 
+    <script src ="../static/js/sidebar.js" defer></script> 
+
+    {% block styles %}{% endblock styles %}
+  </head>
+  <body>
+    <header>
+    
+        <nav>
+            <div id="mySidenav" class="sidenav">
+                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                <img src="../static/images/notes-navbar.png" alt ="notes de musique" id="noteNavBar">
+                
+                {% if not current_user.is_authenticated %}
+
+                <a href="{{ url_for('login')}}" class="texte" >SE CONNECTER</a>
+                <a href="{{ url_for('login')}}" class="texte">CRÉER UN SONDAGE</a>
+                <a href="{{ url_for('login')}}" class="texte" >VOIR LES SONDAGES</a>
+                {% endif %}
+
+
+                {% if current_user.is_authenticated %}
+                <a href="{{ url_for('repetitions')}}" class="texte" >VOIR LES REPETITIONS</a>
+                <a href="{{ url_for('sondages')}}" class="texte" >VOIR LES SONDAGES</a>
+                <a href="{{ url_for('profil',id=current_user.get_id())}}" class="texte" >GERER SON COMPTE</a>
+                {% endif%}
+                
+                {% if current_user and (current_user.role_id == 2 or current_user.role_id == 3) %}
                   <a href="{{ url_for('type_sondage')}}" class="texte">CRÉER UN SONDAGE</a>
                   <a href="{{ url_for('creer_user') }}" class="texte">CREER UN COMPTE </a>
                   <a href="{{ url_for('creer_repetition')}}" class="texte">CRÉER UNE REPETITION</a>
                   <a href="{{ url_for('ajoute_equipement')}}" class="texte">AJOUTER UN EQUIPEMENT</a>
             {% endif %}
+            
+
+                
+            </div>
+            <button id="sideNavBar" onclick="openNav(); ">
+                <img src="../static/images/menu.png" alt="" id="menuImg">
+            </button>
+        <a href="{{ url_for('home') }}"><img src="../static/images/home.png" alt="" id="homeImg"></a>
+
+        {% if not current_user.is_authenticated %}
+
+        <a href="{{ url_for('login') }}"
+          ><img src="../static/images/login.png" alt="" id="loginImg"
+        /></a>
+        {% endif%} {% if current_user.is_authenticated %}
+        <a href="{{ url_for('logout') }}"
+          ><img src="../static/images/logout.png" alt="" id="logoutImg"
+        /></a>
+        {% endif%}
+      </nav>
+    </header>
+    {% block content %}{% endblock content %}
+    <footer>
+      <p>SAE 3.05 Sujet n°4</p>
+      <p>
+        FERDOEL Titouan | HANI Selim | FOURNIER Cyprien | GNANESWARAN Roshan |
+        JORITE Jean-marc
+      </p>
+    </footer>
+  </body>
+</html>
