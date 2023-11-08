@@ -122,3 +122,36 @@ h1> span{
     color: #AB5250;
 }
 
+
+.sondage {
+    margin: 1em;
+    padding: 0em;
+    background-color: rgba(240, 228, 212, 0.75);
+    width: fit-content + 1em;
+    height: fit-content + 1em;
+    text-align: center;
+    border-radius: 15px;
+    border: rgba(192, 143, 111, 0.3) solid 2px;
+    backdrop-filter: blur(20px);
+    justify-content: center;
+}
+
+.sondage p {
+    margin: 0.5em;
+    color: rgba(149, 74, 51, 1);
+    font-size: 1em;
+    flex: 1;
+}
+
+.sondage:hover {
+    transform: scale(1.02);
+    background: rgba(240, 228, 212, 0.90);
+}
+
+.sondage a {
+    text-decoration: none;
+    display: flex;
+    justify-content: space-between;
+    flex: 1;
+
+}
