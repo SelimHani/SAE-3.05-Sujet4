@@ -1,0 +1,44 @@
+
+{% extends 'home.html' %} 
+{% block styles %} 
+    <link rel="stylesheet" href="{{ url_for('static', filename='statistique.css')}}" />
+    <script src="../static/js/affichage.js" defer></script>
+{% endblock styles %} 
+{% block content %}
+  <div class="info">
+    <section>
+        <p id="lastname">{{user.nom}}</p>
+        <p id="name">{{user.prenom}}</p>
+        <p id="email">{{user.mail}}</p>
+        <p id="date">{{user.ddn}}</p>
+        <p id="number">{{user.num_tel}}</p>
+    </section>
+    <img id="violon" src="../static/images/violon.png" alt="image de violon">
+  </div>
+  <div class="btnChange">
+    <button type="submit" onclick="location.href = '{{ url_for('changer_profil',id=user.mail) }}';"> Changer profil </button> 
+  </div>
+  <div class="btn">
+    <p>Voir les statistiques</p>
+    <button id="btnFleche" onclick="afficher()"><img src="../static/images/BoutonFleche.png" alt="BoutonFleche pour descendre vers le bas" ></button>
+  </div>
+  <div class="statistique">
+    <h1>Statistiques</h1>
+    <div id="stats">
+      <section> 
+          <h2> 10 </h2>
+          <h3> COURS PARTICIPER </h3>
+      </section>
+      <section id="red"> 
+          <h2> 10 </h2>
+          <h3> COURS MANQUÉS </h3>
+      </section>
+      <section> 
+          <h2> 10 </h2>
+          <h3> CLASSEMENT </h3>
+      </section>
+    </div>
+  </div>
+{% endblock content %}
+
+

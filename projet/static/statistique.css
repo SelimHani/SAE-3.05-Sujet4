@@ -1,0 +1,130 @@
+section{
+    display: flex;
+    width: 320px;
+    height: 500px;
+    margin: 2vw;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 15px;
+    background: rgba(138, 87, 65, 0.75);
+}
+
+#red h2{
+  color: #F00;
+}
+  
+h2, h3{
+  text-align: center;
+  color: #F0E4D4;
+}
+
+h2{
+  color: white;
+  font-size: 10rem;
+}
+
+#stats{
+  display: flex; 
+  justify-content: center;
+}
+
+button{
+    color:#F0E4D4;
+    background-color: #8A5741;
+    border-radius: 15px;
+    border:none;
+    height: 40px;
+    width:90px;
+}
+
+
+button[type="submit"]{
+  margin: 2rem; 
+}
+
+
+h1{
+  color:#8A5741;
+  text-align: center;
+  font-size:7rem;
+  padding: 2px;
+}
+
+.info{
+  display: flex;
+}
+
+.info section{
+  background :none; 
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  flex-grow: 1;
+}
+
+#lastname, #name, #date, #number{
+  flex-basis: 50%;
+  font-size: 4rem;
+  font-family: 'Anton', sans-serif;
+}
+
+#email{
+  flex-basis: 100%;
+  font-size: 4rem;
+  font-family: 'Anton', sans-serif;
+}
+
+.btnChange{
+  display: flex;
+  margin-bottom: 8rem;
+  margin-top: -12rem;
+
+}
+
+.btnChange button{
+  background-color: #BA4C27;
+  width: 8rem;
+  height: 3rem;
+}
+
+#name, #date, #number, .btn{
+  color: #AB5250;
+}
+
+#lastname, #email{
+  color: #954A33;
+}
+
+
+.btn {
+  text-align: center;
+  
+}
+
+.btn button{
+  background: none;
+  width: 3rem;
+  height: 2rem;
+  border-radius: 50%;
+  border: none;
+  margin: 1rem;
+}
+
+.statistique {
+  opacity: 0;
+  max-height: 0;
+  transition: opacity 0.5s, max-height 1s;
+  overflow: hidden;
+  
+}
+
+#violon{
+  animation: animate 1700ms infinite alternate;
+  height: 50rem;
+}
+
+@keyframes animate {
+  100%{
+    transform: translateY(-30px);
+  }
+}

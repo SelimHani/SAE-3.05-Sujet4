@@ -246,7 +246,7 @@ def profil(id):
     r = u.role_id
     role = get_role_by_id(r)
     return render_template(
-        "profil.html", user= u, role=role
+        "statistique.html", user= u, role=role
     )    
 
 class ChangeProfilForm(FlaskForm):
