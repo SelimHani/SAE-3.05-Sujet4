@@ -45,7 +45,7 @@
     </div>
   </form>
   {% if current_user.get_id_role !=1 %}
-         <button onclick="location.href = '{{ url_for('delete_sondage', id=sondage.id) }}';">Supprimer sondage</button>
+         <button class="bouton" id="boutonRetour" onclick="location.href = '{{ url_for('delete_sondage', id=sondage.id) }}';">Supprimer</button>
          {% endif %}
 </main>
 {% endblock content %}
