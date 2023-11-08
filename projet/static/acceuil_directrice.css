@@ -6,17 +6,26 @@ h1{
     font-size: 5rem;
 }
 
-section{
+section {
+    position: absolute;
+    top: 50%;
+    left: 47%;
+    transform: translate(-50%, -50%);
     margin: 50px;
     display: flex;
     flex-wrap: wrap;
-    justify-content: center; 
+    width: 19vw;
+    align-items: center;
+}
+
+section button{
+    background: none;
+    flex-basis: 100%; 
+    border: none;
 }
 
 h2{
     color: #AB5250;
-    text-align: center;
-    flex-basis: 100%;
     font-size: 3rem;
     margin: 1rem;
 }
