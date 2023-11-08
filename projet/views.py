@@ -337,6 +337,11 @@ def ajoute_equipement():
     
 @app.route("/delete-sondage/<id>")
 def delete_sondage(id):
+    try:
+        if current_user.get_id_role()==1:
+            return redirect(url_for("home")) 
+    except AttributeError:
+        return redirect(url_for("home"))
     s = Sondage.query.get(id)
     reponses = Reponse_sondage.query.filter_by(sondage_id=id).all()
     for r in reponses:
