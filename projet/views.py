@@ -18,10 +18,14 @@ def home():
         return render_template(
             "acceuil_musicien.html"
         )
+    elif current_user.get_id_role()==2:
+        return render_template(
+            "acceuil_directrice.html"
+        )    
     return render_template(
         "acceuil.html"
     )
-    
+
 @app.route("/sondages/")
 def sondages():
     try:
@@ -29,7 +33,7 @@ def sondages():
             pass
     except AttributeError:
         return redirect(url_for("home"))
-    
+
     sondages = get_sondages()
     return render_template(
         "sondages.html",sondages=sondages
@@ -49,12 +53,12 @@ class LoginForm(FlaskForm):
         return user if passwd == user.password else None
 
 
-class RegisterForm(FlaskForm):    
+class RegisterForm(FlaskForm):
     nom = StringField("Nom", validators=[InputRequired()])
     prenom = StringField("Prenom", validators=[InputRequired()])
     date_nais = DateField("Date_de_naissance", validators=[InputRequired()])
     mail = EmailField("Mail", validators=[InputRequired()])
-    num = StringField("Numéro", validators=[InputRequired(),Regexp('^[0-9]{10}$', message="Le numéro doit contenir uniquement des chiffres."),Length(min=10, max=10, message="Le numéro doit contenir 10 chiffres.")])    
+    num = StringField("Numéro", validators=[InputRequired(),Regexp('^[0-9]{10}$', message="Le numéro doit contenir uniquement des chiffres."),Length(min=10, max=10, message="Le numéro doit contenir 10 chiffres.")])
     password = PasswordField("Password", validators=[InputRequired()])
 
     role = SelectField('Role', choices=[("1","Musicien"),("2","Directrice"),("3","Responsable")])
@@ -80,7 +84,7 @@ class SondageForm(FlaskForm):
     descriptionActivite = TextAreaField("descriptionActivite")
     equipements = SelectMultipleField("Choisis des équipements", choices=[])
     next = HiddenField()
-    
+
 class SondageSatisfactionForm(FlaskForm):
     question =  StringField("Question")
     reponses = StringField("Reponses_possibles")
@@ -92,12 +96,12 @@ class SondageSatisfactionForm(FlaskForm):
 def creer_sondage_participation():
     try:
         if current_user.get_id_role()==1:
-            return redirect(url_for("home")) 
+            return redirect(url_for("home"))
     except AttributeError:
         return redirect(url_for("home"))
     form = SondageForm()
     equipements = get_equipements()
-    l = []  
+    l = []
     for e in equipements:
         l.append(e.nom)
     form.equipements.choices = l
@@ -116,20 +120,20 @@ def creer_sondage_participation():
             equipement=get_equipement_by_name(nom)
             a.equipements.append(equipement)
             equipement.activites.append(a)
-        
-        db.session.add(a) 
+
+        db.session.add(a)
         db.session.add(s)
-        db.session.commit()  
+        db.session.commit()
         return redirect(url_for("home"))
     return render_template(
         "new_sondage.html", form=form
     )
-    
+
 @app.route("/create-sondage-satisfaction/", methods=("GET", "POST",))
 def creer_sondage_satisfaction():
     try:
         if current_user.get_id_role()==1:
-            return redirect(url_for("home")) 
+            return redirect(url_for("home"))
     except AttributeError:
         return redirect(url_for("home"))
     form = SondageSatisfactionForm()
@@ -140,7 +144,7 @@ def creer_sondage_satisfaction():
         reponse = form.reponses.data
         r = Reponses_possibles(nom=reponse)
         db.session.add(r)
-        if get_sondage_by_question(question) == None:   
+        if get_sondage_by_question(question) == None:
             s = Sondage(question = form.question.data)
             s.reponses_possibles.append(r)
             db.session.add(s)
@@ -148,17 +152,17 @@ def creer_sondage_satisfaction():
         else:
             s = get_sondage_by_question(question)
             s.reponses_possibles.append(r)
-            db.session.commit()   
+            db.session.commit()
         form.reponses.data=""
     return render_template("new_sondage_satisfaction.html",form=form)
-    
-    
+
+
 @app.route("/calendrier/")
 def calendrier():
     return render_template(
         "calendrier.html"
     )
-    
+
 
 
 @app.route("/login/", methods=("GET", "POST",))
@@ -184,7 +188,7 @@ def logout():
 def creer_user():
     try:
         if current_user.get_id_role()==1:
-            return redirect(url_for("home")) 
+            return redirect(url_for("home"))
     except AttributeError:
         return redirect(url_for("home"))
     form =RegisterForm()
@@ -212,7 +216,7 @@ def repetitions():
 def creer_repetition():
     try:
         if current_user.get_id_role()==1:
-            return redirect(url_for("home")) 
+            return redirect(url_for("home"))
     except AttributeError:
         return redirect(url_for("home"))
     equipements = get_equipements()
@@ -249,7 +253,7 @@ def profil(id):
     role = get_role_by_id(r)
     return render_template(
         "profil.html", user= u, role=role
-    )    
+    )
 
 class ChangeProfilForm(FlaskForm):
     nom = StringField("Nom")
@@ -271,7 +275,7 @@ def changer_profil(id):
         return redirect(url_for("home"))
     u  = get_user_by_id(id)
     f = ChangeProfilForm()
-    
+
     if f.is_submitted():
         password_hash = sha256(f.password.data.encode()).hexdigest()
         u.nom = f.nom.data
@@ -306,7 +310,7 @@ def repondre_sondage(id):
         else:
             r = Reponse_sondage(user_id=current_user.get_id(), sondage_id=s.get_id(), user=current_user, sondage=s, reponse=reponse)
             db.session.add(r)
-        
+
         db.session.commit()
         return redirect(url_for("home"))
     return render_template("repondre_sondage.html", form=f,sondage=s )
@@ -315,4 +319,3 @@ def repondre_sondage(id):
 @app.route("/type-sondage/")
 def type_sondage():
     return render_template("choix_type_sondage.html")
-

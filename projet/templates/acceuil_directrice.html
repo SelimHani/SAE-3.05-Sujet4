@@ -1,0 +1,10 @@
+{% extends 'home.html' %} {% block styles %} 
+<link rel="stylesheet" href="{{ url_for('static', filename='acceuil_directrice.css')}}" />
+{% endblock styles %} {% block content %}
+<h1>Feuille de présence</h1>
+<section>
+  <button><h2>Répétitions > </h2></button>
+  <button><h2>Concerts > </h2></button>
+  <button><h2>Sortie > </h2></button>
+</section>
+{% endblock content %}

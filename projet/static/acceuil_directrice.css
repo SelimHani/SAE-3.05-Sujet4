@@ -1,0 +1,26 @@
+
+h1{
+    text-align: center;
+    color: #8A5741;
+    margin: 3rem;
+    font-size: 5rem;
+}
+
+section{
+    margin: 50px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; 
+}
+
+h2{
+    color: #AB5250;
+    text-align: center;
+    flex-basis: 100%;
+    font-size: 3rem;
+    margin: 1rem;
+}
+
+h1, h2{
+    font-family: "Anton", sans-serif;
+}
