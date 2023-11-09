@@ -1,0 +1,13 @@
+{% extends 'home.html' %} {% block styles %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='repetitions.css')}}"
+/>
+{% endblock styles %} {% block content %}
+<h1>Feuille de presence</h1>
+<div id="scroll">
+    {% for repete in r %}
+    <a href="{{ url_for("presence_repetition",id=repete.id)}}"><p>{{repete.date}}</p></a>
+    {% endfor %}
+</div>
+{% endblock content %}
