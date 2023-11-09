@@ -14,6 +14,16 @@
 <main id="tdb">
     <div id="pane1">
         <h2>Les derniers sondages :</h2>
+        {% for s in sondages[::-1][0:6]%}
+        <div class="sondage">
+            <a href="{{ url_for('repondre_sondage',id=s.id)}}">
+            {% if s.question %}<p>{{s.question}}</p>
+            {%else%}
+            <p>{{s.activite.nom}}</p>
+            {%endif%}
+        </a>
+        </div>
+        {% endfor%} 
     </div>
     <div id="pane2">
         <ul>

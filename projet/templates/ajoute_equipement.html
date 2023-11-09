@@ -1,0 +1,19 @@
+{% extends 'home.html' %} {% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='ajoute_equipement.css')}}" />
+{% endblock styles %} {% block content %}
+<h1>Ajoute equipement</h1>
+<div id="formulaire">
+  <form role="form" method="POST" action="{{ url_for('ajoute_equipement') }}">
+    {{ form.hidden_tag() }}
+    <div>
+      <p>Nom de l'équipement</p>
+      {{ form.nom(class_="test" ,placeholder ="nom...")}}
+    </div>
+    <div id="bouton">
+      <button type="submit" id="bAjouter"> [ AJOUTER ]</button>
+      <button type="reset" id="bAnnuler" onclick="location.href = '{{ url_for('home') }}';">[ RETOUR ]</button>
+    </div>
+  </form>
+</div>
+
+{% endblock content %}

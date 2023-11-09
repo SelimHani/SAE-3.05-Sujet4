@@ -37,8 +37,8 @@
 
         //name of the days
         dayName = {
-            full: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-            d: ['S', 'M', 'T', 'W', 'T', 'F', 'S'],
+            full: ['Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi'],
+            d: ['D', 'L', 'M', 'M', 'J', 'V', 'S'],
             dd: ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'],
             ddd: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
         };
@@ -62,7 +62,7 @@
         //create 1st row for the day letters
         for (c = 0; c <= 6; c = c + 1) {
             td = document.createElement("td");
-            td.innerHTML = "SMTWTFS"[c];
+            td.innerHTML = "DLMMJVS"[c];
             tr.appendChild(td);
         }
         table.appendChild(tr);
@@ -494,8 +494,8 @@
                 date: dateObj.getDate(),
                 monthformat: "full",
                 dayformat: "full",
-                highlighttoday: false,
-                highlighttargetdate: false,
+                highlighttoday: true,
+                highlighttargetdate: true,
                 prevnextbutton: "hide"
             };
 

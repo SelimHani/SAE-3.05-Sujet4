@@ -1,0 +1,39 @@
+#formulaire{
+    background-color: #c08f6f;
+    border-radius: 15px;
+    width: fit-content;
+    justify-content: center;
+    margin: auto;
+    
+}
+
+div button{
+    margin: 3vh;
+    padding: 1vh;
+    background-color: #f0e4d4;
+    color: #8a5741;
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 1em;
+}
+
+
+
+h1{
+    text-align: center;
+    color: #f0e4d4;
+    margin-bottom: 10vh;
+}
+
+main{
+    background-color: #8A5741;
+    padding: 5vw;
+    margin: auto;
+    border-radius: 10px;
+    padding-top: 5vh;
+}
+
+button:hover{
+    transform: scale(1.02);
+}

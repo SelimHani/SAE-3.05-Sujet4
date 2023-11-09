@@ -1,29 +1,37 @@
 {% extends 'home.html' %} {% block styles %}
 <link
   rel="stylesheet"
-  href="{{ url_for('static', filename='new_sondage.css')}}"
+  href="{{ url_for('static', filename='new_sondage_satis.css')}}"
 />
 {% endblock styles %} {% block content %}
 
-<div>
-  <form role="form" method="POST" action="{{ url_for('creer_sondage_satisfaction') }}">
+<div id="formParent">
+  <form
+    role="form"
+    method="POST"
+    action="{{ url_for('creer_sondage_satisfaction') }}"
+  >
     {{ form.hidden_tag() }}
     <div id="formulaireSondage">
       <div class="divForm" id="nomActi">
-        <h2>Question</h2>
-        <div>
-          {{ form.question(id_="formNom" ,placeholder ="Question..")}}
+        <h2>Question :</h2>
+        <div id="Questions">
+          {{ form.question(id_="form" ,placeholder ="Question ...")}}
+          {{ form.reponses(id_="form" ,placeholder ="Réponse possible ...")}}
         </div>
-        <div>
-            {{ form.reponses(id_="formNom" ,placeholder ="réponse possible..")}}
-            <button type="submit" id="bValider">[AJOUTER REPONSE POSSIBLE ]</button>
-            <button type="reset" id="bAnnuler" onclick="location.href = '{{ url_for('home') }}';">[ ANNULER ]</button>
-          </div>
-          
-    
+        <div id="buttons">
+          <button type="submit" id="bValider">[ AJOUTER UNE REPONSE ]</button>
+          <button
+            type="reset"
+            id="bAnnuler"
+            onclick="location.href = '{{ url_for('home') }}';"
+          >
+            [ RETOUR ]
+          </button>
+        </div>
+      </div>
+    </div>
   </form>
-    
-
 </div>
 
 {% endblock content %}

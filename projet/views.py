@@ -1,3 +1,4 @@
+
 from .app import app, db
 from flask import render_template, url_for, redirect, request
 from flask_login import login_user, current_user, logout_user, login_required
@@ -6,24 +7,28 @@ from wtforms import EmailField, StringField, HiddenField, PasswordField, DateFie
 from wtforms.validators import DataRequired, InputRequired, Length, Regexp
 from hashlib import sha256
 from .models import *
+from sqlalchemy import text
 
 
 @app.route("/")
 def home():
+
+    sondages = get_sondages()
+
     if not current_user.is_authenticated:
         return render_template(
             "acceuil_non_connecte.html"
         )
     elif current_user.get_id_role()==1:
         return render_template(
-            "acceuil_musicien.html"
+            "acceuil_musicien.html",sondages= sondages
         )
     elif current_user.get_id_role()==2:
         return render_template(
             "acceuil_directrice.html"
         )
     return render_template(
-        "acceuil.html"
+        "acceuil.html",sondages= sondages
     )
 
 
@@ -87,8 +92,8 @@ class SondageForm(FlaskForm):
     next = HiddenField()
 
 class SondageSatisfactionForm(FlaskForm):
-    question =  StringField("Question")
-    reponses = StringField("Reponses_possibles")
+    question =  StringField("Question",validators=[InputRequired()])
+    reponses = StringField("Reponses_possibles",validators=[InputRequired()])
     next = HiddenField()
 
 
@@ -157,15 +162,6 @@ def creer_sondage_satisfaction():
         form.reponses.data=""
     return render_template("new_sondage_satisfaction.html",form=form)
 
-
-@app.route("/calendrier/")
-def calendrier():
-    return render_template(
-        "calendrier.html"
-    )
-
-
-
 @app.route("/login/", methods=("GET", "POST",))
 def login():
     f = LoginForm()
@@ -207,11 +203,14 @@ def creer_user():
 
     return render_template("register.html", form=form )
 
-@app.route("/repetitions/")
-def repetitions():
-    repetitions = get_repetitions()
-    return render_template("repetitions.html", repetitions=repetitions)
+@app.route("/calendrier/")
+def calendrier():
+    return render_template("calendrier.html")
 
+@app.route("/repetitions")
+def repetitions():
+    repetitions_activites = get_calendrier()
+    return render_template("repetitions.html", repetitions_activites=repetitions_activites)
 
 @app.route("/create-repetition/", methods=("GET","POST",))
 def creer_repetition():
@@ -253,8 +252,9 @@ def profil(id):
     r = u.role_id
     role = get_role_by_id(r)
     return render_template(
-        "profil.html", user= u, role=role
-    )
+        "statistique.html", user= u, role=role
+    )    
+
 
 class ChangeProfilForm(FlaskForm):
     nom = StringField("Nom")
@@ -320,3 +320,53 @@ def repondre_sondage(id):
 @app.route("/type-sondage/")
 def type_sondage():
     return render_template("choix_type_sondage.html")
+
+
+class EquipementForm(FlaskForm):
+    nom = StringField("nom")
+    
+    
+@app.route("/ajoute-equipement",methods=("GET","POST",))
+def ajoute_equipement():
+    try:
+        if current_user.get_id_role()==1:
+            return redirect(url_for("home")) 
+    except AttributeError:
+        return redirect(url_for("home"))
+    form =EquipementForm()
+    if form.is_submitted():
+        e = Equipement(nom=form.nom.data)
+        db.session.add(e)
+        db.session.commit()
+        form.nom.data  = ""
+    return render_template("ajoute_equipement.html", form=form )
+    
+@app.route("/delete-sondage/<id>")
+def delete_sondage(id):
+    try:
+        if current_user.get_id_role()==1:
+            return redirect(url_for("home")) 
+    except AttributeError:
+        return redirect(url_for("home"))
+    s = Sondage.query.get(id)
+    reponses = Reponse_sondage.query.filter_by(sondage_id=id).all()
+    a = s.activite
+    equipements = a.equipements
+    for e in equipements:
+        sql_query=text('DELETE FROM exiger WHERE activite_id = :activite_id AND equipement_id = :equipement_id')
+        db.session.execute(sql_query,{"activite_id":a.id,"equipement_id":e.id})
+    db.session.commit()
+    db.session.delete(a)
+    for r in reponses:
+        db.session.delete(r)
+    db.session.commit()
+    db.session.delete(s)
+    db.session.commit()
+    print("aaaaaaaaaaaaaaa")
+    return redirect(url_for("sondages"))
+
+@app.route("/detail-repetition/<id>")
+def detail_repetition(id):
+    r = get_repetition_by_id(id)
+    return render_template("detail_repetition.html",r=r)
+

@@ -1,30 +1,42 @@
 
-
+let etat = false;
 
 function openNav() {
     const sidenav = document.querySelector('.sidenav');
 
-    if (window.innerWidth <= 600) { // Ajout de la condition pour changer la largeur en 100% si la taille de l'écran est inférieure ou égale à 600 pixels
+
+    if (window.innerWidth <= 600) { 
         sidenav.style.width = "100%";
         sidenav.style.height = "100%";
+        etat = true;
     } else {
         sidenav.style.width = "250px";
+        etat = true
     }
 
-    document.getElementById("tdb").style.zIndex = "-1";
+    try {
+        document.getElementById("scroll").style.zIndex = "-1";
+    } catch (error) {
+        document.getElementById("tdb").style.zIndex = "-1";
+    }
+    
 }
   
 function closeNav() {
     
-
+    etat = false
     setTimeout(function() {
-        console.log("test");
+        try {
+            document.getElementById("scroll").style.zIndex = "0";
+        } catch (error) {
         document.getElementById("tdb").style.zIndex = "0";
+        }
+        console.log("test2");
         
     }, 300);
     document.getElementById("mySidenav").style.width = "0";
     
-    
+
 }
 
 let url = window.location.href;
@@ -35,3 +47,10 @@ if(url === "http://127.0.0.1:5000/"){
     console.log("Autre page");
 }
     
+document.addEventListener("click", (event) =>{
+    const sidenav = document.querySelector('.sidenav');
+        if(sidenav.style.width <= event.clientX){
+            console.log("touche");
+            closeNav();
+    }
+})
