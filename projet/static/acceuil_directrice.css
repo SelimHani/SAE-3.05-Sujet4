@@ -33,3 +33,7 @@ h2{
 h1, h2{
     font-family: "Anton", sans-serif;
 }
+
+section button h2:hover{
+    color:#8A5741
+}

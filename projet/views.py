@@ -18,14 +18,12 @@ def home():
         return render_template(
             "acceuil_musicien.html"
         )
+    elif current_user.get_id_role()==2:
+        return render_template(
+            "acceuil_directrice.html"
+        )
     return render_template(
         "acceuil.html"
-    )
-
-@app.route("/directeur")
-def test():
-    return render_template(
-        "acceuil_directrice.html"
     )
 
 
