@@ -2,7 +2,7 @@
 {% extends 'home.html' %} {% block content %}
 <div id="scroll">
   <h1>Prochainement :</h1>
-  {% for s in sondages %}
+  {% for s in sondages [::-1][0:6] %}
   <div class="sondage">
     <a href="{{ url_for('repondre_sondage',id=s.id)}}">
       {% if s.question %}
