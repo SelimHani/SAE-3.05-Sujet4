@@ -40,7 +40,6 @@ class Role(db.Model):
     
 class Repetition(db.Model):
     id = db.Column(db.Integer, primary_key = True)
-    nom = db.Column(db.String(100))
     lieu = db.Column(db.String(100))
     date = db.Column(db.String(100))
     description = db.Column(db.String(200))

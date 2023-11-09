@@ -1,3 +1,4 @@
+
 from .app import app, db
 from flask import render_template, url_for, redirect, request
 from flask_login import login_user, current_user, logout_user, login_required
@@ -6,6 +7,7 @@ from wtforms import EmailField, StringField, HiddenField, PasswordField, DateFie
 from wtforms.validators import DataRequired, InputRequired, Length, Regexp
 from hashlib import sha256
 from .models import *
+from sqlalchemy import text
 
 
 @app.route("/")
@@ -65,7 +67,6 @@ class RegisterForm(FlaskForm):
 
 class RepetitionForm(FlaskForm):
     id = HiddenField("Id")
-    nom = StringField("Nom",validators=[InputRequired()])
     lieu = StringField("Lieu",validators=[InputRequired()])
     date = DateField("Date", validators=[InputRequired()])
     description = StringField("Description")
@@ -203,8 +204,8 @@ def calendrier():
 
 @app.route("/repetitions")
 def repetitions():
-    repetitions = get_calendrier()
-    return render_template("repetitions.html", repetitions=repetitions)
+    repetitions_activites = get_calendrier()
+    return render_template("repetitions.html", repetitions_activites=repetitions_activites)
 
 @app.route("/create-repetition/", methods=("GET","POST",))
 def creer_repetition():
@@ -220,7 +221,7 @@ def creer_repetition():
     form =RepetitionForm()
     form.equipements.choices = l
     if form.is_submitted():
-        r = Repetition(nom = form.nom.data,lieu=form.lieu.data,date=form.date.data,description=form.description.data, equipements=[])
+        r = Repetition(lieu=form.lieu.data,date=form.date.data,description=form.description.data, equipements=[])
         noms_e = form.equipements.data
         print(noms_e)
         for nom in noms_e:
@@ -342,6 +343,13 @@ def delete_sondage(id):
         return redirect(url_for("home"))
     s = Sondage.query.get(id)
     reponses = Reponse_sondage.query.filter_by(sondage_id=id).all()
+    a = s.activite
+    equipements = a.equipements
+    for e in equipements:
+        sql_query=text('DELETE FROM exiger WHERE activite_id = :activite_id AND equipement_id = :equipement_id')
+        db.session.execute(sql_query,{"activite_id":a.id,"equipement_id":e.id})
+    db.session.commit()
+    db.session.delete(a)
     for r in reponses:
         db.session.delete(r)
     db.session.commit()
@@ -349,3 +357,8 @@ def delete_sondage(id):
     db.session.commit()
     print("aaaaaaaaaaaaaaa")
     return redirect(url_for("sondages"))
+
+@app.route("/detail-repetition/<id>")
+def detail_repetition(id):
+    r = get_repetition_by_id(id)
+    return render_template("detail_repetition.html",r=r)
