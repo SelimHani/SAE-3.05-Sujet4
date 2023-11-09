@@ -1,12 +1,17 @@
 {% extends 'home.html' %} {% block styles %}
-<link rel="stylesheet" href="{{ url_for('static', filename='login.css')}}" />
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='repetitions.css')}}"
+/>
 {% endblock styles %} {% block content %}
+<h1>Prochainement  :</h1>
+<div id="scroll">
+  {% for r in repetitions %}
 
-{% for r in repetitions %}
-
-<div id="formulaire">
+  <div class="repetition">
     <p>{{r.date}} -- {{r.nom}}</p>
-</div>
+  </div>
+  {% endfor %} 
 
-{% endfor %}
+</div>
 {% endblock content %}
