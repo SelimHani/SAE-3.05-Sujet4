@@ -272,7 +272,8 @@ def changer_profil(id):
     f = ChangeProfilForm()
     
     if f.is_submitted():
-        password_hash = sha256(f.password.data.encode()).hexdigest()
+        if f.password.data != None:
+            password_hash = sha256(f.password.data.encode()).hexdigest()
         u.nom = f.nom.data
         u.prenom = f.prenom.data
         u.num =  f.num.data
