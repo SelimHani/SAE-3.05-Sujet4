@@ -279,7 +279,7 @@ def changer_profil(id):
     f = ChangeProfilForm()
     
     if f.is_submitted():
-        if f.password.data != None:
+        if f.password.data !="":
             password_hash = sha256(f.password.data.encode()).hexdigest()
         u.nom = f.nom.data
         u.prenom = f.prenom.data
@@ -439,4 +439,3 @@ def reponse_sondage(id):
     for elem in reponses:
         l.append((Reponses_possibles.query.get(elem.reponse).nom,User.query.get(elem.user_id).nom,User.query.get(elem.user_id).prenom))
     return render_template("reponse_sond.html", l=l)
-
