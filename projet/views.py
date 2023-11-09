@@ -343,7 +343,13 @@ def ajoute_equipement():
         db.session.commit()
         form.nom.data  = ""
     return render_template("ajoute_equipement.html", form=form )
-    
+
+
+
+
+
+
+
 @app.route("/delete-sondage/<id>")
 def delete_sondage(id):
     try:
@@ -372,3 +378,18 @@ def delete_sondage(id):
 def detail_repetition(id):
     r = get_repetition_by_id(id)
     return render_template("detail_repetition.html",r=r)
+
+
+@app.route("/reponse_sond.html/<id>")
+def reponse_sondage(id):
+    try:
+        if current_user.get_id_role()==1:
+            return redirect(url_for("home")) 
+    except AttributeError:
+        return redirect(url_for("home"))
+    l = []
+    s = Sondage.query.get(id)
+    reponses = Reponse_sondage.query.filter_by(sondage_id=id).all()
+    for elem in reponses:
+        l.append((Reponses_possibles.query.get(elem.reponse).nom,User.query.get(elem.user_id).nom,User.query.get(elem.user_id).prenom))
+    return render_template("reponse_sond.html", l=l)
