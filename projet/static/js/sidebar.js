@@ -14,15 +14,24 @@ function openNav() {
         etat = true
     }
 
-    document.getElementById("tdb").style.zIndex = "-1";
+    try {
+        document.getElementById("scroll").style.zIndex = "-1";
+    } catch (error) {
+        document.getElementById("tdb").style.zIndex = "-1";
+    }
+    
 }
   
 function closeNav() {
     
     etat = false
     setTimeout(function() {
-        console.log("test");
-        document.getElementById("tdb").style.zIndex = "0";
+        try {
+            document.getElementById("scroll").style.zIndex = "0";
+        } catch (error) {
+        document.getElementBId("tdb").style.zIndex = "0";
+        }
+        console.log("test2");
         
     }, 300);
     document.getElementById("mySidenav").style.width = "0";
