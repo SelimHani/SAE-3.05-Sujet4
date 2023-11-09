@@ -1,0 +1,35 @@
+{% extends 'home.html' %} {% block styles %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='new_sondage_satis.css')}}"
+/>
+{% endblock styles %} {% block content %}
+
+<div id="formParent">
+  <form
+    role="form"
+    method="POST"
+    action="{{ url_for('presence_repetition',id=id) }}"
+  >
+    <div id="formulaireSondage">
+      <div class="divForm" id="nomActi">
+        <h2>Qui a participé à ce sondage :</h2>
+        <div id="Questions">
+          {{ form.musicien(id_="form" ,placeholder ="musiciens")}}
+        </div>
+        <div id="buttons">
+          <button type="submit" id="bValider">[ VALIDER ]</button>
+          <button
+            type="reset"
+            id="bAnnuler"
+            onclick="location.href = '{{ url_for('home') }}';"
+          >
+            [ RETOUR ]
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+{% endblock content %}

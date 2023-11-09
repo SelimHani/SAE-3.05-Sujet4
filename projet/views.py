@@ -7,7 +7,7 @@ from wtforms import EmailField, StringField, HiddenField, PasswordField, DateFie
 from wtforms.validators import DataRequired, InputRequired, Length, Regexp
 from hashlib import sha256
 from .models import *
-from sqlalchemy import text
+from sqlalchemy import text, func
 
 
 @app.route("/")
@@ -35,7 +35,8 @@ def sondages():
     except AttributeError:
         return redirect(url_for("home"))
     
-    sondages = get_sondages()
+    sondages= get_sondages()
+        
     return render_template(
         "sondages.html",sondages=sondages
     )
@@ -246,8 +247,14 @@ def profil(id):
     u = get_user_by_id(id)
     r = u.role_id
     role = get_role_by_id(r)
+    participees = u.repetitions
+    nb_participees = len(participees)
+    now = func.now()
+    passees = Repetition.query.filter(Repetition.date <= now).all()
+    ratees = len(passees)-nb_participees
+    
     return render_template(
-        "statistique.html", user= u, role=role
+        "statistique.html", user= u, role=role, nb_participees=nb_participees, ratees=ratees
     )    
 
 class ChangeProfilForm(FlaskForm):
@@ -381,6 +388,44 @@ def detail_repetition(id):
     return render_template("detail_repetition.html",r=r)
 
 
+@app.route("/feuille-presence/")
+def feuille_presence():
+    r = Repetition.query.all()
+    return render_template("feuille_presence.html", r =r)
+
+class PresenceForm(FlaskForm):
+    musicien = SelectMultipleField("Choisis des musiciens", choices=[])
+    
+@app.route("/presence-repetition/<id>",methods=("GET","POST",))
+def presence_repetition(id):
+    r = get_repetition_by_id(id)
+    try:
+        if current_user.get_id_role()==1:
+            pass
+    except AttributeError:
+        return redirect(url_for("home"))
+    musiciens = User.query.filter_by(role_id=1).all()
+    form = PresenceForm()
+    l=[]
+    
+   
+    for m in musiciens:
+        l.append((m.mail, m.nom))
+    form.musicien.choices=l
+    
+    if form.is_submitted():
+        print("aaaaaaa")
+        reponse = form.musicien.data
+        for mail in reponse:
+            u = User.query.get(mail)
+            r.users.append(u)
+            u.repetitions.append(r)
+        db.session.commit()
+        print("aaaaaaaaaaaaaa")
+        return redirect(url_for("home"))
+    return render_template("presence_repetition.html", form=form,id= r.id)
+
+
 @app.route("/reponse_sond.html/<id>")
 def reponse_sondage(id):
     try:
@@ -394,3 +439,4 @@ def reponse_sondage(id):
     for elem in reponses:
         l.append((Reponses_possibles.query.get(elem.reponse).nom,User.query.get(elem.user_id).nom,User.query.get(elem.user_id).prenom))
     return render_template("reponse_sond.html", l=l)
+
