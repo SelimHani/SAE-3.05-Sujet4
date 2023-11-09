@@ -281,10 +281,11 @@ def changer_profil(id):
     if f.is_submitted():
         if f.password.data !="":
             password_hash = sha256(f.password.data.encode()).hexdigest()
+            u.password = password_hash
         u.nom = f.nom.data
         u.prenom = f.prenom.data
         u.num =  f.num.data
-        u.password = password_hash
+        
         db.session.commit()
         return redirect(url_for("profil",id = id))
     return render_template("changer_profil.html", form=f,user=u )
