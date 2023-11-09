@@ -2,11 +2,16 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='login.css')}}" />
 {% endblock styles %} {% block content %}
 
-{% for r in repetitions %}
+{% for ra in repetitions_activites %}
+{% if ra.nom %} <a href="{{url_for("repondre_sondage",id=ra.id)}}">
+    <div id="formulaire">{{ra.date}}---{{ra.nom}}</div>
+</a> 
+{% else %}
+<a href="{{url_for("detail_repetition",id=ra.id)}}">
+    <div id="formulaire">{{ra.date}}---Repetition</div>
+</a>  {% endif %}
 
-<div id="formulaire">
-    <p>{{r.date}} -- {{r.nom}}</p>
-</div>
+
 
 {% endfor %}
 {% endblock content %}
