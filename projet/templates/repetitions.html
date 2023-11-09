@@ -6,18 +6,22 @@
 {% endblock styles %} {% block content %}
 <h1>Prochainement  :</h1>
 <div id="scroll">
-  {% for r in repetitions %}
+    {% for ra in repetitions_activites %}
+        {% if ra.nom %} <a href="{{url_for("repondre_sondage",id=ra.id)}}">
+            <div class="repetition">
+                <p>{{ra.nom}}</p>
+                <p>{{ra.date}}</p>
+            </div>
+        </a>
 
-{% for ra in repetitions_activites %}
-{% if ra.nom %} <a href="{{url_for("repondre_sondage",id=ra.id)}}">
-    <div id="repetition">{{ra.date}}---{{ra.nom}}</div>
-</a> 
-{% else %}
-<a href="{{url_for("detail_repetition",id=ra.id)}}">
-    <div id="repetition">{{ra.date}}---Repetition</div>
-</a>  {% endif %}
-
-
-
+        {% else %}
+        <a href="{{url_for("detail_repetition",id=ra.id)}}">
+            <div class="repetition">
+                <p>Repetition</p>
+                <p>{{ra.date}}</p>
+            </div>
+        </a>  
+        {% endif %}
+    {% endfor %}
 </div>
 {% endblock content %}

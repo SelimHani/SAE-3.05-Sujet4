@@ -25,7 +25,9 @@
     border-radius: 15px;
     border: rgba(192, 143, 111, 0.3) solid 2px;
     backdrop-filter: blur(20px);
-    justify-content: center;
+    display: flex;
+    justify-content: space-between;
+    flex: 1;
 }
 
 .repetition p {
@@ -40,17 +42,6 @@
     background: rgba(240, 228, 212, 0.90);
 }
 
-
-.repetition a {
-    text-decoration: none;
-    display: flex;
-    justify-content: space-between;
-    flex: 1;
-
-}
-
-
-
 h1 {
     color: #9e725e;
     font-family: Alata;
@@ -62,4 +53,9 @@ h1 {
     text-align: center;
     font-family: 'Anton', sans-serif;
 }
+
+#scroll a {
+    text-decoration: none;
+}
+
 
