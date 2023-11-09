@@ -1,0 +1,39 @@
+
+h1{
+    text-align: center;
+    color: #8A5741;
+    margin: 3rem;
+    font-size: 5rem;
+}
+
+section {
+    position: absolute;
+    top: 50%;
+    left: 47%;
+    transform: translate(-50%, -50%);
+    margin: 50px;
+    display: flex;
+    flex-wrap: wrap;
+    width: 19vw;
+    align-items: center;
+}
+
+section button{
+    background: none;
+    flex-basis: 100%; 
+    border: none;
+}
+
+h2{
+    color: #AB5250;
+    font-size: 3rem;
+    margin: 1rem;
+}
+
+h1, h2{
+    font-family: "Anton", sans-serif;
+}
+
+section button h2:hover{
+    color:#8A5741
+}
