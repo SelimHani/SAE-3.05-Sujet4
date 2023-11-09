@@ -8,10 +8,16 @@
 <div id="scroll">
   {% for r in repetitions %}
 
-  <div class="repetition">
-    <p>{{r.date}} -- {{r.nom}}</p>
-  </div>
-  {% endfor %} 
+{% for ra in repetitions_activites %}
+{% if ra.nom %} <a href="{{url_for("repondre_sondage",id=ra.id)}}">
+    <div id="repetition">{{ra.date}}---{{ra.nom}}</div>
+</a> 
+{% else %}
+<a href="{{url_for("detail_repetition",id=ra.id)}}">
+    <div id="repetition">{{ra.date}}---Repetition</div>
+</a>  {% endif %}
+
+
 
 </div>
 {% endblock content %}
