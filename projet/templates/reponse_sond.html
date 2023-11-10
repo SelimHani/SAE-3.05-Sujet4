@@ -1,12 +1,26 @@
 {% extends 'home.html' %} {% block styles %} 
-<link rel="stylesheet" href="{{ url_for('static', filename='repondre_sondage.css')}}" />
+<link rel="stylesheet" href="{{ url_for('static', filename='reponse_sondage.css')}}" />
 {% endblock styles %} {% block content %}
+<h1>{{sondage.activite.nom}}</h1>
 <main>
-    {% for i in l %}
-    <p>{{i.1}} {{i.2}} A REPONDU :  {{i.0}}</p>
-    <p> </p>
-    {%endfor%}
-
+    <div id="scroll">
+      {% for i in l %}
+      <div id="rep_sondage">
+        <p>{{i.1}}</p>
+        <p>{{i.2}} </p>
+        {% if i.0 == "JE PARTICIPE" %}
+        <div id="vert">
+          <p> </p>
+        </div>
+        {% endif%}
+        {% if i.0 == "JE NE PARTICIPE PAS" %}
+        <div id="rouge">
+            <p> </p>
+        </div>
+        {% endif%}
+      </div>
+      {%endfor%}
+    </div>
 
 </main>
 {% endblock content %}
