@@ -455,11 +455,13 @@ def reponse_sondage(id):
     except AttributeError:
         return redirect(url_for("home"))
     l = []
-    s = Sondage.query.get(id)
+    s  = get_sondage_by_id(id)
     reponses = Reponse_sondage.query.filter_by(sondage_id=id).all()
     for elem in reponses:
         l.append((Reponses_possibles.query.get(elem.reponse).nom,User.query.get(elem.user_id).nom,User.query.get(elem.user_id).prenom))
-    return render_template("reponse_sond.html", l=l)
+
+    return render_template("reponse_sond.html", l=l, sondage = s)
+
 
 @app.route("/gerer-presences/")
 def gerer_presences():
