@@ -29,9 +29,8 @@ function closeNav() {
         try {
             document.getElementById("scroll").style.zIndex = "0";
         } catch (error) {
-        document.getElementBId("tdb").style.zIndex = "0";
+        document.getElementById("tdb").style.zIndex = "0";
         }
-        console.log("test2");
         
     }, 300);
     document.getElementById("mySidenav").style.width = "0";

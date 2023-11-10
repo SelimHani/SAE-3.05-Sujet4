@@ -4,11 +4,11 @@
   href="{{ url_for('static', filename='repetitions.css')}}"
 />
 {% endblock styles %} {% block content %}
-<h1>Feuille de presence des répétitions passées</h1>
+<h1>Statistiques musiciens</h1>
 <div id="scroll">
-    {% for repete in r %}
+    {% for u in users %}
       <div class="repetition">
-        <a href="{{ url_for("presence_repetition",id=repete.id)}}"><p>Répétition du {{repete.date}} .</p></a>
+        <a href="{{ url_for("profil",id=u.mail)}}"><p> {{u.nom}} {{u.prenom}} .</p></a>
       </div>
     {% endfor %}
 </div>
