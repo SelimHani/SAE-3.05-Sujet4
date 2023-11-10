@@ -1,6 +1,8 @@
 
+import tkinter
+import sqlalchemy
 from .app import app, db
-from flask import render_template, url_for, redirect, request
+from flask import render_template, url_for, redirect, request, flash
 from flask_login import login_user, current_user, logout_user, login_required
 from flask_wtf import FlaskForm
 from wtforms import EmailField, StringField, HiddenField, PasswordField, DateField,SelectField,SelectMultipleField,TextAreaField
@@ -176,6 +178,17 @@ def logout():
     logout_user()
     return redirect(url_for("home"))
 
+import tkinter
+from tkinter import messagebox
+
+def afficher_popup(message):
+    root = tkinter.Tk()
+    root.withdraw()
+    messagebox.showinfo("Message", message)
+    root.destroy()
+
+
+
 
 @app.route("/create-user/", methods=("GET","POST",))
 def creer_user():
@@ -186,18 +199,27 @@ def creer_user():
         return redirect(url_for("home"))
     form =RegisterForm()
     if form.is_submitted():
-        password_hash = sha256(form.password.data.encode()).hexdigest()
-        role_id = int(form.role.data)
-        new_personne = User(mail=form.mail.data, password = password_hash , role_id = role_id, nom = form.nom.data, prenom = form.prenom.data, ddn=form.date_nais.data, num_tel = form.num.data )
+        try:
+            password_hash = sha256(form.password.data.encode()).hexdigest()
+            role_id = int(form.role.data)
+            new_personne = User(mail=form.mail.data,password=password_hash,role_id=role_id,nom=form.nom.data,prenom=form.prenom.data,ddn=form.date_nais.data,num_tel=form.num.data)
 
-        db.session.add(new_personne)
-        db.session.commit()
+            db.session.add(new_personne)
+            db.session.commit()
 
-        login_user(new_personne)
+            flash('Utilisateur créé avec succès!', 'success')
+            return redirect(url_for("home"))
+        except sqlalchemy.exc.IntegrityError:
+            db.session.rollback()
+            afficher_popup('Ce mail est déjà utilisé,veuillez utiliser un autre.')
 
-        return redirect(url_for("home"))
+        except sqlalchemy.exc.PendingRollbackError:
+            db.session.rollback()
+            afficher_popup('Ce mail est déjà utilisé, veuillez utiliser un autre .')
+            
 
-    return render_template("register.html", form=form )
+
+    return render_template("register.html", form=form)
 
 @app.route("/calendrier/")
 def calendrier():
