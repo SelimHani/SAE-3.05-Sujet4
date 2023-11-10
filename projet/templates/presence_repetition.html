@@ -1,7 +1,7 @@
 {% extends 'home.html' %} {% block styles %}
 <link
   rel="stylesheet"
-  href="{{ url_for('static', filename='new_sondage_satis.css')}}"
+  href="{{ url_for('static', filename='presence_repetition.css')}}"
 />
 {% endblock styles %} {% block content %}
 
@@ -13,9 +13,11 @@
   >
     <div id="formulaireSondage">
       <div class="divForm" id="nomActi">
-        <h2>Qui a participé à ce sondage :</h2>
+        <h2>Qui a participé à cette répétition ?</h2>
         <div id="Questions">
-          {{ form.musicien(id_="form" ,placeholder ="musiciens")}}
+          <div id="scroll"> 
+            {{ form.musicien(id_="form" ,placeholder ="musiciens")}}
+          </div>
         </div>
         <div id="buttons">
           <button type="submit" id="bValider">[ VALIDER ]</button>

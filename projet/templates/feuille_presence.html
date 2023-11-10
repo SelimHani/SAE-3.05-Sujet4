@@ -7,7 +7,9 @@
 <h1>Feuille de presence</h1>
 <div id="scroll">
     {% for repete in r %}
-    <a href="{{ url_for("presence_repetition",id=repete.id)}}"><p>{{repete.date}}</p></a>
+      <div class="repetition">
+        <a href="{{ url_for("presence_repetition",id=repete.id)}}"><p>Répétition du {{repete.date}} .</p></a>
+      </div>
     {% endfor %}
 </div>
 {% endblock content %}
