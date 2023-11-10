@@ -11,7 +11,6 @@ from sqlalchemy import text, func
 
 @app.route("/")
 def home():
-
     sondages = get_sondages()
     repetitions_activites = get_calendrier()
     derniere_repetition = None
@@ -390,7 +389,7 @@ def detail_repetition(id):
 
 @app.route("/feuille-presence/")
 def feuille_presence():
-    r = Repetition.query.all()
+    r = Repetition.query.filter(Repetition.date <= func.now()).all()
     return render_template("feuille_presence.html", r =r)
 
 class PresenceForm(FlaskForm):
@@ -410,7 +409,7 @@ def presence_repetition(id):
 
 
     for m in musiciens:
-        l.append((m.mail, m.nom))
+        l.append((m.mail, m.nom+" "+m.prenom))
     form.musicien.choices=l
 
     if form.is_submitted():
