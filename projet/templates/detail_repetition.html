@@ -1,12 +1,24 @@
 {% extends 'home.html' %} {% block styles %}
 <link rel="stylesheet" href="{{ url_for('static', filename='login.css')}}" />
 {% endblock styles %} {% block content %}
-<h1>Repetition</h1>
-<div id="formulaire">
-  {{r.lieu}}
-  {{r.date}}
-  {% for e in r.equipements %}
-  <p>{{e.nom}}</p>{% endfor %}
-  <button onclick="location.href = '{{ url_for('repetitions') }}';">Retour</button>
+<h1>Nom de l'activite</h1>
+<div id="scroll">
+  {% for ra in repetitions_activites %}
+      {% if ra.nom %} <a href="{{url_for("detail_repetition",id=ra.id)}}">
+          <div class="repetition">
+              <p>{{ra.nom}}</p>
+              <p>{{ra.date}}</p>
+          </div>
+      </a>
+
+      {% else %}
+      <a href="{{url_for("detail_repetition",id=ra.id)}}">
+          <div class="repetition">
+              <p>Repetition</p>
+              <p>{{ra.date}}</p>
+          </div>
+      </a>  
+      {% endif %}
+  {% endfor %}
 </div>
 {% endblock content %}

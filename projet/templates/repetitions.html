@@ -4,10 +4,10 @@
   href="{{ url_for('static', filename='repetitions.css')}}"
 />
 {% endblock styles %} {% block content %}
-<h1>Prochainement  :</h1>
+<h1>Répétitions</h1>
 <div id="scroll">
     {% for ra in repetitions_activites %}
-        {% if ra.nom %} <a href="{{url_for("repondre_sondage",id=ra.id)}}">
+        {% if ra.nom %} <a href="{{url_for("detail_repetition",id=ra.id)}}">
             <div class="repetition">
                 <p>{{ra.nom}}</p>
                 <p>{{ra.date}}</p>
