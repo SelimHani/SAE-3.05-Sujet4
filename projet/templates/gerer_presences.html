@@ -1,0 +1,23 @@
+{% extends 'home.html' %} {% block styles %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='choix_sondages.css')}}"
+/>
+{% endblock styles %} {% block content %}
+<main>
+  <h1>Gérer les présences</h1>
+  <div id="formulaire">
+    <button
+      onclick="location.href = '{{ url_for('feuille_presence') }}';"
+    >
+      Feuille de présence
+    </button>
+    <button
+      onclick="location.href = '{{ url_for('stats_musiciens') }}';"
+    >
+      Statistiques des musiciens
+    </button>
+  </div>
+</main>
+
+{% endblock content %}
