@@ -317,16 +317,20 @@ def repondre_sondage(id):
 
         db.session.commit()
         return redirect(url_for("home"))
-
-
-    lieu = s.activite.lieu
-    lieuM =''
-    for c in lieu:
-        if (c == ' '):
-            lieuM += '+'
-        else:
-            lieuM += c
-    map = "https://www.google.fr/maps/search/"+lieuM+"/"
+    
+    if s.question==None:
+        lieu = s.activite.lieu
+        lieuM =''
+        for c in lieu:
+            if (c == ' '):
+                lieuM += '+'
+            else:
+                lieuM += c
+        map = "https://www.google.fr/maps/search/"+lieuM+"/"
+    else:
+        lieuM=None
+        map=None
+    
     return render_template("repondre_sondage.html", form=f,sondage=s, lieu_map = map)
 
 
