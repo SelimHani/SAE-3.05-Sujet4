@@ -1,32 +1,36 @@
-
+import tkinter
+import sqlalchemy
 from .app import app, db
-from flask import render_template, url_for, redirect, request
+from flask import render_template, url_for, redirect, request, flash
 from flask_login import login_user, current_user, logout_user, login_required
 from flask_wtf import FlaskForm
 from wtforms import EmailField, StringField, HiddenField, PasswordField, DateField,SelectField,SelectMultipleField,TextAreaField
 from wtforms.validators import DataRequired, InputRequired, Length, Regexp
 from hashlib import sha256
 from .models import *
-from sqlalchemy import text
+from sqlalchemy import text, func
 
 
 @app.route("/")
 def home():
-
     sondages = get_sondages()
-
+    repetitions_activites = get_calendrier()
+    derniere_repetition = None
+    try:
+        derniere_repetition = repetitions_activites[-1]
+    except IndexError:
+        derniere_repetition = None
     if not current_user.is_authenticated:
-        return render_template(
-            "acceuil_non_connecte.html"
-        )
-    elif current_user.get_id_role()==1:
-        return render_template(
-            "acceuil_musicien.html",sondages= sondages
-        )
-    return render_template(
-        "acceuil.html",sondages= sondages
-    )
-    
+        return render_template("acceuil_non_connecte.html")
+    elif current_user.get_id_role() == 1:
+        return render_template("acceuil_musicien.html",
+                               sondages=sondages,
+                               prochain_evenement=derniere_repetition)
+
+    return render_template("acceuil.html",
+                           sondages=sondages,
+                           prochain_evenement=derniere_repetition)
+
 @app.route("/sondages/")
 def sondages():
     try:
@@ -34,8 +38,7 @@ def sondages():
             pass
     except AttributeError:
         return redirect(url_for("home"))
-    
-    sondages = get_sondages()
+    sondages= get_sondages()
     return render_template(
         "sondages.html",sondages=sondages
     )
@@ -54,12 +57,12 @@ class LoginForm(FlaskForm):
         return user if passwd == user.password else None
 
 
-class RegisterForm(FlaskForm):    
+class RegisterForm(FlaskForm):
     nom = StringField("Nom", validators=[InputRequired()])
     prenom = StringField("Prenom", validators=[InputRequired()])
     date_nais = DateField("Date_de_naissance", validators=[InputRequired()])
     mail = EmailField("Mail", validators=[InputRequired()])
-    num = StringField("Numéro", validators=[InputRequired(),Regexp('^[0-9]{10}$', message="Le numéro doit contenir uniquement des chiffres."),Length(min=10, max=10, message="Le numéro doit contenir 10 chiffres.")])    
+    num = StringField("Numéro", validators=[InputRequired(),Regexp('^[0-9]{10}$', message="Le numéro doit contenir uniquement des chiffres."),Length(min=10, max=10, message="Le numéro doit contenir 10 chiffres.")])
     password = PasswordField("Password", validators=[InputRequired()])
 
     role = SelectField('Role', choices=[("1","Musicien"),("2","Directrice"),("3","Responsable")])
@@ -85,7 +88,7 @@ class SondageForm(FlaskForm):
     descriptionActivite = TextAreaField("descriptionActivite")
     equipements = SelectMultipleField("Choisis des équipements", choices=[])
     next = HiddenField()
-    
+
 class SondageSatisfactionForm(FlaskForm):
     question =  StringField("Question",validators=[InputRequired()])
     reponses = StringField("Reponses_possibles",validators=[InputRequired()])
@@ -97,12 +100,12 @@ class SondageSatisfactionForm(FlaskForm):
 def creer_sondage_participation():
     try:
         if current_user.get_id_role()==1:
-            return redirect(url_for("home")) 
+            return redirect(url_for("home"))
     except AttributeError:
         return redirect(url_for("home"))
     form = SondageForm()
     equipements = get_equipements()
-    l = []  
+    l = []
     for e in equipements:
         l.append(e.nom)
     form.equipements.choices = l
@@ -121,20 +124,20 @@ def creer_sondage_participation():
             equipement=get_equipement_by_name(nom)
             a.equipements.append(equipement)
             equipement.activites.append(a)
-        
-        db.session.add(a) 
+
+        db.session.add(a)
         db.session.add(s)
-        db.session.commit()  
+        db.session.commit()
         return redirect(url_for("home"))
     return render_template(
         "new_sondage.html", form=form
     )
-    
+
 @app.route("/create-sondage-satisfaction/", methods=("GET", "POST",))
 def creer_sondage_satisfaction():
     try:
         if current_user.get_id_role()==1:
-            return redirect(url_for("home")) 
+            return redirect(url_for("home"))
     except AttributeError:
         return redirect(url_for("home"))
     form = SondageSatisfactionForm()
@@ -145,7 +148,7 @@ def creer_sondage_satisfaction():
         reponse = form.reponses.data
         r = Reponses_possibles(nom=reponse)
         db.session.add(r)
-        if get_sondage_by_question(question) == None:   
+        if get_sondage_by_question(question) == None:
             s = Sondage(question = form.question.data)
             s.reponses_possibles.append(r)
             db.session.add(s)
@@ -153,10 +156,10 @@ def creer_sondage_satisfaction():
         else:
             s = get_sondage_by_question(question)
             s.reponses_possibles.append(r)
-            db.session.commit()   
+            db.session.commit()
         form.reponses.data=""
     return render_template("new_sondage_satisfaction.html",form=form)
-    
+
 @app.route("/login/", methods=("GET", "POST",))
 def login():
     f = LoginForm()
@@ -175,28 +178,48 @@ def logout():
     logout_user()
     return redirect(url_for("home"))
 
+import tkinter
+from tkinter import messagebox
+
+def afficher_popup(message):
+    root = tkinter.Tk()
+    root.withdraw()
+    messagebox.showinfo("Message", message)
+    root.destroy()
+
+
+
 
 @app.route("/create-user/", methods=("GET","POST",))
 def creer_user():
     try:
         if current_user.get_id_role()==1:
-            return redirect(url_for("home")) 
+            return redirect(url_for("home"))
     except AttributeError:
         return redirect(url_for("home"))
     form =RegisterForm()
     if form.is_submitted():
-        password_hash = sha256(form.password.data.encode()).hexdigest()
-        role_id = int(form.role.data)
-        new_personne = User(mail=form.mail.data, password = password_hash , role_id = role_id, nom = form.nom.data, prenom = form.prenom.data, ddn=form.date_nais.data, num_tel = form.num.data )
+        try:
+            password_hash = sha256(form.password.data.encode()).hexdigest()
+            role_id = int(form.role.data)
+            new_personne = User(mail=form.mail.data,password=password_hash,role_id=role_id,nom=form.nom.data,prenom=form.prenom.data,ddn=form.date_nais.data,num_tel=form.num.data)
 
-        db.session.add(new_personne)
-        db.session.commit()
+            db.session.add(new_personne)
+            db.session.commit()
 
-        login_user(new_personne)
+            flash('Utilisateur créé avec succès!', 'success')
+            return redirect(url_for("home"))
+        except sqlalchemy.exc.IntegrityError:
+            db.session.rollback()
+            afficher_popup('Ce mail est déjà utilisé,veuillez utiliser un autre.')
 
-        return redirect(url_for("home"))
+        except sqlalchemy.exc.PendingRollbackError:
+            db.session.rollback()
+            afficher_popup('Ce mail est déjà utilisé, veuillez utiliser un autre .')
+            
 
-    return render_template("register.html", form=form )
+
+    return render_template("register.html", form=form)
 
 @app.route("/calendrier/")
 def calendrier():
@@ -211,7 +234,7 @@ def repetitions():
 def creer_repetition():
     try:
         if current_user.get_id_role()==1:
-            return redirect(url_for("home")) 
+            return redirect(url_for("home"))
     except AttributeError:
         return redirect(url_for("home"))
     equipements = get_equipements()
@@ -246,9 +269,14 @@ def profil(id):
     u = get_user_by_id(id)
     r = u.role_id
     role = get_role_by_id(r)
-    return render_template(
-        "statistique.html", user= u, role=role
-    )    
+    participees = u.repetitions
+    nb_participees = len(participees)
+    now = func.now()
+    passees = Repetition.query.filter(Repetition.date <= now).all()
+    ratees = len(passees)-nb_participees
+
+    return render_template("statistique.html", user= u, role=role, nb_participees=nb_participees, ratees=ratees)
+
 
 class ChangeProfilForm(FlaskForm):
     nom = StringField("Nom")
@@ -270,13 +298,15 @@ def changer_profil(id):
         return redirect(url_for("home"))
     u  = get_user_by_id(id)
     f = ChangeProfilForm()
-    
+
     if f.is_submitted():
-        password_hash = sha256(f.password.data.encode()).hexdigest()
+        if f.password.data !="":
+            password_hash = sha256(f.password.data.encode()).hexdigest()
+            u.password = password_hash
         u.nom = f.nom.data
         u.prenom = f.prenom.data
         u.num =  f.num.data
-        u.password = password_hash
+
         db.session.commit()
         return redirect(url_for("profil",id = id))
     return render_template("changer_profil.html", form=f,user=u )
@@ -305,10 +335,24 @@ def repondre_sondage(id):
         else:
             r = Reponse_sondage(user_id=current_user.get_id(), sondage_id=s.get_id(), user=current_user, sondage=s, reponse=reponse)
             db.session.add(r)
-        
+
         db.session.commit()
         return redirect(url_for("home"))
-    return render_template("repondre_sondage.html", form=f,sondage=s )
+    
+    if s.question==None:
+        lieu = s.activite.lieu
+        lieuM =''
+        for c in lieu:
+            if (c == ' '):
+                lieuM += '+'
+            else:
+                lieuM += c
+        map = "https://www.google.fr/maps/search/"+lieuM+"/"
+    else:
+        lieuM=None
+        map=None
+    
+    return render_template("repondre_sondage.html", form=f,sondage=s, lieu_map = map)
 
 
 @app.route("/type-sondage/")
@@ -317,13 +361,13 @@ def type_sondage():
 
 class EquipementForm(FlaskForm):
     nom = StringField("nom")
-    
-    
+
+
 @app.route("/ajoute-equipement",methods=("GET","POST",))
 def ajoute_equipement():
     try:
         if current_user.get_id_role()==1:
-            return redirect(url_for("home")) 
+            return redirect(url_for("home"))
     except AttributeError:
         return redirect(url_for("home"))
     form =EquipementForm()
@@ -335,16 +379,11 @@ def ajoute_equipement():
     return render_template("ajoute_equipement.html", form=form )
 
 
-
-
-
-
-
 @app.route("/delete-sondage/<id>")
 def delete_sondage(id):
     try:
         if current_user.get_id_role()==1:
-            return redirect(url_for("home")) 
+            return redirect(url_for("home"))
     except AttributeError:
         return redirect(url_for("home"))
     s = Sondage.query.get(id)
@@ -370,11 +409,49 @@ def detail_repetition(id):
     return render_template("detail_repetition.html",r=r)
 
 
+@app.route("/feuille-presence/")
+def feuille_presence():
+    r = Repetition.query.filter(Repetition.date <= func.now()).all()
+    return render_template("feuille_presence.html", r =r)
+
+class PresenceForm(FlaskForm):
+    musicien = SelectMultipleField("Choisis des musiciens", choices=[])
+
+@app.route("/presence-repetition/<id>",methods=("GET","POST",))
+def presence_repetition(id):
+    r = get_repetition_by_id(id)
+    try:
+        if current_user.get_id_role()==1:
+            pass
+    except AttributeError:
+        return redirect(url_for("home"))
+    musiciens = User.query.filter_by(role_id=1).all()
+    form = PresenceForm()
+    l=[]
+
+
+    for m in musiciens:
+        l.append((m.mail, m.nom+" "+m.prenom))
+    form.musicien.choices=l
+
+    if form.is_submitted():
+        print("aaaaaaa")
+        reponse = form.musicien.data
+        for mail in reponse:
+            u = User.query.get(mail)
+            r.users.append(u)
+            u.repetitions.append(r)
+        db.session.commit()
+        print("aaaaaaaaaaaaaa")
+        return redirect(url_for("home"))
+    return render_template("presence_repetition.html", form=form,id= r.id)
+
+
 @app.route("/reponse_sond.html/<id>")
 def reponse_sondage(id):
     try:
         if current_user.get_id_role()==1:
-            return redirect(url_for("home")) 
+            return redirect(url_for("home"))
     except AttributeError:
         return redirect(url_for("home"))
     l = []
@@ -382,4 +459,16 @@ def reponse_sondage(id):
     reponses = Reponse_sondage.query.filter_by(sondage_id=id).all()
     for elem in reponses:
         l.append((Reponses_possibles.query.get(elem.reponse).nom,User.query.get(elem.user_id).nom,User.query.get(elem.user_id).prenom))
+
     return render_template("reponse_sond.html", l=l, sondage = s)
+
+
+@app.route("/gerer-presences/")
+def gerer_presences():
+    return render_template("gerer_presences.html")
+
+
+@app.route("/stats-musiciens/")
+def stats_musiciens():
+    u = User.query.filter_by(role_id=1)
+    return render_template("stats_musiciens.html", users=u)
