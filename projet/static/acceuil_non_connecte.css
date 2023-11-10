@@ -4,6 +4,8 @@ body{
     background-position:  0 -5em;
     background-repeat: no-repeat;
     text-align: center;
+    background-attachment: fixed ;
+    background-position: center
 }
 
 
