@@ -1,0 +1,13 @@
+{% extends 'home.html' %} {% block styles %} 
+<link rel="stylesheet" href="{{ url_for('static', filename='repondre_sondage.css')}}" />
+{% endblock styles %} {% block content %}
+<main>
+    {% for i in l %}
+    <p>{{i.1}} {{i.2}} A REPONDU :  {{i.0}}</p>
+    <p> </p>
+    {%endfor%}
+
+
+</main>
+{% endblock content %}
+

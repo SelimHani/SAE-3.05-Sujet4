@@ -6,7 +6,7 @@ from wtforms import EmailField, StringField, HiddenField, PasswordField, DateFie
 from wtforms.validators import DataRequired, InputRequired, Length, Regexp
 from hashlib import sha256
 from .models import *
-from sqlalchemy import text
+from sqlalchemy import text, func
 
 
 @app.route("/")
@@ -32,9 +32,8 @@ def sondages():
         if current_user.get_id_role()==1:
             pass
     except AttributeError:
-        return redirect(url_for("home"))
-
-    sondages = get_sondages()
+        return redirect(url_for("home"))   
+    sondages= get_sondages()
     return render_template(
         "sondages.html",sondages=sondages
     )
@@ -245,9 +244,14 @@ def profil(id):
     u = get_user_by_id(id)
     r = u.role_id
     role = get_role_by_id(r)
-    return render_template(
-        "statistique.html", user= u, role=role
-    )
+    participees = u.repetitions
+    nb_participees = len(participees)
+    now = func.now()
+    passees = Repetition.query.filter(Repetition.date <= now).all()
+    ratees = len(passees)-nb_participees
+    
+    return render_template(prochain_evenement_accueil"statistique.html", user= u, role=role, nb_participees=nb_participees, ratees=ratees)    
+
 
 class ChangeProfilForm(FlaskForm):
     nom = StringField("Nom")
@@ -271,11 +275,13 @@ def changer_profil(id):
     f = ChangeProfilForm()
 
     if f.is_submitted():
-        password_hash = sha256(f.password.data.encode()).hexdigest()
+        if f.password.data !="":
+            password_hash = sha256(f.password.data.encode()).hexdigest()
+            u.password = password_hash
         u.nom = f.nom.data
         u.prenom = f.prenom.data
         u.num =  f.num.data
-        u.password = password_hash
+        
         db.session.commit()
         return redirect(url_for("profil",id = id))
     return render_template("changer_profil.html", form=f,user=u )
@@ -307,7 +313,17 @@ def repondre_sondage(id):
 
         db.session.commit()
         return redirect(url_for("home"))
-    return render_template("repondre_sondage.html", form=f,sondage=s )
+    
+    
+    lieu = s.activite.lieu
+    lieuM =''
+    for c in lieu:
+        if (c == ' '):
+            lieuM += '+'
+        else:
+            lieuM += c
+    map = "https://www.google.fr/maps/search/"+lieuM+"/"
+    return render_template("repondre_sondage.html", form=f,sondage=s, lieu_map = map)
 
 
 @app.route("/type-sondage/")
@@ -332,6 +348,7 @@ def ajoute_equipement():
         db.session.commit()
         form.nom.data  = ""
     return render_template("ajoute_equipement.html", form=form )
+
 
 @app.route("/delete-sondage/<id>")
 def delete_sondage(id):
@@ -360,4 +377,58 @@ def delete_sondage(id):
 @app.route("/detail-repetition/<id>")
 def detail_repetition(id):
     r = get_repetition_by_id(id)
-    return render_template("detail_repetition.html", r=r)
+    return render_template("detail_repetition.html",r=r)
+
+
+@app.route("/feuille-presence/")
+def feuille_presence():
+    r = Repetition.query.all()
+    return render_template("feuille_presence.html", r =r)
+
+class PresenceForm(FlaskForm):
+    musicien = SelectMultipleField("Choisis des musiciens", choices=[])
+    
+@app.route("/presence-repetition/<id>",methods=("GET","POST",))
+def presence_repetition(id):
+    r = get_repetition_by_id(id)
+    try:
+        if current_user.get_id_role()==1:
+            pass
+    except AttributeError:
+        return redirect(url_for("home"))
+    musiciens = User.query.filter_by(role_id=1).all()
+    form = PresenceForm()
+    l=[]
+    
+   
+    for m in musiciens:
+        l.append((m.mail, m.nom))
+    form.musicien.choices=l
+    
+    if form.is_submitted():
+        print("aaaaaaa")
+        reponse = form.musicien.data
+        for mail in reponse:
+            u = User.query.get(mail)
+            r.users.append(u)
+            u.repetitions.append(r)
+        db.session.commit()
+        print("aaaaaaaaaaaaaa")
+        return redirect(url_for("home"))
+    return render_template("presence_repetition.html", form=form,id= r.id)
+
+
+@app.route("/reponse_sond.html/<id>")
+def reponse_sondage(id):
+    try:
+        if current_user.get_id_role()==1:
+            return redirect(url_for("home")) 
+    except AttributeError:
+        return redirect(url_for("home"))
+    l = []
+    s = Sondage.query.get(id)
+    reponses = Reponse_sondage.query.filter_by(sondage_id=id).all()
+    for elem in reponses:
+        l.append((Reponses_possibles.query.get(elem.reponse).nom,User.query.get(elem.user_id).nom,User.query.get(elem.user_id).prenom))
+    return render_template("reponse_sond.html", l=l)
+
