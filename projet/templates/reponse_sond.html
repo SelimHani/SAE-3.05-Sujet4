@@ -1,6 +1,7 @@
 {% extends 'home.html' %} {% block styles %} 
 <link rel="stylesheet" href="{{ url_for('static', filename='reponse_sondage.css')}}" />
 {% endblock styles %} {% block content %}
+<button class="bouton" id="boutonRetour" onclick="location.href = '{{ url_for('repondre_sondage',id=sondage.id) }}';">RETOUR</button>
 <h1>{{sondage.activite.nom}}</h1>
 <main>
     <div id="scroll">
@@ -21,7 +22,7 @@
       </div>
       {%endfor%}
     </div>
-
+    <h2>Le {{sondage.activite.date}}</h2>
 </main>
 {% endblock content %}
 
