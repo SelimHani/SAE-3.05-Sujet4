@@ -7,8 +7,8 @@
     <div id="scroll">
       {% for i in l %}
       <div id="rep_sondage">
-        <p>{{i.1}}</p>
-        <p>{{i.2}} </p>
+        <p>{{i.1}} {{i.2}}</p>
+        <p>REP : {{i.0}}</p>
         {% if i.0 == "JE PARTICIPE" %}
         <div id="vert">
           <p> </p>
