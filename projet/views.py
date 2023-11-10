@@ -439,3 +439,13 @@ def reponse_sondage(id):
     for elem in reponses:
         l.append((Reponses_possibles.query.get(elem.reponse).nom,User.query.get(elem.user_id).nom,User.query.get(elem.user_id).prenom))
     return render_template("reponse_sond.html", l=l)
+
+@app.route("/gerer-presences/")
+def gerer_presences():
+    return render_template("gerer_presences.html")
+
+
+@app.route("/stats-musiciens/")
+def stats_musiciens():
+    u = User.query.filter_by(role_id=1)
+    return render_template("stats_musiciens.html", users=u)
