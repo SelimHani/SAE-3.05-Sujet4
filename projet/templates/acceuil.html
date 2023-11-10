@@ -47,7 +47,7 @@
 
         {% if prochain_evenement != None %}
             <ul>
-                {% if prochain_evenement.nom == ' ' %}
+                {% if prochain_evenement.nom == None %}
                 <li id="nom">Répétitions</li>
                 {% else %}
                 <li id="nom">{{prochain_evenement.nom }}</li>

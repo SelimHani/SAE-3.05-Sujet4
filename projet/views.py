@@ -14,17 +14,21 @@ def home():
 
     sondages = get_sondages()
     repetitions_activites = get_calendrier()
-
+    derniere_repetition = None
+    try:
+        derniere_repetition = repetitions_activites[-1]
+    except IndexError:
+        derniere_repetition = None
     if not current_user.is_authenticated:
         return render_template("acceuil_non_connecte.html")
     elif current_user.get_id_role() == 1:
-        return render_template("acceuil_musicien.html", sondages=sondages,)
-    derniere_repetition = None
-    try:
-         derniere_repetition = repetitions_activites[-1]
-    except IndexError:
-        derniere_repetition = None
-    return render_template("acceuil.html", sondages=sondages,prochain_evenement=derniere_repetition)
+        return render_template("acceuil_musicien.html",
+                               sondages=sondages,
+                               prochain_evenement=derniere_repetition)
+
+    return render_template("acceuil.html",
+                           sondages=sondages,
+                           prochain_evenement=derniere_repetition)
 
 @app.route("/sondages/")
 def sondages():
@@ -32,7 +36,7 @@ def sondages():
         if current_user.get_id_role()==1:
             pass
     except AttributeError:
-        return redirect(url_for("home"))   
+        return redirect(url_for("home"))
     sondages= get_sondages()
     return render_template(
         "sondages.html",sondages=sondages
@@ -249,8 +253,8 @@ def profil(id):
     now = func.now()
     passees = Repetition.query.filter(Repetition.date <= now).all()
     ratees = len(passees)-nb_participees
-    
-    return render_template(prochain_evenement_accueil"statistique.html", user= u, role=role, nb_participees=nb_participees, ratees=ratees)    
+
+    return render_template("statistique.html", user= u, role=role, nb_participees=nb_participees, ratees=ratees)
 
 
 class ChangeProfilForm(FlaskForm):
@@ -281,7 +285,7 @@ def changer_profil(id):
         u.nom = f.nom.data
         u.prenom = f.prenom.data
         u.num =  f.num.data
-        
+
         db.session.commit()
         return redirect(url_for("profil",id = id))
     return render_template("changer_profil.html", form=f,user=u )
@@ -313,8 +317,8 @@ def repondre_sondage(id):
 
         db.session.commit()
         return redirect(url_for("home"))
-    
-    
+
+
     lieu = s.activite.lieu
     lieuM =''
     for c in lieu:
@@ -387,7 +391,7 @@ def feuille_presence():
 
 class PresenceForm(FlaskForm):
     musicien = SelectMultipleField("Choisis des musiciens", choices=[])
-    
+
 @app.route("/presence-repetition/<id>",methods=("GET","POST",))
 def presence_repetition(id):
     r = get_repetition_by_id(id)
@@ -399,12 +403,12 @@ def presence_repetition(id):
     musiciens = User.query.filter_by(role_id=1).all()
     form = PresenceForm()
     l=[]
-    
-   
+
+
     for m in musiciens:
         l.append((m.mail, m.nom))
     form.musicien.choices=l
-    
+
     if form.is_submitted():
         print("aaaaaaa")
         reponse = form.musicien.data
@@ -422,7 +426,7 @@ def presence_repetition(id):
 def reponse_sondage(id):
     try:
         if current_user.get_id_role()==1:
-            return redirect(url_for("home")) 
+            return redirect(url_for("home"))
     except AttributeError:
         return redirect(url_for("home"))
     l = []
@@ -431,4 +435,3 @@ def reponse_sondage(id):
     for elem in reponses:
         l.append((Reponses_possibles.query.get(elem.reponse).nom,User.query.get(elem.user_id).nom,User.query.get(elem.user_id).prenom))
     return render_template("reponse_sond.html", l=l)
-
