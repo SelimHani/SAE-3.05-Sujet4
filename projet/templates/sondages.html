@@ -7,10 +7,12 @@
     <a href="{{ url_for('repondre_sondage',id=s.id)}}">
       {% if s.question %}
       <p>{{s.question}}</p>
+      <p>{{s.nombre_reponses()[0]}} / {{s.nombre_reponses()[1]}}</p>
       {%else%}
       <p>{{s.activite.nom}}</p>
       <p>{{s.activite.lieu}}</p>
       <p>{{s.activite.date}}</p>
+      <p>{{s.nombre_reponses()[0]}} / {{s.nombre_reponses()[1]}}</p>
       {%endif%}
     </a>
   </div>

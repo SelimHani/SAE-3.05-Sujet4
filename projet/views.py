@@ -39,6 +39,7 @@ def sondages():
     except AttributeError:
         return redirect(url_for("home"))
     sondages= get_sondages()
+    
     return render_template(
         "sondages.html",sondages=sondages
     )
@@ -388,13 +389,14 @@ def delete_sondage(id):
         return redirect(url_for("home"))
     s = Sondage.query.get(id)
     reponses = Reponse_sondage.query.filter_by(sondage_id=id).all()
-    a = s.activite
-    equipements = a.equipements
-    for e in equipements:
-        sql_query=text('DELETE FROM exiger WHERE activite_id = :activite_id AND equipement_id = :equipement_id')
-        db.session.execute(sql_query,{"activite_id":a.id,"equipement_id":e.id})
-    db.session.commit()
-    db.session.delete(a)
+    if s.activite:
+        a = s.activite
+        equipements = a.equipements
+        for e in equipements:
+            sql_query=text('DELETE FROM exiger WHERE activite_id = :activite_id AND equipement_id = :equipement_id')
+            db.session.execute(sql_query,{"activite_id":a.id,"equipement_id":e.id})
+        db.session.commit()
+        db.session.delete(a)
     for r in reponses:
         db.session.delete(r)
     db.session.commit()
@@ -472,3 +474,18 @@ def gerer_presences():
 def stats_musiciens():
     u = User.query.filter_by(role_id=1)
     return render_template("stats_musiciens.html", users=u)
+
+@app.route("/supprimer-musicien/<id>")
+def supprimer_musicien(id):
+    user = get_user_by_id(id)
+    try:
+        if current_user.get_id_role()==1 or user.get_id_role()==3:
+            return redirect(url_for("home"))
+    except AttributeError:
+        return redirect(url_for("home"))
+    reponses = Reponse_sondage.query.filter_by(user_id=id).all()
+    for r in reponses:
+        db.session.delete(r)
+    db.session.delete(user)
+    db.session.commit()
+    return redirect(url_for("home"))

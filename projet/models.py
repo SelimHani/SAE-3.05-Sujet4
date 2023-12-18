@@ -85,6 +85,12 @@ class Sondage(db.Model):
     def get_id(self):
         return self.id
     
+    def nombre_reponses(self):
+        reponses  = Reponse_sondage.query.filter_by(sondage_id=self.id).all()
+        repondu = len(reponses)
+        musiciens = len(User.query.all())
+        return repondu, musiciens
+        
 class Activite(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nom = db.Column(db.String(50))
@@ -107,9 +113,6 @@ class Reponses_possibles(db.Model):
 @login_manager.user_loader
 def load_user(mail): 
     return User.query.get(mail)
-
-def get_roles():
-    return Role.query.all()
 
 def get_role_by_id(id):
     return Role.query.get(id)
@@ -155,4 +158,6 @@ def get_sondage_by_question(question):
 
 def get_reponses_possibles_by_sondage(sondage):
     return sondage.reponses_possibles
+
+
 
