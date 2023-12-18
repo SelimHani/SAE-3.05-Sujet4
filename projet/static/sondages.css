@@ -14,7 +14,6 @@
     border: rgba(138, 87, 65, 1) solid 2.5px;
 }
 
-
 .sondage {
     margin: 1em;
     padding: 0em;
@@ -40,16 +39,12 @@
     background: rgba(240, 228, 212, 0.90);
 }
 
-
 .sondage a {
     text-decoration: none;
     display: flex;
     justify-content: space-between;
     flex: 1;
-
 }
-
-
 
 h1 {
     color: #F0E4D4;

@@ -147,3 +147,115 @@ section p{
     transform: scale(1.02);
     cursor: pointer;
 }
+
+@media screen and (max-width: 1000px) {
+    #pane {
+        grid-template-columns: 1fr;
+    }
+    
+
+
+    #consentement {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+   
+}
+
+@media screen and (max-width: 480px) {
+    
+    main{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #pane{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    #boutonValider{
+        width: 10rem;
+        height: 2.5rem;
+        margin: 0.5rem;
+        border: none;
+        border-radius: 0.625rem;
+        background: #954A33;
+        color: #FCF5F3;
+        font-family: Alata;
+        font-size: 1.25rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+    }
+
+    #boutonValider:hover{
+        transform: scale(1.02);
+        cursor: pointer;
+    }
+
+    #boutonRetour{
+        width: 5.5rem;
+        height: 2rem;
+        flex-shrink: 0;
+        color: #F0E4D4;
+        font-family: Alata;
+        font-size: 1rem;
+        font-style: normal;
+        line-height: normal;
+        border: none;
+        border-radius: 0.625rem;
+        background: #954A33;    
+        margin-top: 0.5em;
+        margin-left: 0.5em;
+    }
+
+    #boutonRetour:hover{
+        transform: scale(1.02);
+        cursor: pointer;
+    }
+
+    #reponse{
+        border: 1px solid #ccc;
+        width: 11.5em;
+        border-radius: 3px;
+        overflow: hidden;
+        background-color: #f0e4d4;
+        font-size: 1rem;
+    }
+
+    #reponse option{
+        color: #954A33;
+        font-family: Alata;
+        font-size: 1rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+    }
+
+    #pane{
+        margin: 1em;
+    }
+
+    #materiel ul{
+        margin-left: 0;
+    }
+
+    #materiel li{
+        color: rgba(240, 228, 212, 0.90);
+        font-family: Alata;
+        font-size: 1rem;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+        list-style: circle;
+        padding: 0;
+    }
+    
+}
