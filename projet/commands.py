@@ -9,6 +9,7 @@ def syncdb():
     r1 = Role(id=1, name="Musicien")
     r2 = Role(id=2, name="Directrice")
     r3 = Role(id=3, name="Responsable")
+    r4 = Role(id=4, name="Proche")
 
     e1 = Equipement(id=1, nom="Costume")
     e2 = Equipement(id=2, nom="Piano")
