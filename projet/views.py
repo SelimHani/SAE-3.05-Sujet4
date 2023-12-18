@@ -10,6 +10,10 @@ from hashlib import sha256
 from .models import *
 from sqlalchemy import text, func
 
+def est_present(adresse):
+    proche_entry = Proche.query.filter_by(proche_mail=adresse).first()
+    return proche_entry.musicien_mail if proche_entry else False
+
 
 @app.route("/")
 def home():
@@ -51,10 +55,26 @@ class LoginForm(FlaskForm):
         user = User.query.get(self.mail.data)
         if user is None:
             return None
+
+        if user.role_id == 4:
+            musicien = est_present(self.mail.data)
+            if musicien:
+                musicien_user = User.query.get(musicien)
+                if musicien_user:
+                    m = sha256()
+                    m.update(self.password.data.encode())
+                    passwd = m.hexdigest()                    
+                    return musicien_user if passwd == user.password else None
+            return None
+                    
+
         m = sha256()
         m.update(self.password.data.encode())
         passwd = m.hexdigest()
+
+        # Comparaison du hash des mots de passe
         return user if passwd == user.password else None
+
 
 
 class RegisterForm(FlaskForm):

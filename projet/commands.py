@@ -31,6 +31,10 @@ def syncdb():
     admin = User(mail = "admin@gmail.com", password=sha256("admin".encode()).hexdigest(), role_id=3, nom="admin", prenom="admin")
     
     user1 = User(mail = "a@gmail.com", password = sha256("a".encode()).hexdigest(),nom = "Poulet", prenom="Jule", role_id = 1)
+    user1000 = User(mail = "aaa@gmail.com", password = sha256("ab".encode()).hexdigest(),nom = "Leba", prenom="let", role_id = 4)
+
+    proche1 = Proche(id=1, musicien_mail ="a@gmail.com", proche_mail = "aaa@gmail.com")
+
     user2 = User(mail = "b@gmail.com", password = sha256("b".encode()).hexdigest(),nom = "Monton", prenom="Christophe", role_id = 1)
     user3 = User(mail = "c@gmail.com", password = sha256("c".encode()).hexdigest(),nom = "Doe", prenom="John", role_id = 1)
     user4 = User(mail = "d@gmail.com", password = sha256("d".encode()).hexdigest(),nom = "Joie", prenom="Marie", role_id = 1)
@@ -57,8 +61,8 @@ def syncdb():
     s5= Sondage(id=5, question="Etes-vous satisfait de notre application web", reponses_possibles=[re3,re4,re5])
     s6= Sondage(id=6, question="Quel est votre famille d'instruments favorite?", reponses_possibles=[re6,re7,re8,re9])
     
-    
     db.session.add(user1)
+    db.session.add(user1000)
     db.session.add(user2)
     db.session.add(user3)
     db.session.add(user4)
@@ -99,6 +103,7 @@ def syncdb():
     db.session.add(r2)
     db.session.add(r3)
     db.session.add(admin)
+    db.session.add(proche1)
     db.session.commit()
 
 @app.cli.command()

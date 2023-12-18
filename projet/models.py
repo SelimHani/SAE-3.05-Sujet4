@@ -55,12 +55,15 @@ class Reponse_sondage(db.Model):
     
 
 class Proche(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    user_mail = db.Column(db.String(50), db.ForeignKey('user.mail'))
+    id = db.Column(db.Integer, primary_key = True)
     proche_mail = db.Column(db.String(50), db.ForeignKey('user.mail'))
-    user = db.relationship("User", foreign_keys=[user_mail], backref='proche_of')
+    musicien_mail = db.Column(db.String(50), db.ForeignKey('user.mail'))
+    user = db.relationship("User", foreign_keys=[musicien_mail], backref='proche_of')
     proche = db.relationship("User", foreign_keys=[proche_mail], backref='proches')
 
+
+
+#fonction pour ajouter dans proches le new proche
 
 
 class User(db.Model,UserMixin):
