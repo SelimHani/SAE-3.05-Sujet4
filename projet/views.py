@@ -276,8 +276,9 @@ def profil(id):
     now = func.now()
     passees = Repetition.query.filter(Repetition.date <= now).all()
     ratees = len(passees)-nb_participees
+    pourcentage = int((nb_participees/len(passees))*100)
 
-    return render_template("statistique.html", user= u, role=role, nb_participees=nb_participees, ratees=ratees)
+    return render_template("statistique.html", user= u, role=role, nb_participees=nb_participees, ratees=ratees,pourcentage=pourcentage)
 
 
 class ChangeProfilForm(FlaskForm):

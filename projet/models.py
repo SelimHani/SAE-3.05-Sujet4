@@ -88,7 +88,7 @@ class Sondage(db.Model):
     def nombre_reponses(self):
         reponses  = Reponse_sondage.query.filter_by(sondage_id=self.id).all()
         repondu = len(reponses)
-        musiciens = len(User.query.all())
+        musiciens = len(User.query.filter_by(role_id=1).all())
         return repondu, musiciens
         
 class Activite(db.Model):

@@ -58,8 +58,9 @@
       <div></div>
       <div id="consentement">
         {{form.reponse()}}
-
+        {% if current_user.role_id==1 %}
         <button id="boutonValider" type="submit">Valider</button>
+        {% endif %}
       </div>
     </div>
   </form>
