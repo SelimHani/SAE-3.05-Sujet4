@@ -1,10 +1,9 @@
 #formulaire{
-    background-color: #c08f6f;
-    border-radius: 15px;
-    width: fit-content;
-    justify-content: center;
+    background-color: #8a5741;
+    border-radius: 5px;
+    width: 80%;
     margin: auto;
-    
+    text-align: center;
 }
 
 div button{
@@ -13,25 +12,29 @@ div button{
     background-color: #f0e4d4;
     color: #8a5741;
     border: none;
-    border-radius: 10px;
+    border-radius: 5px;
     font-weight: bold;
-    font-size: 1em;
+    font-size: 2em;
+    width: 80%;
 }
-
 
 
 h1{
     text-align: center;
     color: #f0e4d4;
-    margin-bottom: 10vh;
+    margin-bottom: 5vh;
+    text-decoration: underline;
+    font-size: 5vh;
 }
 
 main{
     background-color: #8A5741;
-    padding: 5vw;
     margin: auto;
-    border-radius: 10px;
-    padding-top: 5vh;
+    padding: 1em;
+    border-radius: 5px;
+    padding-top: 2vh;
+    padding-bottom: 2vh;
+    width: 80%;
 }
 
 button:hover{

@@ -1,10 +1,10 @@
 {% extends 'home.html' %} {% block styles %}
-<link rel="stylesheet" href="{{ url_for('static', filename='login.css')}}" />
+<link rel="stylesheet" href="{{ url_for('static', filename='detail_repetition.css')}}" />
 {% endblock styles %} {% block content %}
 <h1>Repetition</h1>
 <div id="formulaire">
-  {{r.lieu}}
-  {{r.date}}
+  <h2>{{r.lieu}}</h2>
+  <p>{{r.date}}</p>
   {% for e in r.equipements %}
   <p>{{e.nom}}</p>{% endfor %}
   <button onclick="location.href = '{{ url_for('repetitions') }}';">Retour</button>

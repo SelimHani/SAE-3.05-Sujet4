@@ -20,7 +20,7 @@ h2, h3{
 
 h2{
   color: white;
-  font-size: 10rem;
+  font-size: 10vw;
 }
 
 #stats{
@@ -34,7 +34,6 @@ button{
     border-radius: 15px;
     border:none;
     height: 40px;
-    width:90px;
 }
 
 
@@ -46,7 +45,7 @@ button[type="submit"]{
 h1{
   color:#8A5741;
   text-align: center;
-  font-size:7rem;
+  font-size:7vw;
   padding: 2px;
 }
 
@@ -64,20 +63,19 @@ h1{
 
 #lastname, #name, #date, #number{
   flex-basis: 50%;
-  font-size: 4rem;
+  font-size: 4vw;
   font-family: 'Anton', sans-serif;
 }
 
 #email{
   flex-basis: 100%;
-  font-size: 4rem;
+  font-size: 4vw;
   font-family: 'Anton', sans-serif;
 }
 
 .btnChange{
   display: flex;
   margin-bottom: 8rem;
-  margin-top: -12rem;
 
 }
 
@@ -120,11 +118,26 @@ h1{
 
 #violon{
   animation: animate 1700ms infinite alternate;
-  height: 50rem;
+  height: 50vw;
+  margin-top: 2vw;
+  z-index: -1;
 }
 
 @keyframes animate {
   100%{
     transform: translateY(-30px);
+  }
+}
+
+@media screen and (max-width: 700px) {
+  #stats{
+    flex-wrap: wrap;
+  }
+
+  #violon{
+    margin-top: 15vh;
+  }
+  #stats section{
+    height: 20vh;
   }
 }
