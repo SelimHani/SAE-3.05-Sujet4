@@ -45,7 +45,7 @@ p{
     text-align: center;
 }
 
-button:hover{
+#formulaire button:hover{
     transform: scale(1.02);
     box-shadow: 4px 4px 4px #492419;
 }
