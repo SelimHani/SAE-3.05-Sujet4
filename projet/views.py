@@ -9,6 +9,7 @@ from wtforms.validators import DataRequired, InputRequired, Length, Regexp
 from hashlib import sha256
 from .models import *
 from sqlalchemy import text, func
+from flask import jsonify
 
 def est_present(adresse):
     proche_entry = Proche.query.filter_by(proche_mail=adresse).first()
@@ -74,6 +75,51 @@ class LoginForm(FlaskForm):
 
         # Comparaison du hash des mots de passe
         return user if passwd == user.password else None
+
+class ProcheForm(FlaskForm):
+    nom = StringField("Nom", validators=[InputRequired()])
+    prenom = StringField("Prenom", validators=[InputRequired()])
+    mail = EmailField("Mail", validators=[InputRequired()])
+    date_nais = DateField("Date_de_naissance", validators=[InputRequired()])
+    num = StringField("Numéro", validators=[InputRequired(),Regexp('^[0-9]{10}$', message="Le numéro doit contenir uniquement des chiffres."),Length(min=10, max=10, message="Le numéro doit contenir 10 chiffres.")])
+    password = PasswordField("Password", validators=[InputRequired()])
+    musicien = SelectField('Musicien')
+    next = HiddenField()
+
+@app.route("/create-proche/", methods=("GET", "POST",))
+def creer_proche():
+    try:
+        if current_user.get_id_role()==1:
+            return redirect(url_for("home"))
+    except AttributeError:
+        return redirect(url_for("home"))
+    form =ProcheForm()
+    form.musicien.choices = [(user.mail, f"{user.nom} {user.prenom}") for user in User.query.filter_by(role_id=1).all()]
+
+    if form.is_submitted():
+        try:
+            password_hash = sha256(form.password.data.encode()).hexdigest()
+            role_id = 4
+            new_personne = User(mail=form.mail.data,password=password_hash,role_id=role_id,nom=form.nom.data,prenom=form.prenom.data,ddn=form.date_nais.data,num_tel=form.num.data)
+
+            proche = Proche(proche_mail=form.mail.data, musicien_mail=form.musicien.data)
+
+            db.session.add(proche)
+            db.session.add(new_personne)
+            db.session.commit()
+
+            flash('Utilisateur créé avec succès!', 'success')
+            return redirect(url_for("home"))
+        except sqlalchemy.exc.IntegrityError:
+            db.session.rollback()
+            afficher_popup('Ce mail est déjà utilisé,veuillez utiliser un autre.')
+
+        except sqlalchemy.exc.PendingRollbackError:
+            db.session.rollback()
+            afficher_popup('Ce mail est déjà utilisé, veuillez utiliser un autre .')
+    return render_template("create-proche.html", form=form)
+
+
 
 
 
