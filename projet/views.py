@@ -9,6 +9,7 @@ from wtforms.validators import DataRequired, InputRequired, Length, Regexp
 from hashlib import sha256
 from .models import *
 from sqlalchemy import text, func
+import unidecode
 
 
 @app.route("/")
@@ -373,11 +374,23 @@ def ajoute_equipement():
         return redirect(url_for("home"))
     form =EquipementForm()
     if form.is_submitted():
+        nom_equipement = form.nom.data
+        nom_equipement = nom_equipement.upper() # en majuscule
+        nom_equipement = unidecode.unidecode(nom_equipement) # suppression des accents qui restent
+        equipements = get_equipements()
+        
+        for eq in equipements:
+            nom = eq.get_nom()
+            nom = nom.upper()
+            nom =unidecode.unidecode(nom)
+            if nom == nom_equipement:
+                return render_template("ajoute_equipement.html", form=form ,erreur=1)         
         e = Equipement(nom=form.nom.data)
         db.session.add(e)
         db.session.commit()
         form.nom.data  = ""
-    return render_template("ajoute_equipement.html", form=form )
+        return render_template("ajoute_equipement.html", form=form ,erreur=0)
+    return render_template("ajoute_equipement.html", form=form)
 
 
 @app.route("/delete-sondage/<id>")

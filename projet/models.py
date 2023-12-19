@@ -103,6 +103,9 @@ class Activite(db.Model):
 class Equipement(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nom = db.Column(db.String(100))
+    
+    def get_nom(self):
+        return self.nom
 
 class Reponses_possibles(db.Model):
     id = db.Column(db.Integer, primary_key= True)
