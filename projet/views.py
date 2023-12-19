@@ -9,7 +9,12 @@ from wtforms.validators import DataRequired, InputRequired, Length, Regexp
 from hashlib import sha256
 from .models import *
 from sqlalchemy import text, func
+import unidecode
+from flask import jsonify
 
+def est_present(adresse):
+    proche_entry = Proche.query.filter_by(proche_mail=adresse).first()
+    return proche_entry.musicien_mail if proche_entry else False
 
 @app.route("/")
 def home():
@@ -39,6 +44,7 @@ def sondages():
     except AttributeError:
         return redirect(url_for("home"))
     sondages= get_sondages()
+    
     return render_template(
         "sondages.html",sondages=sondages
     )
@@ -51,10 +57,71 @@ class LoginForm(FlaskForm):
         user = User.query.get(self.mail.data)
         if user is None:
             return None
+
+        if user.role_id == 4:
+            musicien = est_present(self.mail.data)
+            if musicien:
+                musicien_user = User.query.get(musicien)
+                if musicien_user:
+                    m = sha256()
+                    m.update(self.password.data.encode())
+                    passwd = m.hexdigest()                    
+                    return musicien_user if passwd == user.password else None
+            return None
+                    
+
         m = sha256()
         m.update(self.password.data.encode())
         passwd = m.hexdigest()
+
+        # Comparaison du hash des mots de passe
         return user if passwd == user.password else None
+
+class ProcheForm(FlaskForm):
+    nom = StringField("Nom", validators=[InputRequired()])
+    prenom = StringField("Prenom", validators=[InputRequired()])
+    mail = EmailField("Mail", validators=[InputRequired()])
+    date_nais = DateField("Date_de_naissance", validators=[InputRequired()])
+    num = StringField("Numéro", validators=[InputRequired(),Regexp('^[0-9]{10}$', message="Le numéro doit contenir uniquement des chiffres."),Length(min=10, max=10, message="Le numéro doit contenir 10 chiffres.")])
+    password = PasswordField("Password", validators=[InputRequired()])
+    musicien = SelectField('Musicien')
+    next = HiddenField()
+
+@app.route("/create-proche/", methods=("GET", "POST",))
+def creer_proche():
+    try:
+        if current_user.get_id_role()==1:
+            return redirect(url_for("home"))
+    except AttributeError:
+        return redirect(url_for("home"))
+    form =ProcheForm()
+    form.musicien.choices = [(user.mail, f"{user.nom} {user.prenom}") for user in User.query.filter_by(role_id=1).all()]
+
+    if form.is_submitted():
+        try:
+            password_hash = sha256(form.password.data.encode()).hexdigest()
+            role_id = 4
+            new_personne = User(mail=form.mail.data,password=password_hash,role_id=role_id,nom=form.nom.data,prenom=form.prenom.data,ddn=form.date_nais.data,num_tel=form.num.data)
+
+            proche = Proche(proche_mail=form.mail.data, musicien_mail=form.musicien.data)
+
+            db.session.add(proche)
+            db.session.add(new_personne)
+            db.session.commit()
+
+            flash('Utilisateur créé avec succès!', 'success')
+            return redirect(url_for("home"))
+        except sqlalchemy.exc.IntegrityError:
+            db.session.rollback()
+            afficher_popup('Ce mail est déjà utilisé,veuillez utiliser un autre.')
+
+        except sqlalchemy.exc.PendingRollbackError:
+            db.session.rollback()
+            afficher_popup('Ce mail est déjà utilisé, veuillez utiliser un autre .')
+    return render_template("create-proche.html", form=form)
+
+
+
 
 
 class RegisterForm(FlaskForm):
@@ -274,8 +341,9 @@ def profil(id):
     now = func.now()
     passees = Repetition.query.filter(Repetition.date <= now).all()
     ratees = len(passees)-nb_participees
+    pourcentage = int((nb_participees/len(passees))*100)
 
-    return render_template("statistique.html", user= u, role=role, nb_participees=nb_participees, ratees=ratees)
+    return render_template("statistique.html", user= u, role=role, nb_participees=nb_participees, ratees=ratees,pourcentage=pourcentage)
 
 
 class ChangeProfilForm(FlaskForm):
@@ -372,11 +440,23 @@ def ajoute_equipement():
         return redirect(url_for("home"))
     form =EquipementForm()
     if form.is_submitted():
+        nom_equipement = form.nom.data
+        nom_equipement = nom_equipement.upper() # en majuscule
+        nom_equipement = unidecode.unidecode(nom_equipement) # suppression des accents qui restent
+        equipements = get_equipements()
+        
+        for eq in equipements:
+            nom = eq.get_nom()
+            nom = nom.upper()
+            nom =unidecode.unidecode(nom)
+            if nom == nom_equipement:
+                return render_template("ajoute_equipement.html", form=form ,erreur=1)         
         e = Equipement(nom=form.nom.data)
         db.session.add(e)
         db.session.commit()
         form.nom.data  = ""
-    return render_template("ajoute_equipement.html", form=form )
+        return render_template("ajoute_equipement.html", form=form ,erreur=0)
+    return render_template("ajoute_equipement.html", form=form)
 
 
 @app.route("/delete-sondage/<id>")
@@ -388,13 +468,14 @@ def delete_sondage(id):
         return redirect(url_for("home"))
     s = Sondage.query.get(id)
     reponses = Reponse_sondage.query.filter_by(sondage_id=id).all()
-    a = s.activite
-    equipements = a.equipements
-    for e in equipements:
-        sql_query=text('DELETE FROM exiger WHERE activite_id = :activite_id AND equipement_id = :equipement_id')
-        db.session.execute(sql_query,{"activite_id":a.id,"equipement_id":e.id})
-    db.session.commit()
-    db.session.delete(a)
+    if s.activite:
+        a = s.activite
+        equipements = a.equipements
+        for e in equipements:
+            sql_query=text('DELETE FROM exiger WHERE activite_id = :activite_id AND equipement_id = :equipement_id')
+            db.session.execute(sql_query,{"activite_id":a.id,"equipement_id":e.id})
+        db.session.commit()
+        db.session.delete(a)
     for r in reponses:
         db.session.delete(r)
     db.session.commit()
@@ -472,3 +553,18 @@ def gerer_presences():
 def stats_musiciens():
     u = User.query.filter_by(role_id=1)
     return render_template("stats_musiciens.html", users=u)
+
+@app.route("/supprimer-musicien/<id>")
+def supprimer_musicien(id):
+    user = get_user_by_id(id)
+    try:
+        if current_user.get_id_role()==1 or user.get_id_role()==3:
+            return redirect(url_for("home"))
+    except AttributeError:
+        return redirect(url_for("home"))
+    reponses = Reponse_sondage.query.filter_by(user_id=id).all()
+    for r in reponses:
+        db.session.delete(r)
+    db.session.delete(user)
+    db.session.commit()
+    return redirect(url_for("home"))
