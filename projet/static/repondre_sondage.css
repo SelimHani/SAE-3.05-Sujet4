@@ -68,6 +68,7 @@ section p{
     background-color: #C08F6F;
     box-shadow: 4px 4px 4px #442b20;
     border-radius: 1vw;
+    justify-content: center;
 }
 
 #date{
@@ -109,11 +110,13 @@ section p{
 
 #reponse{
     border: 1px solid #ccc;
-    width: 11.5em;
-    border-radius: 3px;
+    width: 12em;
+    border-radius: 5px;
     overflow: hidden;
     background-color: #f0e4d4;
     font-size: 1rem;
+    padding: 0.3em;
+    margin: 0.66em;
 }
 
 
@@ -147,6 +150,12 @@ section p{
     transform: scale(1.02);
     cursor: pointer;
 }
+
+
+#consentement{
+    margin: 1em;
+}
+
 
 @media screen and (max-width: 1000px) {
     #pane {
@@ -259,3 +268,4 @@ section p{
     }
     
 }
+

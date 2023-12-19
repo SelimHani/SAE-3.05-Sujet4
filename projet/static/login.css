@@ -1,43 +1,57 @@
 #formulaire {
   background-color: #c08f6f;
   border-radius: 15px;
-  margin-left: 30%;
-  margin-right: 30%;
+  padding: 1vh;
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 3em;
 }
 h1 {
   color: #8a5741;
-  padding: 50px;
   text-align: center;
-  font-size: 100px;
+  font-size: 10vw;
 }
 div {
-  padding: 5px;
-  position: relative;
+  text-align: center;
 }
 p {
   color: #f0e4d4;
+  margin: 0.5em;
+  font-size: 2vw;
 }
-.test {
+.test{
   background: #f0e4d4;
   border: none;
   outline: none;
-  border-radius: 15px;
+  border-radius: 5px;
   color: #8a5741;
-  padding: 2px 5rem 5px 10px;
-  margin: 0;
   text-decoration: none;
+  width: 70%;
+  height: 2em;
+  padding: 0.1em;
+  padding-left: 0.5em;
+  font-size: 2vw;
 }
 
 #bouton {
   text-align: center;
+  margin-top: 0.5em;
 }
 button {
   color: #f0e4d4;
   background-color: #8a5741;
-  border-radius: 15px;
+  border-radius: 5px;
   border: none;
-  height: 40px;
-  width: 90px;
+  height: fit-content;
+  width: fit-content;
+  font-size: 2vw;
+  padding: 0.33em;
+  margin: 0.5em;
+  
 }
 
+#sideNavBar{
+  margin: 0;
+  padding: 0;
+}
 
