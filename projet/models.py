@@ -1,6 +1,6 @@
 from flask_login import UserMixin
 from .app import db, login_manager
-
+from datetime import datetime
 
 participer = db.Table('participer',
     db.Column('user_id', db.String(50),
@@ -127,6 +127,7 @@ def get_roles():
     return Role.query.all()
 
 def get_calendrier():
+
     a= Activite.query.all()
     b = Repetition.query.all()
     res = a+b
