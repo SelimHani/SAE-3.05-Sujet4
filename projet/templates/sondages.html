@@ -4,13 +4,19 @@
   <h1>Prochainement :</h1>
   {% for s in sondages [::-1][0:6] %}
   <div class="sondage">
+    {% if current_user.role_id==1 %}
     <a href="{{ url_for('repondre_sondage',id=s.id)}}">
+    {% else %}
+    <a href="{{ url_for('reponse_sondage',id=s.id)}}">
+    {% endif %}
       {% if s.question %}
       <p>{{s.question}}</p>
+      <p>{{s.nombre_reponses()[0]}} / {{s.nombre_reponses()[1]}}</p>
       {%else%}
       <p>{{s.activite.nom}}</p>
       <p>{{s.activite.lieu}}</p>
       <p>{{s.activite.date}}</p>
+      <p>{{s.nombre_reponses()[0]}} / {{s.nombre_reponses()[1]}}</p>
       {%endif%}
     </a>
   </div>
