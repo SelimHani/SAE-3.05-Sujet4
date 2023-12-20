@@ -22,7 +22,7 @@ def home():
     repetitions_activites = get_calendrier()
     derniere_repetition = None
     try:
-        derniere_repetition = repetitions_activites[-1]
+        derniere_repetition = repetitions_activites[0:5]
     except IndexError:
         derniere_repetition = None
     if not current_user.is_authenticated:
@@ -48,6 +48,21 @@ def sondages():
     return render_template(
         "sondages.html",sondages=sondages
     )
+    
+@app.route("/sondages-finis/")
+def sondages_finis():
+    try:
+        if current_user.get_id_role()==1:
+            pass
+    except AttributeError:
+        return redirect(url_for("home"))
+    sondages_finis= get_sondages_finis()
+    
+    return render_template(
+        "sondages_finis.html",sondages=sondages_finis
+    )
+    
+    
 class LoginForm(FlaskForm):
     mail = StringField("Email",validators=[InputRequired()])
     password = PasswordField("Password",validators=[InputRequired()])
@@ -143,22 +158,19 @@ class RepetitionForm(FlaskForm):
     equipements = SelectMultipleField("Choisis des équipements", choices=[])
 
 
-class SondageParticipationForm(FlaskForm):
-    nomActivite = StringField("nomActivite")
-    lieuActivite = StringField("LieuActivite")
-    dateActivite = DateField()
-
 class SondageForm(FlaskForm):
     nomActivite = StringField("nomActivite",validators=[InputRequired()])
     lieuActivite = StringField("LieuActivite",validators=[InputRequired()])
     dateActivite = DateField(validators=[InputRequired()])
     descriptionActivite = TextAreaField("descriptionActivite")
     equipements = SelectMultipleField("Choisis des équipements", choices=[])
+    dateFin = DateField(validators=[InputRequired()])
     next = HiddenField()
 
 class SondageSatisfactionForm(FlaskForm):
     question =  StringField("Question",validators=[InputRequired()])
     reponses = StringField("Reponses_possibles",validators=[InputRequired()])
+    dateFin = DateField(validators=[InputRequired()])
     next = HiddenField()
 
 
@@ -180,7 +192,7 @@ def creer_sondage_participation():
         form.next.data = request.args.get("next")
     else:
         a = Activite(nom=form.nomActivite.data, lieu=form.lieuActivite.data, date=form.dateActivite.data,description=form.descriptionActivite.data)
-        s = Sondage(activite=a)
+        s = Sondage(activite=a,date_fin = form.dateFin.data)
         a.sondage_id= s.id
         r1 = get_reponses_possibles_by_id(1)
         r2 = get_reponses_possibles_by_id(2)
@@ -216,7 +228,7 @@ def creer_sondage_satisfaction():
         r = Reponses_possibles(nom=reponse)
         db.session.add(r)
         if get_sondage_by_question(question) == None:
-            s = Sondage(question = form.question.data)
+            s = Sondage(question = form.question.data,date_fin = form.dateFin.data)
             s.reponses_possibles.append(r)
             db.session.add(s)
             db.session.commit()
@@ -501,6 +513,7 @@ class PresenceForm(FlaskForm):
 @app.route("/presence-repetition/<id>",methods=("GET","POST",))
 def presence_repetition(id):
     r = get_repetition_by_id(id)
+    participent = get_musiciens_repetition(id)
     try:
         if current_user.get_id_role()==1:
             pass
@@ -520,12 +533,11 @@ def presence_repetition(id):
         reponse = form.musicien.data
         for mail in reponse:
             u = User.query.get(mail)
-            r.users.append(u)
-            u.repetitions.append(r)
+            if u not in r.users:
+                r.users.append(u)
+                u.repetitions.append(r)
         db.session.commit()
-        print("aaaaaaaaaaaaaa")
-        return redirect(url_for("home"))
-    return render_template("presence_repetition.html", form=form,id= r.id)
+    return render_template("presence_repetition.html", form=form,id= r.id,musiciens =participent)
 
 
 @app.route("/reponse_sond.html/<id>")
