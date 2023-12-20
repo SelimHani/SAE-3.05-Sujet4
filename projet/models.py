@@ -62,10 +62,6 @@ class Proche(db.Model):
     proche = db.relationship("User", foreign_keys=[proche_mail], backref='proches')
 
 
-
-#fonction pour ajouter dans proches le new proche
-
-
 class User(db.Model,UserMixin):
     mail = db.Column(db.String(50), primary_key=True)
     password = db.Column(db.String(200))
@@ -103,6 +99,22 @@ class Sondage(db.Model):
         repondu = len(reponses)
         musiciens = len(User.query.filter_by(role_id=1).all())
         return repondu, musiciens
+    
+    def get_pourcentage_rep(self):
+        reponses  = Reponse_sondage.query.filter_by(sondage_id=self.id).all()
+
+        personne =Reponse_sondage.query.filter_by(sondage_id=self.id).with_entities(Reponse_sondage.user_id, Reponse_sondage.reponse).all()
+
+        reponses_possibless = {elem.nom: 0 for elem in Sondage.query.get(self.id).reponses_possibles}
+        for elem in personne:
+            type = Reponses_possibles.query.get(elem[1]).nom
+            if type in reponses_possibless.keys():
+                reponses_possibless[type] += 1
+        nb_reponses = len(personne)
+        final = ""
+        for key, value in reponses_possibless.items():
+            final += key + " : " + str(value)+ " ,"
+        return final
         
 class Activite(db.Model):
     id = db.Column(db.Integer, primary_key=True)
