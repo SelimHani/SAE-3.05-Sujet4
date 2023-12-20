@@ -522,14 +522,7 @@ def presence_repetition(id):
     musiciens = User.query.filter_by(role_id=1).all()
     form = PresenceForm()
     l=[]
-
-
-    for m in musiciens:
-        l.append((m.mail, m.nom+" "+m.prenom))
-    form.musicien.choices=l
-
     if form.is_submitted():
-        
         reponse = form.musicien.data
         for mail in reponse:
             u = User.query.get(mail)
@@ -538,8 +531,24 @@ def presence_repetition(id):
                 u.repetitions.append(r)
         db.session.commit()
     participent = get_musiciens_repetition(id)
+    for m in musiciens:
+        if m not in Repetition.query.get(id).users:
+            l.append((m.mail, m.nom+" "+m.prenom))
+    form.musicien.choices=l
     return render_template("presence_repetition.html", form=form,id= r.id,musiciens =participent)
 
+@app.route('/retirer/<email>/<id>', methods=['GET', 'POST'])
+def retirer(email, id):
+    form = PresenceForm()
+    l=[]
+    
+    u = User.query.get(email)
+    r = Repetition.query.get(id)
+    r.users.remove(u)
+    db.session.commit()
+    reponse_sondage(id)
+    return render_template("presence_repetition.html", form=form,id= r.id,musiciens =participent)
+ 
 
 @app.route("/reponse_sond.html/<id>")
 def reponse_sondage(id):
