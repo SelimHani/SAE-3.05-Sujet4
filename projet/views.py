@@ -513,7 +513,7 @@ class PresenceForm(FlaskForm):
 @app.route("/presence-repetition/<id>",methods=("GET","POST",))
 def presence_repetition(id):
     r = get_repetition_by_id(id)
-    participent = get_musiciens_repetition(id)
+    
     try:
         if current_user.get_id_role()==1:
             pass
@@ -529,7 +529,7 @@ def presence_repetition(id):
     form.musicien.choices=l
 
     if form.is_submitted():
-        print("aaaaaaa")
+        
         reponse = form.musicien.data
         for mail in reponse:
             u = User.query.get(mail)
@@ -537,6 +537,7 @@ def presence_repetition(id):
                 r.users.append(u)
                 u.repetitions.append(r)
         db.session.commit()
+    participent = get_musiciens_repetition(id)
     return render_template("presence_repetition.html", form=form,id= r.id,musiciens =participent)
 
 

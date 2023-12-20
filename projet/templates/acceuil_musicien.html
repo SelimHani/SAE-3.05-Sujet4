@@ -38,19 +38,19 @@
     </div>
     <div id="pane3">
         <h2>Prochains événements</h2>
-
+        <div id="contener">
         {% if prochain_evenement != None %}
         
         {% for ra in prochain_evenement %}
         {% if ra.nom %} 
-            <a href="{{url_for("repondre_sondage",id=ra.id)}}">
+            <a class="tiles" href="{{url_for("repondre_sondage",id=ra.id)}}">
                 <div class="repetition">
                     <p>{{ra.nom}}</p>
                     <p>{{ra.date}}</p>
                 </div>
             </a>
         {% else %}
-            <a href="{{url_for("detail_repetition",id=ra.id)}}">
+            <a class="tiles" href="{{url_for("detail_repetition",id=ra.id)}}">
                 <div class="repetition">
                     <p>Repetition</p>
                     <p>{{ra.date}}</p>
@@ -60,7 +60,7 @@
         {% endfor %}
 
         {%endif%}
-        
+        </div>
     </div>
     <div id="pane4">
         <h2>Un problème technique ? </h2>

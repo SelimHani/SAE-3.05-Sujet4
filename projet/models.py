@@ -106,14 +106,12 @@ class Sondage(db.Model):
     def get_pourcentage_rep(self):
         personne =Reponse_sondage.query.filter_by(sondage_id=self.id).with_entities(Reponse_sondage.user_id, Reponse_sondage.reponse).all()
         reponses_possibless = {elem.nom: 0 for elem in Sondage.query.get(self.id).reponses_possibles}
+        per = len(personne)
         for elem in personne:
             type = Reponses_possibles.query.get(elem[1]).nom
             if type in reponses_possibless.keys():
                 reponses_possibless[type] += 1
-        final = ""
-        for key, value in reponses_possibless.items():
-            final += key + " : " + str(value)+ " ,"
-        return final
+        return reponses_possibless
 
     def get_date(self):
         return self.date_fin
@@ -182,7 +180,7 @@ def get_sondages():
     s = Sondage.query.filter(Sondage.date_fin >=func.now()).all()
     return sorted(s,key=lambda item: item.date_fin,reverse=True)
 
-def get_sondages_finis():
+def get_sondages_finis(): 
     s = Sondage.query.filter(Sondage.date_fin <=func.now()).all()
     return sorted(s,key=lambda item: item.date_fin,reverse=True)
 

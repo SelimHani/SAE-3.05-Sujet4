@@ -57,3 +57,8 @@ h2{
 button:hover{
     transform: scale(1.02);
 }
+
+p{
+    text-align: center;
+    color:#f0e4d4 ;
+}

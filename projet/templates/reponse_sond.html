@@ -3,11 +3,19 @@
 {% endblock styles %} {% block content %}
 <button class="bouton" id="boutonRetour" onclick="location.href = '{{ url_for('sondages') }}';">RETOUR</button>
 <h1>{{sondage.activite.nom}}</h1>
+
 {% if sondage.question %}<h1>{{sondage.question}}</h1>{% endif %}
+
+<p class="rep"> Réponses : {{sondage.nombre_reponses()[0]}} / {{sondage.nombre_reponses()[1]}}</p>
+
+<div id = "stat">
+  {% for key, value in sondage.get_pourcentage_rep().items() %}
+  <p class = "rep">{{key}} : {{value}} </p>
+  {% endfor %}
+</div>
 
 <main>
     <div id="scroll">
-      <p> {{sondage.get_pourcentage_rep()}}</p>
       {% for i in l %}
       <div id="rep_sondage">
         <p>{{i.1}} {{i.2}}</p>
