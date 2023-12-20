@@ -45,6 +45,8 @@
     mix-blend-mode: soft-light;
     display: block;
     margin: auto;
+    width: 5em;
+    height: 10em;
 }
 
 
