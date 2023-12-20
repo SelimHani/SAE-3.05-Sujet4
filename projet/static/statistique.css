@@ -63,13 +63,13 @@ h1{
 
 #lastname, #name, #date, #number{
   flex-basis: 50%;
-  font-size: 4.5vw;
+  font-size: 4vw;
   font-family: 'Anton', sans-serif;
 }
 
 #email{
   flex-basis: 100%;
-  font-size: 4.5vw;
+  font-size: 4vw;
   font-family: 'Anton', sans-serif;
 }
 
