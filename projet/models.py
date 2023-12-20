@@ -101,16 +101,12 @@ class Sondage(db.Model):
         return repondu, musiciens
     
     def get_pourcentage_rep(self):
-        reponses  = Reponse_sondage.query.filter_by(sondage_id=self.id).all()
-
         personne =Reponse_sondage.query.filter_by(sondage_id=self.id).with_entities(Reponse_sondage.user_id, Reponse_sondage.reponse).all()
-
         reponses_possibless = {elem.nom: 0 for elem in Sondage.query.get(self.id).reponses_possibles}
         for elem in personne:
             type = Reponses_possibles.query.get(elem[1]).nom
             if type in reponses_possibless.keys():
                 reponses_possibless[type] += 1
-        nb_reponses = len(personne)
         final = ""
         for key, value in reponses_possibless.items():
             final += key + " : " + str(value)+ " ,"
