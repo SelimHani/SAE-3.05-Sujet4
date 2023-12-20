@@ -15,6 +15,7 @@
         <h2>Les derniers sondages :</h2>
         {% for s in sondages[::-1][0:6]%}
         <div class="sondage">
+            <p>{{s.jours_restants()}} jours restants</p>
             <a href="{{ url_for('repondre_sondage',id=s.id)}}">
             {% if s.question %}<p>{{s.question}}</p>
             {%else%}
@@ -43,20 +44,27 @@
         </ul>
     </div>
     <div id="pane3">
-        <h2>Prochain événement</h2>
+        <h2>Prochains événements</h2>
 
         {% if prochain_evenement != None %}
-            <ul>
-                {% if prochain_evenement.nom == None %}
-                <li id="nom">Répétitions</li>
-                {% else %}
-                <li id="nom">{{prochain_evenement.nom }}</li>
-                {%endif%}
-                <li id="lieu">{{prochain_evenement.lieu }}</li>
-                <li></li>
-                <li id="date">Le {{prochain_evenement.date }}</li>
-            </ul>
         
+        {% for ra in prochain_evenement %}
+        {% if ra.nom %} 
+            <a href="{{url_for("repondre_sondage",id=ra.id)}}">
+                <div class="repetition">
+                    <p>{{ra.nom}}</p>
+                    <p>{{ra.date}}</p>
+                </div>
+            </a>
+        {% else %}
+            <a href="{{url_for("detail_repetition",id=ra.id)}}">
+                <div class="repetition">
+                    <p>Repetition</p>
+                    <p>{{ra.date}}</p>
+                </div>
+            </a>  
+        {% endif %}
+        {% endfor %}
 
         {%endif%}
 

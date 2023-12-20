@@ -50,16 +50,16 @@ def syncdb():
     
     a1 = Activite(id=1, nom="Concert de Noel", lieu="salle des fêtes",date="2023-12-24",equipements=[e1,e2,e3,e4,e5,e6],description="concert de noel avec tout l'orchestre")
     a2 = Activite(id=2, nom="Orchestre", lieu="studio Hollywood",date="2024-03-12",equipements=[e1,e2,e3,e4,e5,e6],description="orchestre pour film à Hollywood")
-    a3 = Activite(id=3, nom="Concert de des percussions", lieu="gymnase sportif",date="2023-11-20",equipements=[e6],description="concert de tambour, batterie, triangle")
+    a3 = Activite(id=3, nom="Concert de des percussions", lieu="gymnase sportif",date="2023-12-28",equipements=[e6],description="concert de tambour, batterie, triangle")
     a4 = Activite(id=4, nom="Carnaval", lieu="salle des fêtes",date="2024-01-20",equipements=[e1,e2,e3,e4],description="défilé carnaval depart salle des fêtes")
     
-    s1= Sondage(id=1, activite=a1, reponses_possibles=[re1,re2])
-    s2= Sondage(id=2, activite=a2, reponses_possibles=[re1,re2])
-    s3= Sondage(id=3, activite=a3, reponses_possibles=[re1,re2])
-    s4= Sondage(id=4, activite=a4, reponses_possibles=[re1,re2])
+    s1= Sondage(id=1, activite=a1, reponses_possibles=[re1,re2],date_fin ="2023-12-23")
+    s2= Sondage(id=2, activite=a2, reponses_possibles=[re1,re2],date_fin ="2024-01-20")
+    s3= Sondage(id=3, activite=a3, reponses_possibles=[re1,re2],date_fin ="2023-12-30")
+    s4= Sondage(id=4, activite=a4, reponses_possibles=[re1,re2],date_fin ="2024-01-10")
     
-    s5= Sondage(id=5, question="Etes-vous satisfait de notre application web", reponses_possibles=[re3,re4,re5])
-    s6= Sondage(id=6, question="Quel est votre famille d'instruments favorite?", reponses_possibles=[re6,re7,re8,re9])
+    s5= Sondage(id=5, question="Etes-vous satisfait de notre application web", reponses_possibles=[re3,re4,re5],date_fin ="2023-12-24")
+    s6= Sondage(id=6, question="Quel est votre famille d'instruments favorite?", reponses_possibles=[re6,re7,re8,re9],date_fin ="2024-01-01")
     
     db.session.add(user1)
     db.session.add(user1000)
