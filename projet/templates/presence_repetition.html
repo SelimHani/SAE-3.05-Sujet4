@@ -15,8 +15,13 @@
       <div class="divForm" id="nomActi">
         <h2>Qui a participé à cette répétition ?</h2>
         <div id="Questions">
-          <div id="scroll"> 
-            {{ form.musicien(id_="form" ,placeholder ="musiciens")}}
+          <div id="musiciens"> 
+            {% for musicien in form.musicien %}
+              <section>
+                <input type="checkbox" id="{{ musicien.id }}" name="{{ musicien.name }}" value="{{ musicien.value }}" {% if musicien.checked %}checked{% endif %}>
+                <label for="{{ musicien.id }}">{{ musicien.label }}</label>
+              </section>  
+            {% endfor %}
           </div>
         </div>
         <div id="buttons">

@@ -57,3 +57,20 @@ h2{
 button:hover{
     transform: scale(1.02);
 }
+
+#musiciens{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+#musiciens label{
+    color: #f0e4d4;
+    font-size: 1.3em;
+}
+
+#musiciens input{
+    height: 1.5em;
+    width: 1.5em;
+}
+
