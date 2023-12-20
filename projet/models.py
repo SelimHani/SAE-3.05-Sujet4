@@ -192,5 +192,6 @@ def get_sondage_by_question(question):
 def get_reponses_possibles_by_sondage(sondage):
     return sondage.reponses_possibles
 
-
-
+def get_musiciens_repetition(id):
+    r = Repetition.query.get(id)
+    return r.users
