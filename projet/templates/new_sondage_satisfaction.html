@@ -14,8 +14,10 @@
     {{ form.hidden_tag() }}
     <div id="formulaireSondage">
       <div class="divForm" id="nomActi">
-        <h2>Question :</h2>
+        <h2>Question et date limite :</h2>
+        
         <div id="Questions">
+          {{ form.dateFin(id_="form" ,placeholder ="")}}
           {{ form.question(id_="form" ,placeholder ="Question ...")}}
           {{ form.reponses(id_="form" ,placeholder ="Réponse possible ...")}}
         </div>

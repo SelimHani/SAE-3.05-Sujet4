@@ -9,6 +9,38 @@ main {
     
 }
 
+
+.tiles{
+    width: fit-content;
+    height: fit-content;
+    flex-grow: 1;
+    margin: auto;
+    margin-top: 2em;
+    text-decoration: none;
+}
+.tiles p {
+    width: fit-content;
+    height: fit-content;
+    margin: auto;
+    
+}
+#contener{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    margin: auto;
+}
+.repetition{
+    background-color: #8A5741;
+    border-radius: 5px;
+    border: none solid ;
+    padding: 0.25em;
+    width: fit-content;
+    height: fit-content;
+    margin: auto;
+    
+}
+
 div {
     border-radius: 15px;
     margin: 20px; 
