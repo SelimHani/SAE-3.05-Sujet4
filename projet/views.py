@@ -13,11 +13,21 @@ import unidecode
 from flask import jsonify
 
 def est_present(adresse):
+    """Vérifie si un proche est associé au musicien
+
+    Args:
+        adresse (string): adresse mail du musicien
+
+    Returns:
+        boolean
+    """
     proche_entry = Proche.query.filter_by(proche_mail=adresse).first()
     return proche_entry.musicien_mail if proche_entry else False
 
 @app.route("/")
 def home():
+    """Affiche la page d'accueil
+    """
     sondages = get_sondages()
     repetitions_activites = get_calendrier()
     derniere_repetition = None
@@ -38,6 +48,8 @@ def home():
 
 @app.route("/sondages/")
 def sondages():
+    """Affiche la page des sondages en cours
+    """
     try:
         if current_user.get_id_role()==1:
             pass
@@ -51,6 +63,8 @@ def sondages():
     
 @app.route("/sondages-finis/")
 def sondages_finis():
+    """Affiche la page des sondages finis
+    """
     try:
         if current_user.get_id_role()==1:
             pass
@@ -69,10 +83,11 @@ class LoginForm(FlaskForm):
     next = HiddenField()
 
     def get_authenticated_user(self):
+        """Renvoie l'utilisateur connecté
+        """
         user = User.query.get(self.mail.data)
         if user is None:
             return None
-
         if user.role_id == 4:
             musicien = est_present(self.mail.data)
             if musicien:
@@ -83,8 +98,6 @@ class LoginForm(FlaskForm):
                     passwd = m.hexdigest()                    
                     return musicien_user if passwd == user.password else None
             return None
-                    
-
         m = sha256()
         m.update(self.password.data.encode())
         passwd = m.hexdigest()
@@ -104,6 +117,8 @@ class ProcheForm(FlaskForm):
 
 @app.route("/create-proche/", methods=("GET", "POST",))
 def creer_proche():
+    """Affiche le formulaire de création d'un proche
+    """
     try:
         if current_user.get_id_role()==1:
             return redirect(url_for("home"))
@@ -177,6 +192,8 @@ class SondageSatisfactionForm(FlaskForm):
 
 @app.route("/create-sondage-participation/", methods=("GET", "POST",))
 def creer_sondage_participation():
+    """Affiche le formulaire de création d'un sondage de participation
+    """
     try:
         if current_user.get_id_role()==1:
             return redirect(url_for("home"))
@@ -214,6 +231,8 @@ def creer_sondage_participation():
 
 @app.route("/create-sondage-satisfaction/", methods=("GET", "POST",))
 def creer_sondage_satisfaction():
+    """Affiche le formulaire de création d'un sondage de satisfaction
+    """
     try:
         if current_user.get_id_role()==1:
             return redirect(url_for("home"))
@@ -241,6 +260,8 @@ def creer_sondage_satisfaction():
 
 @app.route("/login/", methods=("GET", "POST",))
 def login():
+    """Affiche la page de login
+    """
     f = LoginForm()
     if not f.is_submitted():
         f.next.data = request.args.get("next")
@@ -254,6 +275,8 @@ def login():
 
 @app.route("/logout/")
 def logout():
+    """Pour se déconnecter
+    """
     logout_user()
     return redirect(url_for("home"))
 
@@ -271,6 +294,8 @@ def afficher_popup(message):
 
 @app.route("/create-user/", methods=("GET","POST",))
 def creer_user():
+    """Affiche le formulaire de création d'un utilisateur
+    """
     try:
         if current_user.get_id_role()==1:
             return redirect(url_for("home"))
@@ -300,17 +325,17 @@ def creer_user():
 
     return render_template("register.html", form=form)
 
-@app.route("/calendrier/")
-def calendrier():
-    return render_template("calendrier.html")
-
 @app.route("/repetitions")
 def repetitions():
+    """Affiche la page des evenements à venir
+    """
     repetitions_activites = get_calendrier()
     return render_template("repetitions.html", repetitions_activites=repetitions_activites)
 
 @app.route("/create-repetition/", methods=("GET","POST",))
 def creer_repetition():
+    """Affiche le formulaire de création de répétition
+    """
     try:
         if current_user.get_id_role()==1:
             return redirect(url_for("home"))
@@ -340,6 +365,8 @@ def creer_repetition():
 
 @app.route("/profil/<id>")
 def profil(id):
+    """Affiche la page de profil d'un utilisateur
+    """
     try:
         if current_user.get_id_role()==1:
             pass
@@ -371,6 +398,8 @@ class RepondreSondageForm(FlaskForm):
 
 @app.route("/change-profil/<id>",methods=("GET","POST",))
 def changer_profil(id):
+    """Affiche le formulaire de mise à jour de profil
+    """
     try:
         if current_user.get_id_role()==1:
             pass
@@ -393,6 +422,8 @@ def changer_profil(id):
 
 @app.route("/repondre-sondage/<id>",methods=("GET","POST",))
 def repondre_sondage(id):
+    """Affiche le formulaire pour répondre à un sondage
+    """
     try:
         if current_user.get_id_role()==1:
             pass
@@ -437,6 +468,8 @@ def repondre_sondage(id):
 
 @app.route("/type-sondage/")
 def type_sondage():
+    """Affiche la page de selection du type de sondage pour le créer
+    """
     return render_template("choix_type_sondage.html")
 
 class EquipementForm(FlaskForm):
@@ -445,6 +478,8 @@ class EquipementForm(FlaskForm):
 
 @app.route("/ajouter-equipement",methods=("GET","POST",))
 def ajoute_equipement():
+    """Affiche la page de formulaire pour créer un équipement
+    """
     try:
         if current_user.get_id_role()==1:
             return redirect(url_for("home"))
@@ -473,6 +508,8 @@ def ajoute_equipement():
 
 @app.route("/delete-sondage/<id>")
 def delete_sondage(id):
+    """Permet de supprimer un sondage
+    """
     try:
         if current_user.get_id_role()==1:
             return redirect(url_for("home"))
@@ -498,12 +535,16 @@ def delete_sondage(id):
 
 @app.route("/detail-repetition/<id>")
 def detail_repetition(id):
+    """Affiche la page de détail d"une répétition
+    """
     r = get_repetition_by_id(id)
     return render_template("detail_repetition.html",r=r)
 
 
 @app.route("/feuille-presence/")
 def feuille_presence():
+    """Affiche la page où choisir une répétition pour gérer les présents
+    """
     r = Repetition.query.filter(Repetition.date <= func.now()).all()
     return render_template("feuille_presence.html", r =r)
 
@@ -512,6 +553,8 @@ class PresenceForm(FlaskForm):
 
 @app.route("/presence-repetition/<id>",methods=("GET","POST",))
 def presence_repetition(id):
+    """Affiche la page pour gérer les présents lors d"une répétition
+    """
     r = get_repetition_by_id(id)
     
     try:
@@ -543,6 +586,8 @@ def presence_repetition(id):
 
 @app.route('/retirer/<email>/<id>/', methods=['GET', 'POST'])
 def retirer(email, id):
+    """Permet de retirer d'une répétition un utilisateur qui a été selectionné
+    """
     form = PresenceForm()
     
     sql_query=text('DELETE FROM participer WHERE user_id = :user_id AND repetition_id = :repetition_id')
@@ -561,6 +606,8 @@ def retirer(email, id):
 
 @app.route("/reponse_sond.html/<id>")
 def reponse_sondage(id):
+    """Affiche la page des réponses d'un sondages
+    """
     try:
         if current_user.get_id_role()==1:
             return redirect(url_for("home"))
@@ -577,16 +624,22 @@ def reponse_sondage(id):
 
 @app.route("/gerer-presences/")
 def gerer_presences():
+    """Affiche une page qui permet de gérer les musiciens
+    """
     return render_template("gerer_presences.html")
 
 
 @app.route("/stats-musiciens/")
 def stats_musiciens():
+    """Affiche les stats des musiciens
+    """
     u = User.query.filter_by(role_id=1)
     return render_template("stats_musiciens.html", users=u)
 
 @app.route("/supprimer-musicien/<id>")
 def supprimer_musicien(id):
+    """Permet de supprimer un musicien de la base de données
+    """
     user = get_user_by_id(id)
     try:
         if current_user.get_id_role()==1 or user.get_id_role()==3:
