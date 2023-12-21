@@ -202,4 +202,11 @@ def get_reponses_possibles_by_sondage(sondage):
 
 def get_musiciens_repetition(id):
     r = Repetition.query.get(id)
-    return r.users
+    r = r.users
+    res = sorted(r,key=lambda item: item.nom)
+    return res
+
+def get_musiciens_pas_repetition(id):
+    r= User.query.filter(~User.repetitions.any(Repetition.id ==id)).filter(User.role_id==1).all()
+    res = sorted(r,key=lambda item: item.nom)
+    return res

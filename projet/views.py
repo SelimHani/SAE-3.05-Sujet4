@@ -520,6 +520,7 @@ def presence_repetition(id):
     except AttributeError:
         return redirect(url_for("home"))
     musiciens = User.query.filter_by(role_id=1).all()
+    musiciens = sorted(musiciens,key=lambda item: item.nom)
     form = PresenceForm()
     l=[]
     if form.is_submitted():
@@ -537,17 +538,22 @@ def presence_repetition(id):
     form.musicien.choices=l
     return render_template("presence_repetition.html", form=form,id= r.id,musiciens =participent)
 
-@app.route('/retirer/<email>/<id>', methods=['GET', 'POST'])
+@app.route('/retirer/<email>/<id>/', methods=['GET', 'POST'])
 def retirer(email, id):
     form = PresenceForm()
-    l=[]
     
-    u = User.query.get(email)
-    r = Repetition.query.get(id)
-    r.users.remove(u)
+    sql_query=text('DELETE FROM participer WHERE user_id = :user_id AND repetition_id = :repetition_id')
+    db.session.execute(sql_query,{"user_id":email,"repetition_id":id})
     db.session.commit()
-    reponse_sondage(id)
-    return render_template("presence_repetition.html", form=form,id= r.id,musiciens =participent)
+    
+    l=[]
+    non_participants = get_musiciens_pas_repetition(id)
+    for m in non_participants:
+        if m not in Repetition.query.get(id).users:
+            l.append((m.mail, m.nom+" "+m.prenom))
+    form.musicien.choices=l
+    participent = get_musiciens_repetition(id)
+    return render_template("presence_repetition.html", form=form,id=id,musiciens =participent)
  
 
 @app.route("/reponse_sond.html/<id>")
