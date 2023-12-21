@@ -26,13 +26,13 @@ def home():
     except IndexError:
         derniere_repetition = None
     if not current_user.is_authenticated:
-        return render_template("acceuil_non_connecte.html")
+        return render_template("accueil_non_connecte.html")
     elif current_user.get_id_role() == 1:
-        return render_template("acceuil_musicien.html",
+        return render_template("accueil_musicien.html",
                                sondages=sondages,
                                prochain_evenement=derniere_repetition)
 
-    return render_template("acceuil.html",
+    return render_template("accueil.html",
                            sondages=sondages,
                            prochain_evenement=derniere_repetition)
 
@@ -443,7 +443,7 @@ class EquipementForm(FlaskForm):
     nom = StringField("nom")
 
 
-@app.route("/ajoute-equipement",methods=("GET","POST",))
+@app.route("/ajouter-equipement",methods=("GET","POST",))
 def ajoute_equipement():
     try:
         if current_user.get_id_role()==1:
@@ -467,8 +467,8 @@ def ajoute_equipement():
         db.session.add(e)
         db.session.commit()
         form.nom.data  = ""
-        return render_template("ajoute_equipement.html", form=form ,erreur=0)
-    return render_template("ajoute_equipement.html", form=form)
+        return render_template("ajouter_equipement.html", form=form ,erreur=0)
+    return render_template("ajouter_equipement.html", form=form)
 
 
 @app.route("/delete-sondage/<id>")
@@ -515,14 +515,16 @@ def presence_repetition(id):
     r = get_repetition_by_id(id)
     
     try:
-        if current_user.get_id_role()==1:
+        if current_user.get_id_role() == 1:
             pass
     except AttributeError:
         return redirect(url_for("home"))
     musiciens = User.query.filter_by(role_id=1).all()
     musiciens = sorted(musiciens,key=lambda item: item.nom)
     form = PresenceForm()
+
     l=[]
+
     if form.is_submitted():
         reponse = form.musicien.data
         for mail in reponse:
@@ -537,6 +539,7 @@ def presence_repetition(id):
             l.append((m.mail, m.nom+" "+m.prenom))
     form.musicien.choices=l
     return render_template("presence_repetition.html", form=form,id= r.id,musiciens =participent)
+
 
 @app.route('/retirer/<email>/<id>/', methods=['GET', 'POST'])
 def retirer(email, id):

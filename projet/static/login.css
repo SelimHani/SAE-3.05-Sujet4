@@ -1,10 +1,11 @@
 #formulaire {
   background-color: #c08f6f;
-  border-radius: 15px;
-  padding: 1vh;
+  border-radius: 5px;
+  padding: 3vh;
   margin-right: auto;
   margin-left: auto;
   margin-top: 3em;
+
   margin-bottom: 2em;
 }
 h1 {
@@ -18,7 +19,6 @@ div {
 p {
   color: #f0e4d4;
   margin: 0.5em;
-  font-size: 2vw;
 }
 .test{
   background: #f0e4d4;
@@ -27,11 +27,10 @@ p {
   border-radius: 5px;
   color: #8a5741;
   text-decoration: none;
-  width: 70%;
+  width: 80%;
   height: 2em;
   padding: 0.1em;
   padding-left: 0.5em;
-  font-size: 2vw;
 }
 
 #bouton {
@@ -56,3 +55,8 @@ button {
   padding: 0;
 }
 
+@media screen and (max-width: 750px) {
+  button{
+    font-size: inherit; 
+  }
+}
