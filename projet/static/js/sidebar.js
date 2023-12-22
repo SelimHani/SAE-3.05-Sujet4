@@ -46,10 +46,12 @@ if(url === "http://127.0.0.1:5000/"){
     console.log("Autre page");
 }
     
-document.addEventListener("click", (event) =>{
+document.addEventListener("click", (event) => {
     const sidenav = document.querySelector('.sidenav');
-        if(sidenav.style.width <= event.clientX){
-            console.log("touche");
-            closeNav();
+    const sidenavWidth = parseFloat(sidenav.style.width);
+
+    if (sidenavWidth <= event.clientX) {
+        console.log("touche");
+        closeNav();
     }
-})
+});
