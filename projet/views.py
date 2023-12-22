@@ -380,6 +380,9 @@ def profil(id):
     now = func.now()
     passees = Repetition.query.filter(Repetition.date <= now).all()
     ratees = len(passees)-nb_participees
+    if passees == []:
+        return render_template("statistique.html", user= u, role=role, nb_participees=nb_participees, ratees=ratees,pourcentage=0)
+
     pourcentage = int((nb_participees/len(passees))*100)
 
     return render_template("statistique.html", user= u, role=role, nb_participees=nb_participees, ratees=ratees,pourcentage=pourcentage)
