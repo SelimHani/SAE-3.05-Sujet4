@@ -1,0 +1,15 @@
+{% extends 'home.html' %} {% block styles %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='repetitions.css')}}"
+/>
+{% endblock styles %} {% block content %}
+<h1>Statistiques musiciens</h1>
+<div id="scroll">
+    {% for u in users %}
+      <div class="repetition">
+        <a href="{{ url_for("profil",id=u.mail)}}"><p> {{u.nom}} {{u.prenom}} .</p></a>
+      </div>
+    {% endfor %}
+</div>
+{% endblock content %}

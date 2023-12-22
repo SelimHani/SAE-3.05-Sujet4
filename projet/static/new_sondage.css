@@ -39,9 +39,18 @@ h2{
 }
 #descrActi{
     grid-column: 1 / 5;
+    grid-row: 5 / 6;
+    margin: 1vw;
+}
+
+#dateFin{
+    grid-column: 1 / 5;
     grid-row: 4 / 5;
     margin: 1vw;
 }
+
+
+
 #matActi{
     grid-column: 3 / 5;
     grid-row: 1 / 4;
@@ -95,6 +104,7 @@ h2{
 
 #actionbutton button:hover{
     transform: scale(1.05);
+    box-shadow: 4px 4px 4px #492419;
 }
 
 #actionbutton button{
@@ -150,4 +160,13 @@ h2{
 }
 #navRecherche{
     display: flex;
+}
+
+select{
+    background-color: #9F5C45;
+    padding: 1em;
+    margin: 1em;
+    border-radius: 10px;
+    width: 80em;
+    height: 22em;
 }

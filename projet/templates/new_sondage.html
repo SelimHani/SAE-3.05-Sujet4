@@ -6,7 +6,11 @@
 {% endblock styles %} {% block content %}
 
 <div>
-  <form role="form" method="POST" action="{{ url_for('creer_sondage') }}">
+  <form
+    role="form"
+    method="POST"
+    action="{{ url_for('creer_sondage_participation') }}"
+  >
     {{ form.hidden_tag() }}
     <div id="formulaireSondage">
       <div class="divForm" id="nomActi">
@@ -19,7 +23,8 @@
       <div class="divForm" id="lieuActi">
         <h2>Lieu de l’activité</h2>
         <div>
-          {{ form.lieuActivite (id_="formLieu", placeholder="3 rue du fun, Orléans 45000") }}
+          {{ form.lieuActivite (id_="formLieu", placeholder="3 rue du fun,
+          Orléans 45000") }}
         </div>
       </div>
 
@@ -28,15 +33,22 @@
         <div>{{ form.dateActivite (id_="formDate", placeholder="") }}</div>
       </div>
 
+      <div class="divForm" id="dateFin">
+        <h2>Date limite du sondage</h2>
+        <div>{{ form.dateFin (id_="formDate", placeholder="") }}</div>
+      </div>
+
       <div class="divForm" id="matActi">
         <h2>Materiel nécessaire</h2>
         <div id="gestionAdd">
-            <div id="navRecherche">
-                <div id="searchs"> 
-                        <input type="text" id="recherche" name="recherche" />
-                </div>
-                <img src="../static/images/addMat.png" alt="">
-            </div>
+          <div id="navRecherche">
+            {{form.equipements}}
+            <a href="{{ url_for('ajoute_equipement') }}"
+              ><img
+                src="../static/images/addMat.png"
+                alt="Ajouter de l'équipement"
+            /></a>
+          </div>
         </div>
       </div>
 
@@ -48,7 +60,13 @@
       </div>
     </div>
     <div id="actionbutton">
-      <button type="reset" id="bAnnuler" onclick="location.href = '{{ url_for('home') }}';">[ ANNULER ]</button>
+      <button
+        type="reset"
+        id="bAnnuler"
+        onclick="location.href = '{{ url_for('home') }}';"
+      >
+        [ ANNULER ]
+      </button>
       <button type="reset" id="bReset">[ RESET ]</button>
       <button type="submit" id="bValider">[ VALIDER ]</button>
     </div>

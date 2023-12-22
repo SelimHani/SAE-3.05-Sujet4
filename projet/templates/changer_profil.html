@@ -1,10 +1,10 @@
 
 {% extends 'home.html' %} {% block styles %} 
-<link rel="stylesheet" href="{{ url_for('static', filename='register.css')}}" />
+<link rel="stylesheet" href="{{ url_for('static', filename='login.css')}}" />
 {% endblock styles %} {% block content %}
-<h1>Inscription</h1>
+<h1>Changer profil</h1>
 <div id="formulaire">
-  <form role="form" method="POST" action="{{ url_for('creer_user') }}">
+  <form role="form" method="POST" action="{{ url_for('changer_profil', id=user.mail) }}">
   {{ form.hidden_tag() }}
     <div>
     <p>Votre nom</p>
@@ -29,23 +29,9 @@
     </div>
 
     <div>
-    <p>Votre mail</p>
-    <div>
-    {{ form.mail(class_="test" ,placeholder ="exemple@gmail.com")}}
-    </div>
-    </div>
-
-    <div>
     <p>Votre numero de telephone</p>
     <div>
       {{ form.num(class_="test" ,placeholder ="XXXXXXXXXX")}}
-    </div>
-    </div>
-
-    <div>
-    <p>Votre role</p>
-    <div>
-      {{ form.role(class_="test" ,placeholder ="role")}}
     </div>
     </div>
 
@@ -56,9 +42,8 @@
     </div>
     </div>
 
-
     <div id="bouton">
-    <button type="submit">S'inscrire</button>
+    <button type="submit">Mettre à jour</button>
     </div>
   </form>
 </div>

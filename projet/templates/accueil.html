@@ -1,0 +1,82 @@
+{% extends 'home.html' %} {% block styles %} 
+<link rel="stylesheet" href="{{ url_for('static', filename='acceuil.css')}}" />
+{% endblock styles %} {% block content %}
+
+{% if current_user.is_authenticated %}
+<h1>Bienvenue, <span>{{current_user.get_prenom()}} </span> ! 👋</h1>
+{% else %}
+<h1>Bonjour !👋</h1>
+{% endif%}
+
+
+<main id="tdb">
+
+    <div id="pane1">
+        <h2>Les derniers sondages :</h2>
+        {% for s in sondages[::-1][0:6]%}
+        <div class="sondage">
+
+            <p>{{s.jours_restants()}} jours restants</p>
+
+            <a href="{{ url_for('repondre_sondage',id=s.id)}}">
+            {% if s.question %}<p>{{s.question}}</p>
+            {%else%}
+            <p>{{s.activite.nom}}</p>
+            {%endif%}
+        </a>
+        </div>
+        {% endfor%} 
+    </div>
+    <div id="pane2">
+        <ul>
+            <li>
+                <button onclick="location.href = '{{ url_for('type_sondage') }}';">CRÉER UN SONDAGE</button>
+            </li>
+            <li>
+                {% if current_user.is_authenticated %}
+                <button onclick="location.href = '{{ url_for('profil', id=current_user.get_id()) }}';">GÉRER SON COMPTE</button>
+                {% endif%}
+            </li>
+            <li>
+                <button onclick="location.href = '{{ url_for('sondages') }}';">VOIR LES SONDAGES</button>
+            </li>
+            <li>
+                <button onclick="location.href = '{{ url_for('creer_user') }}';">AJOUTER UN COMPTE</button>
+            </li>
+        </ul>
+    </div>
+    <div id="pane3">
+
+        <h2>Prochains événements</h2>
+        <div id="contener">
+        {% if prochain_evenement != None %}
+        
+        {% for ra in prochain_evenement %}
+        {% if ra.nom %} 
+            <a class="tiles" href="{{url_for("repondre_sondage",id=ra.id)}}">
+                <div class="repetition">
+                    <p>{{ra.nom}}</p>
+                    <p>{{ra.date}}</p>
+                </div>
+            </a>
+        {% else %}
+            <a class="tiles" href="{{url_for("detail_repetition",id=ra.id)}}">
+                <div class="repetition">
+                    <p>Repetition</p>
+                    <p>{{ra.date}}</p>
+                </div>
+            </a>  
+        {% endif %}
+        {% endfor %}
+
+        {%endif%}
+        </div>
+    </div>
+    <div id="pane4">
+        <h2>Un problème technique ?</h2>
+        <p>Merci de nous contacter sur 
+        <a href = "mailto:iuto45@orleans.fr? subject = Feedback&body">iuto45@orleans.fr</a>
+        </p>
+</div>
+</main>
+{% endblock content %}

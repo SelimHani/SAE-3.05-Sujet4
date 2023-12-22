@@ -1,11 +1,14 @@
 
 {% extends 'home.html' %} {% block styles %} 
-<link rel="stylesheet" href="{{ url_for('static', filename='login.css')}}" />
+  {{ bootstrap.load_css() }}
+<link rel="stylesheet" href="{{ url_for('static', filename='create_repetition.css')}}" />
 {% endblock styles %} {% block content %}
 <h1>Créer répétition</h1>
 <div id="formulaire">
   <form role="form" method="POST" action="{{ url_for('creer_repetition') }}">
   {{ form.hidden_tag() }}
+  <div>
+    </div>
     <div>
     <p>lieu</p>
     <div>
@@ -19,14 +22,14 @@
       {{ form.date(class_="test" ,placeholder ="date")}}
     </div>
     </div>
-
-    <div>
-
     <div>
     <p>description</p>
     <div>
       {{ form.description(class_="test" ,placeholder ="description")}}
     </div>
+    </div>
+    <div>
+      {{ form.equipements(class_="test", placeholder="equipement")}}
     </div>
     <div id="bouton">
     <button type="submit">Enregistrer</button>

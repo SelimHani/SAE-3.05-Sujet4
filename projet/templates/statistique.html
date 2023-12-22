@@ -1,0 +1,49 @@
+
+{% extends 'home.html' %} 
+{% block styles %} 
+    <link rel="stylesheet" href="{{ url_for('static', filename='statistique.css')}}" />
+    <script src="../static/js/affichage.js" defer></script>
+{% endblock styles %} 
+{% block content %}
+  <div class="info">
+    <section>
+        <p id="lastname">{{user.nom}}</p>
+        <p id="name">{{user.prenom}}</p>
+        <p id="email">{{user.mail}}</p>
+        <p id="date">{{user.ddn}}</p>
+        <p id="number">{{user.num_tel}}</p>
+    </section>
+    <img id="violon" src="../static/images/violon.png" alt="image de violon">
+  </div>
+  <div class="btnChange">
+    <button type="submit" onclick="location.href = '{{ url_for('changer_profil',id=user.mail) }}';"> Changer profil </button>
+    {% if current_user.role_id==3 and user.role_id==1 %}
+    <button type="submit" onclick="location.href = '{{ url_for('supprimer_musicien',id=user.mail) }}';"> Supprimer musicien </button> 
+    {% endif%}
+  </div>
+  {% if user.role_id==1 %}
+  <div class="btn">
+    <p>Voir les statistiques</p>
+    <button id="btnFleche" onclick="afficher()"><img src="../static/images/BoutonFleche.png" alt="BoutonFleche pour descendre vers le bas" ></button>
+  </div>
+  <div class="statistique">
+    <h1>Statistiques</h1>
+    <div id="stats">
+      <section> 
+          <h2> {{nb_participees}}</h2>
+          <h3> COURS PARTICIPÉS </h3>
+      </section>
+      <section id="red"> 
+          <h2> {{ratees}} </h2>
+          <h3> COURS MANQUÉS </h3>
+      </section>
+      <section> 
+          <h2> {{pourcentage}}% </h2>
+          <h3> SCORE DE PRESENCE </h3>
+      </section>
+    </div>
+  </div>
+  {% endif %}
+{% endblock content %}
+
+

@@ -1,10 +1,10 @@
 
 {% extends 'home.html' %} {% block styles %} 
-<link rel="stylesheet" href="{{ url_for('static', filename='register.css')}}" />
+<link rel="stylesheet" href="{{ url_for('static', filename='login.css')}}" />
 {% endblock styles %} {% block content %}
 <h1>Inscription</h1>
 <div id="formulaire">
-  <form role="form" method="POST" action="{{ url_for('creer_user') }}">
+  <form role="form" method="POST" action="{{ url_for('creer_proche') }}">
   {{ form.hidden_tag() }}
     <div>
     <p>Votre nom</p>
@@ -43,9 +43,9 @@
     </div>
 
     <div>
-    <p>Votre role</p>
+    <p>Votre Musicien</p>
     <div>
-      {{ form.role(class_="test" ,placeholder ="role")}}
+      {{ form.musicien(class_="test" ,placeholder ="musicien")}}
     </div>
     </div>
 

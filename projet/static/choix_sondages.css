@@ -1,0 +1,42 @@
+#formulaire{
+    background-color: #8a5741;
+    border-radius: 5px;
+    width: 80%;
+    margin: auto;
+    text-align: center;
+}
+
+div button{
+    margin: 3vh;
+    padding: 1vh;
+    background-color: #f0e4d4;
+    color: #8a5741;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 2em;
+    width: 80%;
+}
+
+
+h1{
+    text-align: center;
+    color: #f0e4d4;
+    margin-bottom: 5vh;
+    text-decoration: underline;
+    font-size: 5vh;
+}
+
+main{
+    background-color: #8A5741;
+    margin: auto;
+    padding: 1em;
+    border-radius: 5px;
+    padding-top: 2vh;
+    padding-bottom: 2vh;
+    width: 80%;
+}
+
+button:hover{
+    transform: scale(1.02);
+}

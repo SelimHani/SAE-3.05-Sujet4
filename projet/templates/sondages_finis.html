@@ -1,0 +1,20 @@
+<link rel="stylesheet" href="{{ url_for('static', filename='sondages.css')}}" />
+{% extends 'home.html' %} {% block content %}
+<div id="scroll">
+  <h1>Sondages finis :</h1>
+  {% for s in sondages [::-1][0:6] %}
+  <div class="sondage">
+    <a href="{{ url_for('reponse_sondage',id=s.id)}}">
+      {% if s.question %}
+      <p>{{s.question}}</p>
+      <p>{{s.nombre_reponses()[0]}} / {{s.nombre_reponses()[1]}}</p>
+      {%else%}
+      <p>{{s.activite.nom}}</p>
+      <p>{{s.nombre_reponses()[0]}} / {{s.nombre_reponses()[1]}}</p>
+      {%endif%}
+    </a>
+  </div>
+
+  {% endfor%}
+</div>
+{% endblock content %}

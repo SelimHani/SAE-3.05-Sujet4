@@ -6,7 +6,9 @@ main {
     grid-auto-rows: minmax(50px, auto);
     margin-left: 2em;
     margin-right: 2em;
+    
 }
+
 
 .tiles{
     width: fit-content;
@@ -39,9 +41,6 @@ main {
     
 }
 
-
-
-
 div {
     border-radius: 15px;
     margin: 20px; 
@@ -51,13 +50,14 @@ div {
 #pane1 {
     margin-left: 1em;
     grid-column: 1 / 2;
-    grid-row: 1 / 8;
+    grid-row: 1 / 11;
     background-color: #8A5741;
     box-shadow: 4px 4px 4px #442b20;
+    
 }
 
 #pane2 {
-    grid-column: 2 / 6;
+    grid-column: 2 / 5;
     grid-row: 1 / 6;
     background-color: #9F5C45;
     box-shadow: 4px 4px 4px #4e2d22;
@@ -67,54 +67,44 @@ div {
     z-index: 1;
 }
 
+
 #pane3 {
-    grid-column: 2 / 5;
-    grid-row: 6 / 8;
+    grid-column: 2 / 6;
+    grid-row: 6 / 11;
     background-color: #B1725B;
-    box-shadow: 4px 4px 4px #58392d;  
-}
-
-
-
-#nom {
-    color: rgba(240, 228, 212, 0.90);
-    font-size: 2em;
-}
-
-#lieu{
-    color: rgba(240, 228, 212, 0.90);
-    font-size: 1.25em;
-}
-
-#date{
-    color: rgba(240, 228, 212, 0.90);
-    font-size: 1.5em;
+    box-shadow: 4px 4px 4px #58392d;
+    
 }
 
 #pane4 {
     grid-column: 5 / 6;
-    grid-row: 6 / 8;
+    grid-row:  1/ 6;
     background-color: #954A33;
     box-shadow: 4px 4px 4px #492419;
+    
 }
+
 
 h2 {
     text-align: left;
-    font-size: 2.25rem;
+    font-size: 1.85rem;
     color: #F0E4D4;
     margin: 0.5vw;
     font-family: 'Anton', sans-serif;
 }
+
 
 #pane4 p {
     margin: 0.5vw;
     text-align: left;
 }
 
+
 ul{
     display: flex;
     flex-wrap: wrap;
     align-items: center;
+    
 }
 
 a{
@@ -122,14 +112,15 @@ a{
 }
 
 li button {
-    width: 26vw;
-    height: 8vh;
+    width: 50vw;
+    height: 10vh;
     color: #9F5C45;
     background-color: #F0E4D4;
     border-radius: 15px;
     border: none;
     font-size: 1.5em;
     z-index: 5;
+    
 }
 
 #pane2 button:hover{
@@ -142,12 +133,16 @@ li{
     list-style-type: none;
     padding: 2vw;
     flex-grow: 1;
+    text-align: center;
+    
 }
+
 
 #pane4 p {
     text-align: left;
     color : #F0E4D4;
 }
+
 
 h1{
     margin-left: 1em;
@@ -161,6 +156,7 @@ h1> span{
     font-family: 'Anton', sans-serif;
     color: #AB5250;
 }
+
 
 .sondage {
     margin: 1em;
@@ -192,9 +188,31 @@ h1> span{
     display: flex;
     justify-content: space-between;
     flex: 1;
+
 }
 
-@media screen and (max-width: 1000px) {
+
+#pane3 > ul {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+#nom {
+    color: rgba(240, 228, 212, 0.90);
+    font-size: 2em;
+}
+
+#lieu{
+    color: rgba(240, 228, 212, 0.90);
+    font-size: 1.25em;
+}
+
+#date{
+    color: rgba(240, 228, 212, 0.90);
+    font-size: 1.5em;
+}
+
+@media screen and (max-width: 900px) {
     main {
         grid-template-columns: repeat(2, 1fr);
         margin: 1em;

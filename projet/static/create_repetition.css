@@ -1,0 +1,81 @@
+h1 {
+    color: #9e725e;
+    font-family: Alata;
+    font-size: 3rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin-left: 1rem;
+    margin-top: 1em;
+    text-align: center;
+    font-family: 'Anton', sans-serif;
+}
+
+#formulaire {
+    background-color: #c08f6f;
+    border-radius: 15px;
+    padding: 1vh;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 3em;
+    margin-bottom: 3em;
+    width: 80%;
+}
+
+div {
+    text-align: center;
+    margin: 1em;
+}
+
+p {
+    color: #f0e4d4;
+    margin: 0.5em;
+    font-size: 3vw;
+}
+
+.test{
+    background: #f0e4d4;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    color: #8a5741;
+    text-decoration: none;
+    width: 70%;
+    height: 2em;
+    padding: 0.1em;
+    padding-left: 0.5em;
+    font-size: 2vw;
+}
+  
+#bouton {
+    text-align: center;
+    margin-top: 0.5em;
+}
+
+button {
+    color: #f0e4d4;
+    background-color: #8a5741;
+    border-radius: 5px;
+    border: none;
+    height: fit-content;
+    width: fit-content;
+    font-size: 2vw;
+    padding: 0.33em;
+    margin: 0.5em;
+    
+}
+  
+#sideNavBar{
+    margin: 0;
+    padding: 0;
+}
+
+#equipements{
+    height: 5em;
+}
+
+body{
+    background-color: #f0e4d4;
+}
+  
+  
