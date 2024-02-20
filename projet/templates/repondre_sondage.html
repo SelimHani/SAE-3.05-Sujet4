@@ -6,12 +6,13 @@
 {% endblock styles %} {% block content %}
 <main>
   <button
-    class="bouton"
-    id="boutonRetour"
-    onclick="location.href = '{{ url_for('sondages') }}';"
-  >
-    RETOUR
-  </button>
+  class="bouton"
+  id="boutonRetour"
+  onclick="history.go(-1);"
+>
+  RETOUR
+</button>
+
   <form
     role="form"
     method="POST"

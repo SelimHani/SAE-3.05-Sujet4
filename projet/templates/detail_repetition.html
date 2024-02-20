@@ -7,6 +7,6 @@
   <p>{{r.date}}</p>
   {% for e in r.equipements %}
   <p>{{e.nom}}</p>{% endfor %}
-  <button onclick="location.href = '{{ url_for('repetitions') }}';">Retour</button>
+  <a href="{{ url_for('calendrier') }}">Retour au Calendrier</a>
 </div>
 {% endblock content %}

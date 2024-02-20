@@ -325,12 +325,6 @@ def creer_user():
 
     return render_template("register.html", form=form)
 
-@app.route("/repetitions")
-def repetitions():
-    """Affiche la page des evenements à venir
-    """
-    repetitions_activites = get_calendrier()
-    return render_template("repetitions.html", repetitions_activites=repetitions_activites)
 
 @app.route("/create-repetition/", methods=("GET","POST",))
 def creer_repetition():
@@ -652,3 +646,28 @@ def supprimer_musicien(id):
     db.session.delete(user)
     db.session.commit()
     return redirect(url_for("home"))
+
+
+@app.route('/calendrier')
+def calendrier():
+    events = get_calendrier()
+
+    # Formattez les données pour les rendre compatibles avec FullCalendar
+    events_data = []
+    for event in events:
+        if  event.type =="activite":
+            events_data.append({
+                'title': event.nom,
+                'start': event.date,
+                'end': event.date,
+                'url': url_for("repondre_sondage", id=event.id),
+            })
+    else:
+        events_data.append({
+            'title': "Repetition",
+            'start': event.date,
+            'end': event.date,
+            'url': url_for("detail_repetition", id=event.id),
+        })
+
+    return render_template('calendrier.html', events_data=events_data)
