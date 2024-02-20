@@ -13,7 +13,7 @@
     <div>
     <p>Votre nom</p>
     <div>
-      {{ form.nom(class_="test" ,placeholder ="nom")}}
+      {{ form.nom(class_="test" ,placeholder ="nom",value=user.nom)}}
     </div>
     </div>
 
@@ -21,21 +21,21 @@
     <div>
     <p>Votre prenom</p>
     <div>
-      {{ form.prenom (class_="test", placeholder="prenom") }}
+      {{ form.prenom (class_="test", placeholder="prenom",value=user.prenom) }}
     </div>
     </div>
 
     <div>
     <p>Votre date de naissance</p>
     <div>
-      {{ form.date_nais(class_="test" ,placeholder ="date")}}
+      {{ form.date_nais(class_="test" ,placeholder ="date",value=user.ddn)}}
     </div>
     </div>
 
     <div>
     <p>Votre numero de telephone</p>
     <div>
-      {{ form.num(class_="test" ,placeholder ="XXXXXXXXXX")}}
+      {{ form.num(class_="test" ,placeholder ="XXXXXXXXXX",value=user.num_tel)}}
     </div>
     </div>
 
