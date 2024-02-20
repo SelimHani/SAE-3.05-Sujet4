@@ -1,5 +1,6 @@
 import tkinter
 import sqlalchemy
+import unidecode
 from .app import app, db
 from flask import render_template, url_for, redirect, request, flash
 from flask_login import login_user, current_user, logout_user, login_required
@@ -9,8 +10,9 @@ from wtforms.validators import DataRequired, InputRequired, Length, Regexp
 from hashlib import sha256
 from .models import *
 from sqlalchemy import text, func
-import unidecode
 from flask import jsonify
+from tkinter import messagebox
+
 
 def est_present(adresse):
     """Vérifie si un proche est associé au musicien
@@ -59,11 +61,11 @@ def sondages():
     except AttributeError:
         return redirect(url_for("home"))
     sondages= get_sondages()
-    
+
     return render_template(
         "sondages.html",sondages=sondages,user=current_user
     )
-    
+
 @app.route("/sondages-finis/")
 def sondages_finis():
     """Affiche la page des sondages finis
@@ -74,12 +76,12 @@ def sondages_finis():
     except AttributeError:
         return redirect(url_for("home"))
     sondages_finis= get_sondages_finis()
-    
+
     return render_template(
         "sondages_finis.html",sondages=sondages_finis,user=current_user
     )
-    
-    
+
+
 class LoginForm(FlaskForm):
     mail = StringField("Email",validators=[InputRequired()])
     password = PasswordField("Password",validators=[InputRequired()])
@@ -98,7 +100,7 @@ class LoginForm(FlaskForm):
                 if musicien_user:
                     m = sha256()
                     m.update(self.password.data.encode())
-                    passwd = m.hexdigest()                    
+                    passwd = m.hexdigest()
                     return musicien_user if passwd == user.password else None
             return None
         m = sha256()
@@ -164,7 +166,6 @@ class RegisterForm(FlaskForm):
     mail = EmailField("Mail", validators=[InputRequired()])
     num = StringField("Numéro", validators=[InputRequired(),Regexp('^[0-9]{10}$', message="Le numéro doit contenir uniquement des chiffres."),Length(min=10, max=10, message="Le numéro doit contenir 10 chiffres.")])
     password = PasswordField("Password", validators=[InputRequired()])
-
     role = SelectField('Role', choices=[("1","Musicien"),("2","Directrice"),("3","Responsable")])
     next = HiddenField()
 
@@ -283,8 +284,6 @@ def logout():
     logout_user()
     return redirect(url_for("home"))
 
-import tkinter
-from tkinter import messagebox
 
 def afficher_popup(message):
     root = tkinter.Tk()
@@ -323,7 +322,7 @@ def creer_user():
         except sqlalchemy.exc.PendingRollbackError:
             db.session.rollback()
             afficher_popup('Ce mail est déjà utilisé, veuillez utiliser un autre .')
-            
+
 
 
     return render_template("register.html", form=form,user=current_user)
@@ -378,6 +377,9 @@ def profil(id):
     now = func.now()
     passees = Repetition.query.filter(Repetition.date <= now).all()
     ratees = len(passees)-nb_participees
+    if passees == []:
+        return render_template("statistique.html", user= u, role=role, nb_participees=nb_participees, ratees=ratees,pourcentage=0)
+
     pourcentage = int((nb_participees/len(passees))*100)
 
     return render_template("statistique.html", user= u, role=role, nb_participees=nb_participees, ratees=ratees,pourcentage=pourcentage)
@@ -447,7 +449,7 @@ def repondre_sondage(id):
 
         db.session.commit()
         return redirect(url_for("home"))
-    
+
     if s.question==None:
         lieu = s.activite.lieu
         lieuM =''
@@ -489,7 +491,7 @@ def ajoute_equipement():
         nom_equipement = nom_equipement.upper() # en majuscule
         nom_equipement = unidecode.unidecode(nom_equipement) # suppression des accents qui restent
         equipements = get_equipements()
-        
+
         for eq in equipements:
             nom = eq.get_nom()
             nom = nom.upper()
@@ -554,7 +556,7 @@ def presence_repetition(id):
     """Affiche la page pour gérer les présents lors d"une répétition
     """
     r = get_repetition_by_id(id)
-    
+
     try:
         if current_user.get_id_role() == 1:
             pass
@@ -587,11 +589,11 @@ def retirer(email, id):
     """Permet de retirer d'une répétition un utilisateur qui a été selectionné
     """
     form = PresenceForm()
-    
+
     sql_query=text('DELETE FROM participer WHERE user_id = :user_id AND repetition_id = :repetition_id')
     db.session.execute(sql_query,{"user_id":email,"repetition_id":id})
     db.session.commit()
-    
+
     l=[]
     non_participants = get_musiciens_pas_repetition(id)
     for m in non_participants:
