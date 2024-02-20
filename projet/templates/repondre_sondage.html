@@ -44,17 +44,18 @@
       </section>
       <section>
         <h2>Lieu</h2>
-        <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2678.223293585451!2d2.1094762763313746!3d47.83526737121176!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e51bd6c6686cdf%3A0x5050c749efed8421!2sUnion%20Musicale%20de%20F%C3%A9rolles!5e0!3m2!1sfr!2sfr!4v1699281624287!5m2!1sfr!2sfr"
-          width="300"
-          height="225"
-          style="border: 0"
-          allowfullscreen=""
-          loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade"
-        ></iframe>
+        <section class="map">
+          <iframe id="map"
+          width="400" 
+          height="250" 
+          style="border:0"
+          Loading="lazy" 
+          allowfullscreen 
+          src="">
+      </iframe>
+      </section>
 
-        <a href={{lieu_map}}><h3>{{sondage.activite.lieu}}</h3></a>
+        <a id="lieu" href={{lieu_map}}><h3>{{sondage.activite.lieu}}</h3></a>
 
       </section>
       <h2 id="date">Le {{sondage.activite.get_date()}}</h2>
