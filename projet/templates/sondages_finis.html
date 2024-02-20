@@ -1,4 +1,10 @@
+{% if user.mode == "default" %}
 <link rel="stylesheet" href="{{ url_for('static', filename='sondages.css')}}" />
+{% else %}
+<link rel="stylesheet" href="{{ url_for('static', filename='dark/sondages.css')}}" />
+{% endif%}
+
+
 {% extends 'home.html' %} {% block content %}
 <div id="scroll">
   <h1>Sondages finis :</h1>

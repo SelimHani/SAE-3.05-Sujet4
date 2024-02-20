@@ -1,8 +1,18 @@
-{% extends 'home.html' %} {% block styles %} 
+
+{% extends 'home.html' %} {% block styles %}
+
+{% if user.mode == "default" %}
+<link rel="stylesheet" href="{{ url_for('static', filename='calendrier.css')}}" />
+{% else %}
+<link rel="stylesheet" href="{{ url_for('static', filename='dark/calendrier.css')}}" />
+{% endif%}
+
+
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.0/fullcalendar.min.css" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.0/fullcalendar.min.js"></script>
+
 
 {% endblock styles %} {% block content %}
 

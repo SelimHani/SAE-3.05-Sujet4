@@ -1,8 +1,13 @@
 
 {% extends 'home.html' %} 
 {% block styles %} 
-    <link rel="stylesheet" href="{{ url_for('static', filename='statistique.css')}}" />
     <script src="../static/js/affichage.js" defer></script>
+    {% if user.mode == "default" %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='statistique.css')}}" />
+    {% else %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='dark/statistique.css')}}" />
+    {% endif%}
+
 {% endblock styles %} 
 {% block content %}
   <div class="info">
@@ -17,6 +22,9 @@
   </div>
   <div class="btnChange">
     <button type="submit" onclick="location.href = '{{ url_for('changer_profil',id=user.mail) }}';"> Changer profil </button>
+
+    <button id="modeButton">Changer de mode</button>
+
     {% if current_user.role_id==3 and user.role_id==1 %}
     <button type="submit" onclick="location.href = '{{ url_for('supprimer_musicien',id=user.mail) }}';"> Supprimer musicien </button> 
     {% endif%}
@@ -44,6 +52,28 @@
     </div>
   </div>
   {% endif %}
+
+  <script>
+    document.getElementById("modeButton").addEventListener("click", function() {
+        fetch("/update_mode", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                new_mode: "sombre"
+            })
+        })
+        .then(response => {
+          location.reload();
+        })
+        .catch(error => {
+            console.error('Erreur lors de la requête:', error);
+        });
+        
+    });
+</script>
+
 {% endblock content %}
 
 

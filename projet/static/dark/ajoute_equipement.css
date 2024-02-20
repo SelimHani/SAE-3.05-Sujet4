@@ -1,0 +1,65 @@
+#bAjouter{
+    background-color:#1c3813; 
+    border-radius: 5px;
+    padding: 0.5em;
+    font-size: 1.5vw;
+    margin-right: 1em;
+    border: none;
+}
+
+#bAnnuler{
+    background-color: #461818;
+    border-radius: 5px;
+    padding: 0.5em;
+    font-size: 1.5vw;
+    margin-left: 1em;
+    border: none;
+}
+
+#formulaire {
+    background-color: #241711;
+    border-radius: 5px;
+    padding: 2em;
+    text-align: center;
+    width: 50%;
+    
+    margin: auto;
+}
+
+input{
+    border-radius: 5px;
+    padding: 1vw;
+    font-size: 0.7em;
+    background-color:#fff3e3 ;
+    margin: 1em;
+    width: 80%;
+
+    font-size: 0.8em;
+}
+
+p{
+    color: #fff3e3;
+    font-size: 4vw;
+    margin: 1em;
+    margin-top: 0em;
+    text-align: center;
+}
+
+#formulaire button:hover{
+    transform: scale(1.02);
+    box-shadow: 4px 4px 4px #22110c;
+}
+
+h1{
+    text-align: center;
+    color: #271913;
+    font-size: 5vw;
+    font-family: 'Anton', sans-serif;
+    margin: 0.5em;
+}
+
+#bouton{
+    display: flex;
+    justify-content: center;
+}
+
