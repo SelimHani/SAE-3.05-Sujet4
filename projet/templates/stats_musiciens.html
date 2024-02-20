@@ -8,7 +8,7 @@
 <div id="scroll">
     {% for u in users %}
       <div class="repetition">
-        <a href="{{ url_for("profil",id=u.mail)}}"><p> {{u.nom}} {{u.prenom}} .</p></a>
+        <a href="{{ url_for("profil",id=u.mail)}}"><p> {{u.nom}} {{u.prenom}} </p></a>
       </div>
     {% endfor %}
 </div>
