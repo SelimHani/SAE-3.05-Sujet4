@@ -1,8 +1,10 @@
 {% extends 'home.html' %} {% block styles %}
-<link
-  rel="stylesheet"
-  href="{{ url_for('static', filename='choix_sondages.css')}}"
-/>
+
+{% if user.mode == "default" %}
+<link rel="stylesheet" href="{{ url_for('static', filename='choix_sondages.css')}}" />
+{% else %}
+<link rel="stylesheet" href="{{ url_for('static', filename='dark/choix_sondages.css')}}" />
+{% endif%}
 {% endblock styles %} {% block content %}
 <main>
   <h1>Choix du type de sondage</h1>

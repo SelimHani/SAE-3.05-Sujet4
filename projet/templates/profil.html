@@ -1,5 +1,11 @@
 {% extends 'home.html' %} {% block styles %}
+
+{% if user.mode == "default" %}
 <link rel="stylesheet" href="{{ url_for('static', filename='login.css')}}" />
+{% else %}
+<link rel="stylesheet" href="{{ url_for('static', filename='dark/login.css')}}" />
+{% endif%}
+
 {% endblock styles %} {% block content %}
 <h1>Profil</h1>
 <div id="formulaire">

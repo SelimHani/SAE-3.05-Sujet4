@@ -1,6 +1,13 @@
 
 {% extends 'home.html' %} {% block styles %} 
+
+{% if user.mode == "default" %}
 <link rel="stylesheet" href="{{ url_for('static', filename='register.css')}}" />
+{% else %}
+<link rel="stylesheet" href="{{ url_for('static', filename='dark/register.css')}}" />
+{% endif%}
+
+
 {% endblock styles %} {% block content %}
 <h1>Inscription</h1>
 <div id="formulaire">

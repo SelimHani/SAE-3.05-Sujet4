@@ -1,5 +1,10 @@
 {% extends 'home.html' %} {% block styles %}
+
+{% if user.mode == "default" %}
 <link rel="stylesheet" href="{{ url_for('static', filename='ajoute_equipement.css')}}" />
+{% else %}
+<link rel="stylesheet" href="{{ url_for('static', filename='dark/ajoute_equipement.css')}}" />
+{% endif%}
 {% endblock styles %} {% block content %}
 
 <h1>Ajouter des équipements</h1>

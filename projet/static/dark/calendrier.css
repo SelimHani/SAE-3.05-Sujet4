@@ -1,0 +1,46 @@
+.container{
+    width: 50rem;
+    height: 40rem;
+
+    background-color: rgba(37, 28, 22, 0.1);
+    backdrop-filter: blur(20px);
+    border-radius: 10px;
+    border: 1px rgba(53, 39, 30, 0.5) solid;
+    border-bottom: rgba(43, 32, 25, 0.3);
+    border-right: rgba(46, 34, 26, 0.3);
+
+    text-align: center;
+    align-content: center;
+    align-items: center;
+    display : flex;
+    justify-content: center;
+    margin: 1%;
+}
+
+
+
+.dycalendar-prev-next-btn{
+    font-size: 4rem;
+}
+.next-btn{
+    margin-left: 1.5rem;
+}
+.prev-btn{
+    margin-right: 1.5rem;
+}
+
+td{
+    font-size: 2rem;
+    color: rgba(192,143,111,100);
+    padding: 1rem;
+}
+.dycalendar-span-month-year{
+    font-size: 4rem;
+}
+
+.dycalendar-month-container .dycalendar-today-date,
+.dycalendar-month-container .dycalendar-target-date{
+    background-color: #291812;
+    border-radius: 15px;
+    color: #fff3e3 ;
+}

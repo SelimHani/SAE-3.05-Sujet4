@@ -3,6 +3,13 @@
   rel="stylesheet"
   href="{{ url_for('static', filename='presence_repetition.css')}}"
 />
+
+{% if user.mode == "default" %}
+<link rel="stylesheet" href="{{ url_for('static', filename='presence_repetition.css')}}" />
+{% else %}
+<link rel="stylesheet" href="{{ url_for('static', filename='dark/presence_repetition.css')}}" />
+{% endif%}
+
 {% endblock styles %} {% block content %}
 
 <div id="formParent">
