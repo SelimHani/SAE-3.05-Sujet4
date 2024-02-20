@@ -2,9 +2,23 @@ import click
 from .app import app, db
 from .models import *
 from hashlib import sha256
+import os
+
 
 @app.cli.command()
 def syncdb():
+    db.create_all()
+    
+@app.cli.command()
+def delete_db():
+    if os.path.exists('./myapp.db'):
+        os.remove('./myapp.db')
+        
+        
+@app.cli.command()
+def loadbd():
+    if os.path.exists('./myapp.db'):
+        os.remove('./myapp.db')
     db.create_all()
     r1 = Role(id=1, name="Musicien")
     r2 = Role(id=2, name="Directrice")
