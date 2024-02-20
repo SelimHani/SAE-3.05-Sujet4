@@ -3,6 +3,13 @@
   rel="stylesheet"
   href="{{ url_for('static', filename='new_sondage.css')}}"
 />
+
+{% if user.mode == "default" %}
+<link rel="stylesheet" href="{{ url_for('static', filename='new_sondage.css')}}" />
+{% else %}
+<link rel="stylesheet" href="{{ url_for('static', filename='dark/new_sondage.css')}}" />
+{% endif%}
+
 {% endblock styles %} {% block content %}
 
 <div>

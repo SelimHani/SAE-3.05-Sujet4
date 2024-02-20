@@ -1,0 +1,120 @@
+#formulaire {
+    background-color: #2c211a;
+    border-radius: 5px;
+    padding: 1vh;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 3em;
+    margin-bottom: 2em;
+    width: 60%;
+  }
+  h1 {
+    color: #fff3e3;
+    text-align: center;
+    font-size: 5vw;
+  }
+  div {
+    text-align: center;
+  }
+  p {
+    color: #fff3e3;
+    margin: 0.5em;
+    font-size: 1.5vw;
+  }
+  .test{
+    background: #312f2c;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+    color: #fff3e3;
+    text-decoration: none;
+    width: 50%;
+    height: 2em;
+    padding: 0.1em;
+    padding-left: 0.5em;
+    font-size: 1vw;
+  }
+  
+  #bouton {
+    text-align: center;
+    margin-top: 0.5em;
+  }
+  button {
+    color: #f0e4d4;
+    background-color: #271912;
+    border-radius: 5px;
+    border: none;
+    height: fit-content;
+    width: fit-content;
+    font-size: 1.5vw;
+    padding: 0.33em;
+    margin: 0.5em;
+    
+  }
+  
+  #sideNavBar{
+    margin: 0;
+    padding: 0;
+  }
+  
+
+@media screen and (max-width:900px) {
+    #formulaire {
+        background-color: #2c211a;
+        border-radius: 5px;
+        padding: 1vh;
+        margin-right: auto;
+        margin-left: auto;
+        margin-top: 3em;
+        margin-bottom: 2em;
+        width: 80%;
+      }
+      h1 {
+        color: #fff3e3;
+        text-align: center;
+        font-size: 10vw;
+      }
+      div {
+        text-align: center;
+      }
+      p {
+        color: #fff3e3;
+        margin: 0.5em;
+        font-size: 5vw;
+      }
+      .test{
+        background: #24221f;
+        border: none;
+        outline: none;
+        border-radius: 5px;
+        color: #fff3e3;
+        text-decoration: none;
+        width: 80%;
+        height: 2em;
+        padding: 0.1em;
+        padding-left: 0.5em;
+        font-size: 5vw;
+      }
+      
+      #bouton {
+        text-align: center;
+        margin-top: 0.5em;
+      }
+      button {
+        color: #fff3e3;
+        background-color: #291a14;
+        border-radius: 5px;
+        border: none;
+        height: fit-content;
+        width: fit-content;
+        font-size: 5vw;
+        padding: 0.33em;
+        margin: 0.5em;
+        
+      }
+      
+      #sideNavBar{
+        margin: 0;
+        padding: 0;
+      }
+}

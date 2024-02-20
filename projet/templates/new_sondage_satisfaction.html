@@ -1,8 +1,11 @@
 {% extends 'home.html' %} {% block styles %}
-<link
-  rel="stylesheet"
-  href="{{ url_for('static', filename='new_sondage_satis.css')}}"
-/>
+
+{% if user.mode == "default" %}
+<link rel="stylesheet" href="{{ url_for('static', filename='new_sondage_satis.css')}}" />
+{% else %}
+<link rel="stylesheet" href="{{ url_for('static', filename='dark/new_sondage_satis.css')}}" />
+{% endif%}
+
 {% endblock styles %} {% block content %}
 
 <div id="formParent">

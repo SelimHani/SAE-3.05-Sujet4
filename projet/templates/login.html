@@ -1,5 +1,15 @@
 {% extends 'home.html' %} {% block styles %}
-<link rel="stylesheet" href="{{ url_for('static', filename='login.css')}}" />
+
+{% if user and user.mode %}
+    {% if user.mode == "default" %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='login.css')}}" />
+    {% else %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='dark/login.css')}}" />
+    {% endif %}
+    {% else %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='login.css')}}" />
+    {% endif %}
+
 {% endblock styles %} {% block content %}
 <h1>Connexion</h1>
 <div id="formulaire">

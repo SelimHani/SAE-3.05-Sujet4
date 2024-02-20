@@ -13,6 +13,23 @@
     <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet"> 
     <script src ="../static/js/sidebar.js" defer></script> 
 
+
+    {% if user and user.mode %}
+    {% if user.mode == "default" %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='home.css')}}" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='nav.css')}}" />
+    {% else %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='dark/home.css')}}" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='dark/nav.css')}}" />
+    {% endif %}
+    {% else %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='home.css')}}" />
+        <link rel="stylesheet" href="{{ url_for('static', filename='nav.css')}}" />
+    {% endif %}
+
+
+    
+
     {% block styles %}{% endblock styles %}
   </head>
   <body>

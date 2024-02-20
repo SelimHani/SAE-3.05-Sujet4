@@ -1,0 +1,64 @@
+#formParent{
+    background-color: #2c1c15;
+    margin: auto;
+    padding: 5vw;
+    padding-top: 5vh;
+    border-radius: 15px;
+}
+
+h2{
+    text-align: center;
+    margin-bottom: 3vh;
+    font-size: 2em;
+    color:#fff3e3 ;
+}
+
+#bValider{
+    background-color: #14290e ;
+    border: none;
+    margin-right: 3vw;
+    padding: 2vh;
+    font-size: 1.5em;
+    border-radius: 15px;
+}
+#bAnnuler{
+    background-color: #2e1010;
+    border: none;
+    margin-left: 3vw;
+    padding: 2vh;
+    font-size: 1.5em;
+    border-radius: 15px;
+}
+
+#Questions{
+    display:flex;
+    flex-direction: column;
+    margin-bottom: 5vh;
+    align-items:center;
+    
+}
+
+
+#form{
+    background-color: #2b2825;
+    border-radius: 10px;
+    border: none;
+    padding: 1vw;
+    margin: 0.5vh;
+    width: 30vw;
+    font-size: 1em;
+    color: #fff3e3;
+}
+
+#buttons{
+    text-align: center;
+}
+
+button:hover{
+    transform: scale(1.02);
+}
+
+p{
+    text-align: center;
+    color:#fff3e3 ;
+}

@@ -1,8 +1,12 @@
 {% extends 'home.html' %} {% block styles %}
-<link
-  rel="stylesheet"
-  href="{{ url_for('static', filename='repetitions.css')}}"
-/>
+
+{% if user.mode == "default" %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='repetitions.css')}}" />
+    {% else %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='dark/repetitions.css')}}" />
+    {% endif%}
+
+
 {% endblock styles %} {% block content %}
 <h1>Statistiques musiciens</h1>
 <div id="scroll">

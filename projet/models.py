@@ -75,6 +75,7 @@ class User(db.Model,UserMixin):
     role = db.relationship("Role", backref = db.backref("users",lazy="dynamic"))
     repetitions = db.relationship("Repetition",secondary=participer,backref='users')
     sondages = db.relationship("Reponse_sondage", back_populates="user")
+    mode = db.Column(db.String(50), default="default")
 
     def get_id(self):
         return self.mail

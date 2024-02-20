@@ -1,0 +1,257 @@
+main {
+    background-color: #242220;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-gap: 0px;
+    grid-auto-rows: minmax(50px, auto);
+    margin-left: 2em;
+    margin-right: 2em;
+}
+
+.tiles{
+    width: fit-content;
+    height: fit-content;
+    flex-grow: 1;
+    margin: auto;
+    margin-top: 2em;
+    text-decoration: none;
+}
+.tiles p {
+    width: fit-content;
+    height: fit-content;
+    margin: auto;
+    
+}
+#contener{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    margin: auto;
+}
+.repetition{
+    background-color: #251812;
+    border-radius: 5px;
+    border: none solid ;
+    padding: 0.25em;
+    width: fit-content;
+    height: fit-content;
+    margin: auto;
+    
+}
+
+
+
+
+div {
+    border-radius: 15px;
+    margin: 20px; 
+    z-index: 0; 
+}
+
+#pane1 {
+    margin-left: 1em;
+    grid-column: 1 / 2;
+    grid-row: 1 / 8;
+    background-color: #291a13;
+    box-shadow: 4px 4px 4px #20140f;
+}
+
+#pane2 {
+    grid-column: 2 / 6;
+    grid-row: 1 / 6;
+    background-color: #251610;
+    box-shadow: 4px 4px 4px #241510;
+    background-image: url('../static/images/fond_pane2.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    z-index: 1;
+}
+
+#pane3 {
+    grid-column: 2 / 5;
+    grid-row: 6 / 8;
+    background-color: #2b1b16;
+    box-shadow: 4px 4px 4px #291b15;  
+}
+
+
+
+#nom {
+    color: rgba(255, 242, 225, 0.9);
+    font-size: 2em;
+}
+
+#lieu{
+    color: rgba(255, 242, 224, 0.9);
+    font-size: 1.25em;
+}
+
+#date{
+    color: rgba(255, 241, 223, 0.9);
+    font-size: 1.5em;
+}
+
+#pane4 {
+    grid-column: 5 / 6;
+    grid-row: 6 / 8;
+    background-color: #2b150f;
+    box-shadow: 4px 4px 4px #24120c;
+}
+
+h2 {
+    text-align: left;
+    font-size: 2.25rem;
+    color: #fff2e1;
+    margin: 0.5vw;
+    font-family: 'Anton', sans-serif;
+}
+
+#pane4 p {
+    margin: 0.5vw;
+    text-align: left;
+}
+
+ul{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+a{
+    color: #fff2e0 ;
+}
+
+li button {
+    width: 26vw;
+    height: 8vh;
+    color: #22130f;
+    background-color: #fff3e3;
+    border-radius: 15px;
+    border: none;
+    font-size: 1.5em;
+    z-index: 5;
+}
+
+#pane2 button:hover{
+    transform: scale(1.02);
+    color: #ff7375;
+    cursor: pointer;
+}
+
+li{
+    list-style-type: none;
+    padding: 2vw;
+    flex-grow: 1;
+}
+
+#pane4 p {
+    text-align: left;
+    color : #fff2e0;
+}
+
+h1{
+    margin-left: 1em;
+    margin-top: 1em;
+    font-size: 3em;
+    font-family: 'Anton', sans-serif;
+    color: #291712;
+}
+
+h1> span{
+    font-family: 'Anton', sans-serif;
+    color: #200f0f;
+}
+
+.sondage {
+    margin: 1em;
+    padding: 0em;
+    background-color: rgba(255, 241, 223, 0.75);
+    width: fit-content + 1em;
+    height: fit-content + 1em;
+    text-align: center;
+    border-radius: 15px;
+    border: rgba(37, 28, 21, 0.3) solid 2px;
+    backdrop-filter: blur(20px);
+    justify-content: center;
+}
+
+.sondage p {
+    margin: 0.5em;
+    color: rgb(39, 19, 13);
+    font-size: 1em;
+    flex: 1;
+}
+
+.sondage:hover {
+    transform: scale(1.02);
+    background: rgba(255, 243, 227, 0.9);
+}
+
+.sondage a {
+    text-decoration: none;
+    display: flex;
+    justify-content: space-between;
+    flex: 1;
+}
+
+@media screen and (max-width: 1000px) {
+    main {
+        grid-template-columns: repeat(2, 1fr);
+        margin: 1em;
+    }
+    
+    #pane1 {
+        grid-column: 1 / 3;
+        grid-row: 1 / 6;
+    }
+    
+    #pane2 {
+        grid-column: 1 / 3;
+        grid-row: 6 / 11;
+    }
+
+    #pane2 li button{
+        width: 80vw;
+    }
+    
+    #pane3 {
+        grid-column: 1 / 3;
+        grid-row: 11 / 16;
+    }
+    
+    #pane4 {
+        grid-column: 1 / 3;
+        grid-row: 16 / 19;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    main {
+        grid-template-columns: 1fr;
+        margin: 1em;
+    }
+    
+    #pane1 {
+        grid-column: 1 / 2;
+        grid-row: 1 / 6;
+    }
+    
+    #pane2 {
+        grid-column: 1 / 2;
+        grid-row: 6 / 11;
+    }
+
+    #pane2 li button{
+        width: 80vw;
+    }
+    
+    #pane3 {
+        grid-column: 1 / 2;
+        grid-row: 11 / 16;
+    }
+    
+    #pane4 {
+        grid-column: 1 / 2;
+        grid-row: 16 / 21;
+    }
+}

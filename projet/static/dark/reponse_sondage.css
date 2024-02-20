@@ -1,0 +1,124 @@
+#scroll {
+    width: 90%;
+    height: 40rem;
+    overflow-y: scroll;
+    scrollbar-color: rgba(0, 0, 0, 0) rgba(0, 0, 0, 0);
+    scrollbar-width: thin;
+    background-color: rgba(51, 32, 24, 0.8);
+    border-radius: 15px;
+    align-self: center;
+    margin-top: 1.5em;
+    background-image: url('../static/images/font_notes2.png');
+    background-repeat: repeat;
+    background-size: cover;
+    border: rgb(41, 26, 19) solid 2.5px;
+    margin: auto;
+    padding: 0.5em;
+    position:relative;
+    z-index: -1;
+}
+
+#stat{
+    display: flex;
+    margin-top:2em ;
+    margin-bottom:2em ;
+}
+.rep{
+    color:#ff7e56;
+    font-weight: bolder;
+    font-size: 2vw;
+    margin: auto;
+}
+
+#rep_sondage {
+    margin: 1em;
+    padding: 0em;
+    background-color: rgba(41, 38, 35, 0.75);
+    width: fit-content + 1em;
+    height: fit-content + 1em;
+    text-align: center;
+    border-radius: 15px;
+    border: rgba(51, 38, 30, 0.3) solid 2px;
+    backdrop-filter: blur(20px);
+    justify-content: center;
+    display: flex ;
+    align-items: center;
+}
+
+#rep_sondage p {
+    margin: 0.5em;
+    color: rgb(255, 126, 86);
+    font-size: 2em;
+    flex: 1;
+    
+}
+
+#rep_sondage:hover {
+    transform: scale(1.02);
+    background: rgba(49, 47, 43, 0.9);
+}
+
+
+h1 {
+    color: #ffa178;
+    font-family: "Anton", sans-serif;
+    font-size: 5rem;
+    font-weight: 400;
+    text-align: center;
+    margin-bottom: 0.5em;
+}
+
+#vert{
+    background-color: rgb(0, 44, 0);
+    height: 3em;
+    width: 3em;
+    margin-right: 3em;
+    border-radius: 12px;
+}
+
+#rouge{
+    background-color: rgb(49, 0, 0);
+    height: 3em;
+    width: 3em;
+    margin-right: 3em;
+    border-radius: 12px;
+}
+
+
+h2{
+    text-align: right;
+    margin: 0.2em;
+    color: #ff7c55;
+    font-size: 2em;
+    margin-right: 2em;
+}
+
+button{
+    color:#fff3e3;
+    background-color: #251812;
+    border-radius: 15px;
+    border:none;
+    height: 40px;
+    width:90px;
+}
+
+#boutonRetour {
+    width: 5.5rem;
+    height: 2rem;
+    flex-shrink: 0;
+    color: #fff3e3;
+    font-family: Alata;
+    font-size: 1rem;
+    font-style: normal;
+    line-height: normal;
+    border: none;
+    border-radius: 0.625rem;
+    background: #351a12;
+    margin-top: 0.5em;
+    margin-left: 0.5em;
+  }
+
+#boutonRetour:hover {
+  transform: scale(1.02);
+  cursor: pointer;
+}

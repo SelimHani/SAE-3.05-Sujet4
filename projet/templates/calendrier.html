@@ -1,9 +1,10 @@
 {% extends 'home.html' %} {% block styles %}
-<link rel="stylesheet" href="dycalendar.css" />
-<link
-  rel="stylesheet"
-  href="{{ url_for('static', filename='calendrier.css')}}"
-/>
+
+{% if user.mode == "default" %}
+<link rel="stylesheet" href="{{ url_for('static', filename='calendrier.css')}}" />
+{% else %}
+<link rel="stylesheet" href="{{ url_for('static', filename='dark/calendrier.css')}}" />
+{% endif%}
 
 {% endblock styles %} {% block content %}
 <main>
