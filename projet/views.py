@@ -655,3 +655,15 @@ def supprimer_musicien(id):
     db.session.delete(user)
     db.session.commit()
     return redirect(url_for("home"))
+
+@app.route('/update_mode', methods=['POST'])
+def update_mode():
+    user = current_user
+    if user.mode != "sombre":
+        new_mode = request.json.get('new_mode')
+        user.mode = new_mode  
+    else:
+        user.mode = "default"
+    db.session.commit()
+    
+    return 'Mode mis à jour avec succès', 200
