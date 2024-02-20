@@ -32,13 +32,10 @@ def syncdb():
 
     admin = User(mail = "admin@gmail.com", password=sha256("admin".encode()).hexdigest(),num_tel="0871661865", role_id=3, nom="admin", prenom="admin")
 
-    user1 = User(mail = "a@gmail.com", password = sha256("a".encode()).hexdigest(),num_tel="0871661865",nom = "Poulet", prenom="Jule", role_id = 1)
-    user1000 = User(mail = "aaa@gmail.com", password = sha256("ab".encode()).hexdigest(),num_tel="0871661865",nom = "Leba", prenom="let", role_id = 4)
-
+    
     proche1 = Proche(id=1, musicien_mail ="a@gmail.com", proche_mail = "aaa@gmail.com")
 
-    from datetime import datetime
-
+    user1 = User(mail="a@gmail.com", password=sha256("a".encode()).hexdigest(), num_tel="0871661865", nom="Poulet", prenom="Jule", role_id=1, ddn=datetime.strptime("1990-01-01", "%Y-%m-%d"))
     user2 = User(mail="b@gmail.com", password=sha256("b".encode()).hexdigest(), num_tel="0871661865", nom="Monton", prenom="Christophe", role_id=1, ddn=datetime.strptime("1990-05-15", "%Y-%m-%d"))
     user3 = User(mail="c@gmail.com", password=sha256("c".encode()).hexdigest(), num_tel="0871661865", nom="Doe", prenom="John", role_id=1, ddn=datetime.strptime("1985-10-20", "%Y-%m-%d"))
     user4 = User(mail="d@gmail.com", password=sha256("d".encode()).hexdigest(), num_tel="0871661865", nom="Joie", prenom="Marie", role_id=1, ddn=datetime.strptime("1992-03-08", "%Y-%m-%d"))
@@ -47,11 +44,11 @@ def syncdb():
     user7 = User(mail="g@gmail.com", password=sha256("g".encode()).hexdigest(), num_tel="0871661865", nom="Macron", prenom="Emmanuel", role_id=1, ddn=datetime.strptime("1977-12-21", "%Y-%m-%d"))
 
 
-    r1 = Repetition(id=1, lieu="gymnase Mozart", date=datetime.strptime("2023-10-11", "%Y-%m-%d"), equipements=[e1,e2], description="repetition des percussions")
-    r2 = Repetition(id=2, lieu="gymnase Mozart", date=datetime.strptime("2024-02-10", "%Y-%m-%d"), equipements=[e1,e2,e4], description="repetition des instruments à vents")
-    r3 = Repetition(id=3, lieu="18 rue des cuivres", date=datetime.strptime("2022-08-22", "%Y-%m-%d"), equipements=[e3,e5], description="repetition des violons et clarinette")
-    r4 = Repetition(id=4, lieu="gymnase Mozart", date=datetime.strptime("2023-10-01", "%Y-%m-%d"), equipements=[e1,e6], description="repetition orchestre")
-    r5 = Repetition(id=5, lieu="10 boulevard Bethoven", date=datetime.strptime("2023-12-22", "%Y-%m-%d"), equipements=[e1,e2,e3,e4,e5], description="repetition avant le concert de noel")
+    r1 = Repetition(id=1, lieu="Gymnase Mozart, 123 rue de la Musique", date=datetime.strptime("2023-10-11", "%Y-%m-%d"), equipements=[e1,e2], description="repetition des percussions")
+    r2 = Repetition(id=2, lieu="Gymnase Mozart, 123 rue de la Musique", date=datetime.strptime("2024-02-10", "%Y-%m-%d"), equipements=[e1,e2,e4], description="repetition des instruments à vents")
+    r3 = Repetition(id=3, lieu="18 rue des Cuivres", date=datetime.strptime("2022-08-22", "%Y-%m-%d"), equipements=[e3,e5], description="repetition des violons et clarinette")
+    r4 = Repetition(id=4, lieu="Gymnase Mozart, 123 rue de la Musique", date=datetime.strptime("2023-10-01", "%Y-%m-%d"), equipements=[e1,e6], description="repetition orchestre")
+    r5 = Repetition(id=5, lieu="10 boulevard Beethoven", date=datetime.strptime("2023-12-22", "%Y-%m-%d"), equipements=[e1,e2,e3,e4,e5], description="repetition avant le concert de noel")
 
 
     a1 = Activite(id=1, nom="Concert de Noel", lieu="salle des fêtes", date=datetime.strptime("24/12/2023", "%d/%m/%Y"), equipements=[e1,e2,e3,e4,e5,e6], description="concert de noel avec tout l'orchestre")
@@ -68,7 +65,6 @@ def syncdb():
     s6= Sondage(id=6, question="Quel est votre famille d'instruments favorite?", reponses_possibles=[re6,re7,re8,re9],date_fin ="2024-01-01")
 
     db.session.add(user1)
-    db.session.add(user1000)
     db.session.add(user2)
     db.session.add(user3)
     db.session.add(user4)
