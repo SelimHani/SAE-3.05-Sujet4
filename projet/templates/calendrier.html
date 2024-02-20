@@ -1,28 +1,29 @@
-{% extends 'home.html' %} {% block styles %}
-<link rel="stylesheet" href="dycalendar.css" />
-<link
-  rel="stylesheet"
-  href="{{ url_for('static', filename='calendrier.css')}}"
-/>
+{% extends 'home.html' %} {% block styles %} 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.0/fullcalendar.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.0/fullcalendar.min.js"></script>
 
 {% endblock styles %} {% block content %}
+
 <main>
-  <div class="box">
-    <div class="container">
-      <div id="dycalendar"></div>
-    </div>
-  </div>
-  <script src="../static/js/dycalendar.js"></script>
-  <script>
-    dycalendar.draw({
-      target: "#dycalendar",
-      type: "month",
-      dayformat: "full",
-      monthformat: "full",
-      highlighttargetdate: true,
-      prevnextbutton: "show",
-    });
+    <div id="calendar"></div>
+
+    <script>
+      $(document).ready(function() {
+          // Initialisez le calendrier avec les données passées depuis Flask
+          $('#calendar').fullCalendar({
+              events: {{ events_data | tojson }},
+              contentHeight: 'auto',  // Ajustez la hauteur du contenu selon vos besoins
+              weekMode: 'variable',  // Ajustez le nombre de semaines affichées
+              eventClick: function(calEvent, jsEvent, view) {
+                  // Redirigez l'utilisateur vers l'URL associée à l'événement
+                  console.log(calEvent.url);
+                  window.location.href = calEvent.url;
+              },
+              // Autres options et callbacks peuvent être ajoutés ici
+          });
+      });
   </script>
-  
 </main>
 {% endblock content %}

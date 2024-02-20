@@ -44,6 +44,7 @@ class Repetition(db.Model):
     lieu = db.Column(db.String(100))
     date = db.Column(db.String(100))
     description = db.Column(db.String(200))
+    type = db.Column(db.String(20), default='repetition')  # Ajoutez cette colonne pour indiquer le type (repetition ou activite)
     equipements = db.relationship("Equipement",secondary=necessiter,backref='repetitions')
 
 
@@ -130,6 +131,7 @@ class Activite(db.Model):
     lieu = db.Column(db.String(50))
     date = db.Column(db.String(50))
     description = db.Column(db.String(100))
+    type = db.Column(db.String(20), default='activite')  # Ajoutez cette colonne pour indiquer le type (repetition ou activite)
     sondage_id = db.Column(db.Integer, db.ForeignKey("sondage.id"))
     equipements = db.relationship("Equipement",secondary=exiger,backref='activites')
 
