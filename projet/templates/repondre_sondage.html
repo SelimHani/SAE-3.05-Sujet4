@@ -53,7 +53,7 @@
         <a href={{lieu_map}}><h3>{{sondage.activite.lieu}}</h3></a>
 
       </section>
-      <h2 id="date">Le {{sondage.activite.date}}</h2>
+      <h2 id="date">Le {{sondage.activite.get_date()}}</h2>
       {% endif%}
       <div id="consentement">
         {{form.reponse()}}

@@ -6,7 +6,7 @@
   {{user.nom}}
   {{user.prenom}}
   {{user.mail}}
-  {{user.ddn}}
+  {{user.get_date()}}
   {{user.numtel}}
   {{role.name}}
   <button onclick="location.href = '{{ url_for('changer_profil',id=user.mail) }}';">Changer profil</button>

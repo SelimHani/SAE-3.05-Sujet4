@@ -5,46 +5,52 @@ from datetime import datetime
 
 participer = db.Table('participer',
     db.Column('user_id', db.String(50),
-    	db.ForeignKey('user.mail')),
+     db.ForeignKey('user.mail')),
     db.Column('repetition_id', db.Integer,
-    	db.ForeignKey('repetition.id'))
+     db.ForeignKey('repetition.id'))
 )
 
 necessiter = db.Table('necessiter',
     db.Column('repetition_id', db.Integer,
-    	db.ForeignKey('repetition.id')),
+     db.ForeignKey('repetition.id')),
     db.Column('equipement_id', db.Integer,
-    	db.ForeignKey('equipement.id'))
+     db.ForeignKey('equipement.id'))
 )
 
 exiger = db.Table('exiger',
     db.Column('activite_id', db.Integer,
-    	db.ForeignKey('activite.id')),
+     db.ForeignKey('activite.id')),
     db.Column('equipement_id', db.Integer,
-    	db.ForeignKey('equipement.id'))
+     db.ForeignKey('equipement.id'))
 )
 
 repondre = db.Table('repondre',
     db.Column('sondage_id', db.Integer,
-    	db.ForeignKey('sondage.id')),
+     db.ForeignKey('sondage.id')),
     db.Column('reponse_id', db.Integer,
-    	db.ForeignKey('reponses_possibles.id'))
+     db.ForeignKey('reponses_possibles.id'))
 )
 
-    
+
 class Role(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20))
-    
+
     def get_name(self):
         return self.name
-    
+
+
 class Repetition(db.Model):
-    id = db.Column(db.Integer, primary_key = True)
+    id = db.Column(db.Integer, primary_key=True)
     lieu = db.Column(db.String(100))
-    date = db.Column(db.String(100))
+    date = db.Column(db.DateTime, default=datetime.utcnow)
     description = db.Column(db.String(200))
-    equipements = db.relationship("Equipement",secondary=necessiter,backref='repetitions')
+    equipements = db.relationship("Equipement",
+                                  secondary=necessiter,
+                                  backref='repetitions')
+
+    def get_date(self):
+        return self.date.strftime("%d/%m/%Y ")
 
 
 class Reponse_sondage(db.Model):
@@ -53,7 +59,7 @@ class Reponse_sondage(db.Model):
     reponse = db.Column(db.String(50))
     user = db.relationship("User", back_populates="sondages")
     sondage = db.relationship("Sondage", back_populates="users")
-    
+
 
 class Proche(db.Model):
     id = db.Column(db.Integer, primary_key = True)
@@ -63,17 +69,19 @@ class Proche(db.Model):
     proche = db.relationship("User", foreign_keys=[proche_mail], backref='proches')
 
 
-class User(db.Model,UserMixin):
+class User(db.Model, UserMixin):
     mail = db.Column(db.String(50), primary_key=True)
     password = db.Column(db.String(200))
     nom = db.Column(db.String(50))
     prenom = db.Column(db.String(50))
 
-    ddn = db.Column(db.String(100))
+    ddn = db.Column(db.DateTime, default=datetime.utcnow)
     num_tel = db.Column(db.String(10))
     role_id = db.Column(db.Integer, db.ForeignKey("role.id"))
-    role = db.relationship("Role", backref = db.backref("users",lazy="dynamic"))
-    repetitions = db.relationship("Repetition",secondary=participer,backref='users')
+    role = db.relationship("Role", backref=db.backref("users", lazy="dynamic"))
+    repetitions = db.relationship("Repetition",
+                                  secondary=participer,
+                                  backref='users')
     sondages = db.relationship("Reponse_sondage", back_populates="user")
 
     def get_id(self):
@@ -81,27 +89,32 @@ class User(db.Model,UserMixin):
 
     def get_prenom(self):
         return self.prenom
-    
+
     def get_id_role(self):
         return self.role_id
-    
+
+    def get_date(self):
+        if self.ddn is None:
+            return "Pas de date de naissance"
+        return self.ddn.strftime("%d/%m/%Y")
+
 class Sondage(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    activite = db.relationship("Activite", uselist=False,backref="sondage") 
+    activite = db.relationship("Activite", uselist=False,backref="sondage")
     users = db.relationship("Reponse_sondage",back_populates="sondage")
     reponses_possibles = db.relationship("Reponses_possibles", secondary=repondre, backref="sondages")
     question = db.Column(db.String(100))
     date_fin = db.Column(db.String(100))
-    
+
     def get_id(self):
         return self.id
-    
+
     def nombre_reponses(self):
         reponses  = Reponse_sondage.query.filter_by(sondage_id=self.id).all()
         repondu = len(reponses)
         musiciens = len(User.query.filter_by(role_id=1).all())
         return repondu, musiciens
-    
+
 
     def get_pourcentage_rep(self):
         personne =Reponse_sondage.query.filter_by(sondage_id=self.id).with_entities(Reponse_sondage.user_id, Reponse_sondage.reponse).all()
@@ -114,8 +127,8 @@ class Sondage(db.Model):
         return reponses_possibless
 
     def get_date(self):
-        return self.date_fin
-    
+        return self.date_fin.strftime("%d/%m/%Y %H:%M")
+
     def jours_restants(self):
         date_fin = datetime.strptime(self.date_fin, '%Y-%m-%d')  # Convertir la chaîne en objet datetime
         aujourdhui = datetime.now()  # Date actuelle
@@ -123,20 +136,23 @@ class Sondage(db.Model):
         difference = date_fin - aujourdhui  # Calcul de la différence de dates
         return difference.days  # Nombre de jours restants jusqu'à la date de fin
 
-        
+
 class Activite(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nom = db.Column(db.String(50))
     lieu = db.Column(db.String(50))
-    date = db.Column(db.String(50))
+    date = db.Column(db.DateTime, default=datetime.utcnow)
     description = db.Column(db.String(100))
     sondage_id = db.Column(db.Integer, db.ForeignKey("sondage.id"))
     equipements = db.relationship("Equipement",secondary=exiger,backref='activites')
 
+    def get_date(self):
+        return self.date.strftime("%d/%m/%Y")
+
 class Equipement(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nom = db.Column(db.String(100))
-    
+
     def get_nom(self):
         return self.nom
 
@@ -147,7 +163,7 @@ class Reponses_possibles(db.Model):
 
 
 @login_manager.user_loader
-def load_user(mail): 
+def load_user(mail):
     return User.query.get(mail)
 
 def get_role_by_id(id):
@@ -180,7 +196,7 @@ def get_sondages():
     s = Sondage.query.filter(Sondage.date_fin >=func.now()).all()
     return sorted(s,key=lambda item: item.date_fin,reverse=True)
 
-def get_sondages_finis(): 
+def get_sondages_finis():
     s = Sondage.query.filter(Sondage.date_fin <=func.now()).all()
     return sorted(s,key=lambda item: item.date_fin,reverse=True)
 
