@@ -688,4 +688,4 @@ def calendrier():
             'url': url_for("detail_repetition", id=event.id),
         })
 
-    return render_template('calendrier.html', events_data=events_data)
+    return render_template('calendrier.html', events_data=events_data, user=current_user)
