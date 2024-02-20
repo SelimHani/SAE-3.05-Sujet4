@@ -1,17 +1,21 @@
 {% extends 'home.html' %} {% block styles %}
-<link
-  rel="stylesheet"
-  href="{{ url_for('static', filename='repondre_sondage.css')}}"
-/>
+
+{% if user.mode == "default" %}
+<link rel="stylesheet" href="{{ url_for('static', filename='repondre_sondage.css')}}" />
+{% else %}
+<link rel="stylesheet" href="{{ url_for('static', filename='dark/repondre_sondage.css')}}" />
+{% endif%}
+
 {% endblock styles %} {% block content %}
 <main>
   <button
-    class="bouton"
-    id="boutonRetour"
-    onclick="location.href = '{{ url_for('sondages') }}';"
-  >
-    RETOUR
-  </button>
+  class="bouton"
+  id="boutonRetour"
+  onclick="history.go(-1);"
+>
+  RETOUR
+</button>
+
   <form
     role="form"
     method="POST"

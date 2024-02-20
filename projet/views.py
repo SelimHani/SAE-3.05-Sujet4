@@ -33,6 +33,7 @@ def home():
     sondages = get_sondages()
     repetitions_activites = get_calendrier()
     derniere_repetition = None
+    
     try:
         derniere_repetition = repetitions_activites[0:5]
     except IndexError:
@@ -42,11 +43,13 @@ def home():
     elif current_user.get_id_role() == 1:
         return render_template("accueil_musicien.html",
                                sondages=sondages,
-                               prochain_evenement=derniere_repetition)
+                               prochain_evenement=derniere_repetition,
+                               user=current_user)
 
     return render_template("accueil.html",
                            sondages=sondages,
-                           prochain_evenement=derniere_repetition)
+                           prochain_evenement=derniere_repetition,
+                           user=current_user)
 
 @app.route("/sondages/")
 def sondages():
@@ -60,7 +63,7 @@ def sondages():
     sondages= get_sondages()
 
     return render_template(
-        "sondages.html",sondages=sondages
+        "sondages.html",sondages=sondages,user=current_user
     )
 
 @app.route("/sondages-finis/")
@@ -75,7 +78,7 @@ def sondages_finis():
     sondages_finis= get_sondages_finis()
 
     return render_template(
-        "sondages_finis.html",sondages=sondages_finis
+        "sondages_finis.html",sondages=sondages_finis,user=current_user
     )
 
 
@@ -150,7 +153,7 @@ def creer_proche():
         except sqlalchemy.exc.PendingRollbackError:
             db.session.rollback()
             afficher_popup('Ce mail est déjà utilisé, veuillez utiliser un autre .')
-    return render_template("create-proche.html", form=form)
+    return render_template("create-proche.html", form=form,user=current_user)
 
 
 
@@ -227,7 +230,7 @@ def creer_sondage_participation():
         db.session.commit()
         return redirect(url_for("home"))
     return render_template(
-        "new_sondage.html", form=form
+        "new_sondage.html", form=form,user=current_user
     )
 
 @app.route("/create-sondage-satisfaction/", methods=("GET", "POST",))
@@ -257,7 +260,7 @@ def creer_sondage_satisfaction():
             s.reponses_possibles.append(r)
             db.session.commit()
         form.reponses.data=""
-    return render_template("new_sondage_satisfaction.html",form=form)
+    return render_template("new_sondage_satisfaction.html",form=form,user=current_user)
 
 @app.route("/login/", methods=("GET", "POST",))
 def login():
@@ -272,7 +275,7 @@ def login():
             login_user(user)
             next = f.next.data or url_for("home")
             return redirect(next)
-    return render_template("login.html",form=f)
+    return render_template("login.html",form=f,user=current_user)
 
 @app.route("/logout/")
 def logout():
@@ -322,14 +325,9 @@ def creer_user():
 
 
 
-    return render_template("register.html", form=form)
+    return render_template("register.html", form=form,user=current_user)
 
-@app.route("/repetitions")
-def repetitions():
-    """Affiche la page des evenements à venir
-    """
-    repetitions_activites = get_calendrier()
-    return render_template("repetitions.html", repetitions_activites=repetitions_activites)
+
 
 @app.route("/create-repetition/", methods=("GET","POST",))
 def creer_repetition():
@@ -360,7 +358,7 @@ def creer_repetition():
         db.session.add(r)
         db.session.commit()
         return redirect(url_for("home"))
-    return render_template("create_repetition.html", form=form )
+    return render_template("create_repetition.html", form=form,user=current_user )
 
 @app.route("/profil/<id>")
 def profil(id):
@@ -464,15 +462,15 @@ def repondre_sondage(id):
     else:
         lieuM=None
         map=None
-
-    return render_template("repondre_sondage.html", form=f,sondage=s, lieu_map = map)
+    
+    return render_template("repondre_sondage.html", form=f,sondage=s, lieu_map = map,user=current_user)
 
 
 @app.route("/type-sondage/")
 def type_sondage():
     """Affiche la page de selection du type de sondage pour le créer
     """
-    return render_template("choix_type_sondage.html")
+    return render_template("choix_type_sondage.html",user=current_user)
 
 class EquipementForm(FlaskForm):
     nom = StringField("nom")
@@ -499,13 +497,13 @@ def ajoute_equipement():
             nom = nom.upper()
             nom =unidecode.unidecode(nom)
             if nom == nom_equipement:
-                return render_template("ajoute_equipement.html", form=form ,erreur=1)
+                return render_template("ajoute_equipement.html", form=form ,erreur=1,user=current_user)         
         e = Equipement(nom=form.nom.data)
         db.session.add(e)
         db.session.commit()
         form.nom.data  = ""
-        return render_template("ajouter_equipement.html", form=form ,erreur=0)
-    return render_template("ajouter_equipement.html", form=form)
+        return render_template("ajouter_equipement.html", form=form ,erreur=0,user=current_user)
+    return render_template("ajouter_equipement.html", form=form,user=current_user)
 
 
 @app.route("/delete-sondage/<id>")
@@ -540,7 +538,7 @@ def detail_repetition(id):
     """Affiche la page de détail d"une répétition
     """
     r = get_repetition_by_id(id)
-    return render_template("detail_repetition.html",r=r)
+    return render_template("detail_repetition.html",r=r,user=current_user)
 
 
 @app.route("/feuille-presence/")
@@ -548,7 +546,7 @@ def feuille_presence():
     """Affiche la page où choisir une répétition pour gérer les présents
     """
     r = Repetition.query.filter(Repetition.date <= func.now()).all()
-    return render_template("feuille_presence.html", r =r)
+    return render_template("feuille_presence.html", r =r,user=current_user)
 
 class PresenceForm(FlaskForm):
     musicien = SelectMultipleField("Choisis des musiciens", choices=[])
@@ -583,7 +581,7 @@ def presence_repetition(id):
         if m not in Repetition.query.get(id).users:
             l.append((m.mail, m.nom+" "+m.prenom))
     form.musicien.choices=l
-    return render_template("presence_repetition.html", form=form,id= r.id,musiciens =participent)
+    return render_template("presence_repetition.html", form=form,id= r.id,musiciens =participent,user=current_user)
 
 
 @app.route('/retirer/<email>/<id>/', methods=['GET', 'POST'])
@@ -603,8 +601,8 @@ def retirer(email, id):
             l.append((m.mail, m.nom+" "+m.prenom))
     form.musicien.choices=l
     participent = get_musiciens_repetition(id)
-    return render_template("presence_repetition.html", form=form,id=id,musiciens =participent)
-
+    return render_template("presence_repetition.html", form=form,id=id,musiciens =participent,user=current_user)
+ 
 
 @app.route("/reponse_sond.html/<id>")
 def reponse_sondage(id):
@@ -621,14 +619,14 @@ def reponse_sondage(id):
     for elem in reponses:
         l.append((Reponses_possibles.query.get(elem.reponse).nom,User.query.get(elem.user_id).nom,User.query.get(elem.user_id).prenom))
 
-    return render_template("reponse_sond.html", l=l, sondage = s)
+    return render_template("reponse_sond.html", l=l, sondage = s,user=current_user)
 
 
 @app.route("/gerer-presences/")
 def gerer_presences():
     """Affiche une page qui permet de gérer les musiciens
     """
-    return render_template("gerer_presences.html")
+    return render_template("gerer_presences.html",user=current_user)
 
 
 @app.route("/stats-musiciens/")
@@ -636,7 +634,7 @@ def stats_musiciens():
     """Affiche les stats des musiciens
     """
     u = User.query.filter_by(role_id=1)
-    return render_template("stats_musiciens.html", users=u)
+    return render_template("stats_musiciens.html", users=u,user=current_user)
 
 @app.route("/supprimer-musicien/<id>")
 def supprimer_musicien(id):
@@ -654,3 +652,40 @@ def supprimer_musicien(id):
     db.session.delete(user)
     db.session.commit()
     return redirect(url_for("home"))
+
+@app.route('/update_mode', methods=['POST'])
+def update_mode():
+    user = current_user
+    if user.mode != "sombre":
+        new_mode = request.json.get('new_mode')
+        user.mode = new_mode  
+    else:
+        user.mode = "default"
+    db.session.commit()
+    
+    return 'Mode mis à jour avec succès', 200
+
+
+@app.route('/calendrier')
+def calendrier():
+    events = get_calendrier()
+
+    # Formattez les données pour les rendre compatibles avec FullCalendar
+    events_data = []
+    for event in events:
+        if  event.type =="activite":
+            events_data.append({
+                'title': event.nom,
+                'start': event.date,
+                'end': event.date,
+                'url': url_for("repondre_sondage", id=event.id),
+            })
+    else:
+        events_data.append({
+            'title': "Repetition",
+            'start': event.date,
+            'end': event.date,
+            'url': url_for("detail_repetition", id=event.id),
+        })
+
+    return render_template('calendrier.html', events_data=events_data)

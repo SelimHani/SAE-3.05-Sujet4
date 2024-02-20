@@ -45,6 +45,7 @@ class Repetition(db.Model):
     lieu = db.Column(db.String(100))
     date = db.Column(db.DateTime, default=datetime.utcnow)
     description = db.Column(db.String(200))
+    type = db.Column(db.String(20), default='repetition')  # Ajoutez cette colonne pour indiquer le type (repetition ou activite)
     equipements = db.relationship("Equipement",
                                   secondary=necessiter,
                                   backref='repetitions')
@@ -83,6 +84,7 @@ class User(db.Model, UserMixin):
                                   secondary=participer,
                                   backref='users')
     sondages = db.relationship("Reponse_sondage", back_populates="user")
+    mode = db.Column(db.String(50), default="default")
 
     def get_id(self):
         return self.mail
@@ -143,6 +145,7 @@ class Activite(db.Model):
     lieu = db.Column(db.String(50))
     date = db.Column(db.DateTime, default=datetime.utcnow)
     description = db.Column(db.String(100))
+    type = db.Column(db.String(20), default='activite')  # Ajoutez cette colonne pour indiquer le type (repetition ou activite)
     sondage_id = db.Column(db.Integer, db.ForeignKey("sondage.id"))
     equipements = db.relationship("Equipement",secondary=exiger,backref='activites')
 

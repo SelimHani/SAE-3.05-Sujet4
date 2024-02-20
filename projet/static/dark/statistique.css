@@ -1,0 +1,143 @@
+section{
+    display: flex;
+    width: 320px;
+    height: 500px;
+    margin: 2vw;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 15px;
+    background: rgba(46, 29, 22, 0.75);
+}
+
+#red h2{
+  color: rgb(255, 0, 0);
+}
+  
+h2, h3{
+  text-align: center;
+  color: #fff3e3;
+}
+
+h2{
+  color: white;
+  font-size: 10vw;
+}
+
+#stats{
+  display: flex; 
+  justify-content: center;
+}
+
+button{
+    color:#fff3e3;
+    background-color: #20140f;
+    border-radius: 15px;
+    border:none;
+    height: 40px;
+}
+
+
+button[type="submit"]{
+  margin: 2rem; 
+}
+
+
+h1{
+  color:#271913;
+  text-align: center;
+  font-size:7vw;
+  padding: 2px;
+}
+
+.info{
+  display: flex;
+}
+
+.info section{
+  background :none; 
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+  flex-grow: 1;
+}
+
+#lastname, #name, #date, #number{
+  flex-basis: 50%;
+  font-size: 4vw;
+  font-family: 'Anton', sans-serif;
+}
+
+#email{
+  flex-basis: 100%;
+  font-size: 4vw;
+  font-family: 'Anton', sans-serif;
+}
+
+.btnChange{
+  display: flex;
+  margin-bottom: 8rem;
+
+}
+
+.btnChange button{
+  background-color: #271009;
+  width: 8rem;
+  height: 3rem;
+}
+
+#name, #date, #number, .btn{
+  color: #ff7a76;
+}
+
+#lastname, #email{
+  color: #ff7f57;
+}
+
+
+.btn {
+  text-align: center;
+  
+}
+
+.btn button{
+  background: none;
+  width: 3rem;
+  height: 2rem;
+  border-radius: 50%;
+  border: none;
+  margin: 1rem;
+}
+
+.statistique {
+  opacity: 0;
+  max-height: 0;
+  transition: opacity 0.5s, max-height 1s;
+  overflow: hidden;
+  
+}
+
+#violon{
+  animation: animate 1700ms infinite alternate;
+  height: 50vw;
+  margin-top: 2vw;
+  z-index: -1;
+}
+
+@keyframes animate {
+  100%{
+    transform: translateY(-30px);
+  }
+}
+
+@media screen and (max-width: 700px) {
+  #stats{
+    flex-wrap: wrap;
+  }
+
+  #violon{
+    margin-top: 15vh;
+  }
+  #stats section{
+    height: 20vh;
+  }
+}
