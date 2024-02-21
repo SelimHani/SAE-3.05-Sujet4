@@ -13,6 +13,6 @@
   <p>{{r.date}}</p>
   {% for e in r.accessoires %}
   <p>{{e.nom}}</p>{% endfor %}
-  <a href="{{ url_for('calendrier') }}">Retour au Calendrier</a>
+  <a href="" onclick="history.go(-1);">Retour</a>
 </div>
 {% endblock content %}
