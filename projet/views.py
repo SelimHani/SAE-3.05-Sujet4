@@ -301,7 +301,7 @@ def creer_sondage_satisfaction():
         db.session.add(r)
         if get_sondage_by_question(question) == None:
             s = Sondage(question=form.question.data,
-                        date_fin=form.dateFin.data)
+                        date_fin=datetime.combine(form.dateFin.data, form.heureFin.data))
             s.reponses_possibles.append(r)
             db.session.add(s)
             db.session.commit()
