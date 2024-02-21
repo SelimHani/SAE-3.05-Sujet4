@@ -41,7 +41,7 @@
   </form>
   <h2>Participants :</h2>
   {% for m in musiciens %}
-  <p>{{m.nom}} {{m.prenom}} <a href="{{ url_for('retirer', email=m.mail, id=id) }}"> X </a></p>
+  <p>{{m.nom}} {{m.prenom}} ( {{m.instrument.name}} ) <a href="{{ url_for('retirer', email=m.mail, id=id) }}"> X </a></p>
   {% endfor %}
 </div>
 

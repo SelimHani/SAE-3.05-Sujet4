@@ -707,10 +707,7 @@ class PresenceForm(FlaskForm):
     musicien = SelectMultipleField("Choisis des musiciens", choices=[])
 
 
-@app.route("/presence-repetition/<id>", methods=(
-    "GET",
-    "POST",
-))
+@app.route("/presence-repetition/<id>", methods=("GET","POST",))
 def presence_repetition(id):
     """Affiche la page pour gérer les présents lors d"une répétition
     """
@@ -738,13 +735,11 @@ def presence_repetition(id):
     participent = get_musiciens_repetition(id)
     for m in musiciens:
         if m not in Repetition.query.get(id).users:
-            l.append((m.mail, m.nom + " " + m.prenom))
+            l.append((m.mail, m.nom + " " + m.prenom + " ( " + m.instrument.name + " )"))
     form.musicien.choices = l
-    return render_template("presence_repetition.html",
-                           form=form,
-                           id=r.id,
-                           musiciens=participent,
-                           user=current_user)
+    return render_template("presence_repetition.html",form=form,id=r.id,musiciens=participent,user=current_user)
+
+
 
 
 @app.route('/retirer/<email>/<id>/', methods=['GET', 'POST'])
@@ -763,7 +758,7 @@ def retirer(email, id):
     non_participants = get_musiciens_pas_repetition(id)
     for m in non_participants:
         if m not in Repetition.query.get(id).users:
-            l.append((m.mail, m.nom + " " + m.prenom))
+            l.append((m.mail, m.nom + " " + m.prenom + " (" + m.instrument.name + ")"))
     form.musicien.choices = l
     participent = get_musiciens_repetition(id)
 
@@ -823,10 +818,11 @@ def gerer_presences():
 def stats_musiciens():
     """Affiche les stats des musiciens
     """
-    users = User.query.filter_by(role_id=1).all()  # Fetch all users with role_id 1
-    user_stats = {}  # Dictionary to hold user stats
+    users = User.query.filter_by(role_id=1).all()
+    user_stats = {}
 
     for user in users:
+        instrument = Instrument.query.get(user.instrument_id) 
         participees = user.repetitions
         nb_participees = len(participees)
         now = func.now()
@@ -836,7 +832,9 @@ def stats_musiciens():
         user_stats[user.mail] = {
             'nb_participees': nb_participees,
             'ratees': ratees,
-            'pourcentage': pourcentage
+            'pourcentage': pourcentage,
+            'instrument': instrument,
+            'all' : int(len(passees))
         }
 
     return render_template("stats_musiciens.html", users=users, user=current_user, user_stats=user_stats)
