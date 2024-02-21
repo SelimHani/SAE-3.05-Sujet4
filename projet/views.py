@@ -486,24 +486,28 @@ def ajoute_equipement():
     except AttributeError:
         return redirect(url_for("home"))
     form =EquipementForm()
+    equipements = get_equipements()
     if form.is_submitted():
         nom_equipement = form.nom.data
         nom_equipement = nom_equipement.upper() # en majuscule
         nom_equipement = unidecode.unidecode(nom_equipement) # suppression des accents qui restent
-        equipements = get_equipements()
+        
 
         for eq in equipements:
             nom = eq.get_nom()
             nom = nom.upper()
             nom =unidecode.unidecode(nom)
             if nom == nom_equipement:
-                return render_template("ajoute_equipement.html", form=form ,erreur=1,user=current_user)         
+                equipements = get_equipements()
+                return render_template("ajoute_equipement.html", form=form ,erreur=1,user=current_user,equipements=equipements)         
         e = Equipement(nom=form.nom.data)
         db.session.add(e)
         db.session.commit()
         form.nom.data  = ""
-        return render_template("ajouter_equipement.html", form=form ,erreur=0,user=current_user)
-    return render_template("ajouter_equipement.html", form=form,user=current_user)
+        equipements = get_equipements()
+        return render_template("ajouter_equipement.html", form=form ,erreur=0,user=current_user,equipements=equipements)
+    equipements = get_equipements()
+    return render_template("ajouter_equipement.html", form=form,user=current_user,equipements=equipements)
 
 
 @app.route("/delete-sondage/<id>")
@@ -602,6 +606,25 @@ def retirer(email, id):
     form.musicien.choices=l
     participent = get_musiciens_repetition(id)
     return render_template("presence_repetition.html", form=form,id=id,musiciens =participent,user=current_user)
+
+
+
+
+@app.route('/retirerEquippement/<equippement>/', methods=['GET', 'POST'])
+def retirerEquippement(equippement):
+    """Permet de retirer un equippement 
+    """
+    form = EquipementForm()
+
+    sql_query=text('DELETE FROM Equipement WHERE id = :equippement_id')
+    db.session.execute(sql_query,{"equippement_id":equippement})
+    db.session.commit()
+    equipements= get_equipements()
+    return render_template("ajouter_equipement.html", form=form,user=current_user,equipements=equipements)
+
+
+
+
  
 
 @app.route("/reponse_sond.html/<id>")
