@@ -20,7 +20,11 @@
         {% for s in sondages[::-1][0:6]%}
         <div class="sondage">
 
-            <p>{{s.jours_restants()}} jours restants</p>
+            {% if s.jours_restants()[1] == -1 %}
+                <p>{{s.jours_restants()[0]}} jours restants</p>
+            {% else %}
+                <p>{{s.jours_restants()[1]}} heures restantes</p>
+            {% endif %}
 
             <a href="{{ url_for('repondre_sondage',id=s.id)}}">
             {% if s.question %}<p>{{s.question}}</p>

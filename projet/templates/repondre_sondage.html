@@ -25,6 +25,7 @@
       <h1>{{sondage.activite.nom}}</h1>
       {% if sondage.question%}
       <h1>{{sondage.question}}</h1>
+      <p>Fin le  {{sondage.get_date()}}</p>
       {%endif%}
     </div>
 

@@ -136,7 +136,13 @@ class Sondage(db.Model):
         aujourdhui = datetime.now()  # Date actuelle
 
         difference = date_fin - aujourdhui  # Calcul de la différence de dates
-        return difference.days  # Nombre de jours restants jusqu'à la date de fin
+        jours_restants = difference.days  # Nombre de jours restants jusqu'à la date de fin
+        heures_restantes = difference.seconds // 3600  # Nombre d'heures restantes jusqu'à la date de fin
+
+        if heures_restantes > 24:
+            heures_restantes = -1
+
+        return (jours_restants, heures_restantes)  # Retourne le nombre de jours et d'heures restants
 
 
 class Activite(db.Model):
