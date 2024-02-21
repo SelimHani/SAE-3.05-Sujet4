@@ -22,8 +22,8 @@
     padding: 2em;
     text-align: center;
     width: 50%;
-    
     margin: auto;
+    margin-bottom: 2vh;
 }
 
 input{
@@ -43,6 +43,12 @@ p{
     margin: 1em;
     margin-top: 0em;
     text-align: center;
+}
+
+.item{
+    font-size: 2vw;
+    margin: 0;
+    padding: 0;
 }
 
 #formulaire button:hover{
