@@ -501,15 +501,15 @@ def ajoute_accessoire():
     except AttributeError:
         return redirect(url_for("home"))
     form =accessoireForm()
-    equipements = get_equipements()
+    accessoires = get_accessoires()
     if form.is_submitted():
         nom_accessoire = form.nom.data
         nom_accessoire = nom_accessoire.upper() # en majuscule
         nom_accessoire = unidecode.unidecode(nom_accessoire) # suppression des accents qui restent
         accessoires = get_accessoires()
-        nom_equipement = form.nom.data
-        nom_equipement = nom_equipement.upper() # en majuscule
-        nom_equipement = unidecode.unidecode(nom_equipement) # suppression des accents qui restent
+        nom_accessoire = form.nom.data
+        nom_accessoire = nom_accessoire.upper() # en majuscule
+        nom_accessoire = unidecode.unidecode(nom_accessoire) # suppression des accents qui restent
         
 
         for eq in accessoires:
@@ -517,16 +517,16 @@ def ajoute_accessoire():
             nom = nom.upper()
             nom =unidecode.unidecode(nom)
             if nom == nom_accessoire:
-                equipements = get_equipements()
-                return render_template("ajouter_accessoire.html", form=form ,erreur=1,user=current_user,equipements=equipements)         
+                accessoires = get_accessoires()
+                return render_template("ajouter_accessoire.html", form=form ,erreur=1,user=current_user,accessoires=accessoires)         
         e = Accessoire(nom=form.nom.data)
         db.session.add(e)
         db.session.commit()
         form.nom.data  = ""
-        equipements = get_equipements()
-        return render_template("ajouter_accessoire.html", form=form ,erreur=0,user=current_user,equipements=equipements)
-    equipements = get_equipements()
-    return render_template("ajouter_accessoire.html", form=form,user=current_user,equipements=equipements)
+        accessoires = get_accessoires()
+        return render_template("ajouter_accessoire.html", form=form ,erreur=0,user=current_user,accessoires=accessoires)
+    accessoires = get_accessoires()
+    return render_template("ajouter_accessoire.html", form=form,user=current_user,accessoires=accessoires)
 
 
 @app.route("/delete-sondage/<id>")
@@ -629,17 +629,17 @@ def retirer(email, id):
 
 
 
-@app.route('/retirerEquippement/<equippement>/', methods=['GET', 'POST'])
-def retirerEquippement(equippement):
-    """Permet de retirer un equippement 
+@app.route('/retirerAccessoire/<accessoire>/', methods=['GET', 'POST'])
+def retirerAccessoire(accessoire):
+    """Permet de retirer un accessoire
     """
-    form = EquipementForm()
+    form = accessoireForm()
 
-    sql_query=text('DELETE FROM Equipement WHERE id = :equippement_id')
-    db.session.execute(sql_query,{"equippement_id":equippement})
+    sql_query=text('DELETE FROM Accessoire WHERE id = :accessoire_id')
+    db.session.execute(sql_query,{"accessoire_id":accessoire})
     db.session.commit()
-    equipements= get_equipements()
-    return render_template("ajouter_equipement.html", form=form,user=current_user,equipements=equipements)
+    accessoires= get_accessoires()
+    return render_template("ajouter_accessoire.html", form=form,user=current_user,accessoires=accessoires)
 
 
 

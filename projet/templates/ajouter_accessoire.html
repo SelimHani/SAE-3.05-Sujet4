@@ -28,5 +28,14 @@
 
   </form>
 </div>
+</div>
+<div id="formulaire">
+  <p>Equipements déjà existants</p>
+  <ul>
+    {% for accessoire in accessoires %}
+    <li><p class="item">{{ accessoire.nom }}<a href="{{ url_for('retirerAccessoire', accessoire=accessoire.id) }}"> X </a></p></li>
+    {% endfor %}
+  </ul>
+</div>
 
 {% endblock content %}
