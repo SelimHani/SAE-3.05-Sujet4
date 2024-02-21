@@ -313,9 +313,16 @@ def creer_sondage_satisfaction():
             s.reponses_possibles.append(r)
             db.session.commit()
         form.reponses.data = ""
-    return render_template("new_sondage_satisfaction.html",
-                           form=form,
-                           user=current_user)
+    try:
+        return render_template("new_sondage_satisfaction.html",
+                            form=form,
+                            user=current_user,
+                            sondage=get_sondage_by_question(question))
+    except UnboundLocalError:
+        return render_template("new_sondage_satisfaction.html",
+                            form=form,
+                            user=current_user)
+        
 
 
 @app.route("/login/", methods=(

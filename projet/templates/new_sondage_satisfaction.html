@@ -23,6 +23,15 @@
           {{ form.dateFin(id_="form" ,placeholder ="")}}
           {{ form.heureFin(id_="form" ,placeholder ="")}}
           {{ form.question(id_="form" ,placeholder ="Question ...")}}
+          <div>
+            <ul>
+              {%if sondage%}
+              {% for s in sondage.reponses_possibles %}
+              <li><p class="item">{{ s.nom }}</p></li>
+              {% endfor %}
+              {% endif %}
+            </ul>
+          </div>
           {{ form.reponses(id_="form" ,placeholder ="Réponse possible ...")}}
         </div>
         <div id="buttons">

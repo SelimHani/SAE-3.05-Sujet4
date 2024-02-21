@@ -57,3 +57,15 @@ h2{
 button:hover{
     transform: scale(1.02);
 }
+
+.item{
+    font-size: 1em;
+    margin: auto;
+    width: fit-content;
+}
+
+ul{
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 100%;
+}
