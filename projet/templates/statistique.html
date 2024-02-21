@@ -18,12 +18,15 @@
         <p id="date">{{user.get_date()}}</p>
         <p id="number">{{user.num_tel}}</p>
         <p id="number">{{user.instrument.name}}</p>
+        {% if user.get_proches() != [] %}
         <p>Proches :</p>
         <ul>
         {% for proche in user.get_proches()%}
           <li><p>{{proche.nom}} {{proche.prenom}}</p></li>
         {% endfor %}
       </ul>
+        {% endif %}
+        
     </section>
     <img id="violon" src="../static/images/violon.png" alt="image de violon">
   </div>
