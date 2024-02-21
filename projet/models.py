@@ -38,7 +38,7 @@ class Role(db.Model):
 
     def get_name(self):
         return self.name
-    
+
 class Instrument(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(30))
@@ -87,7 +87,7 @@ class User(db.Model, UserMixin):
     role = db.relationship("Role", backref=db.backref("users", lazy="dynamic"))
     instrument_id=  db.Column(db.Integer, db.ForeignKey("instrument.id"))
     instrument = db.relationship("Instrument", backref= db.backref("users", lazy="dynamic"))
-    
+
     repetitions = db.relationship("Repetition",
                                   secondary=participer,
                                   backref='users')
@@ -107,38 +107,45 @@ class User(db.Model, UserMixin):
         if self.ddn is None:
             return "Pas de date de naissance"
         return self.ddn.strftime("%d/%m/%Y")
-    
+
     def get_proches(self):
         proches = Proche.query.filter_by(user=self).all()
         res=[]
         for p in proches:
             res.append(User.query.get(p.proche_mail))
         return res
-        
-            
+
+
 
 
 class Sondage(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    activite = db.relationship("Activite", uselist=False,backref="sondage")
-    users = db.relationship("Reponse_sondage",back_populates="sondage")
-    reponses_possibles = db.relationship("Reponses_possibles", secondary=repondre, backref="sondages")
+    activite = db.relationship("Activite", uselist=False, backref="sondage")
+    users = db.relationship("Reponse_sondage", back_populates="sondage")
+    reponses_possibles = db.relationship("Reponses_possibles",
+                                         secondary=repondre,
+                                         backref="sondages")
     question = db.Column(db.String(100))
-    date_fin = db.Column(db.DateTime, default=datetime.utcnow()+timedelta(days=7))
+    date_fin = db.Column(db.DateTime,
+                         default=datetime.utcnow() + timedelta(days=7))
 
     def get_id(self):
         return self.id
 
     def nombre_reponses(self):
-        reponses  = Reponse_sondage.query.filter_by(sondage_id=self.id).all()
+        reponses = Reponse_sondage.query.filter_by(sondage_id=self.id).all()
         repondu = len(reponses)
         musiciens = len(User.query.filter_by(role_id=1).all())
         return repondu, musiciens
 
-
     def get_pourcentage_rep(self):
-        personne =Reponse_sondage.query.filter_by(sondage_id=self.id).with_entities(Reponse_sondage.user_id, Reponse_sondage.reponse).all()
-        reponses_possibless = {elem.nom: 0 for elem in Sondage.query.get(self.id).reponses_possibles}
+        personne = Reponse_sondage.query.filter_by(
+            sondage_id=self.id).with_entities(Reponse_sondage.user_id,
+                                              Reponse_sondage.reponse).all()
+        reponses_possibless = {
+            elem.nom: 0
+            for elem in Sondage.query.get(self.id).reponses_possibles
+        }
         per = len(personne)
         for elem in personne:
             type = Reponses_possibles.query.get(elem[1]).nom
@@ -156,11 +163,15 @@ class Sondage(db.Model):
         difference = date_fin - aujourdhui  # Calcul de la différence de dates
         jours_restants = difference.days  # Nombre de jours restants jusqu'à la date de fin
         heures_restantes = difference.seconds // 3600  # Nombre d'heures restantes jusqu'à la date de fin
-
-        if heures_restantes > 24:
+        minutes_restantes = difference.seconds // 60  # Nombre de minutes restantes jusqu'à la date de fin
+        if jours_restants > 0:
             heures_restantes = -1
 
-        return (jours_restants, heures_restantes)  # Retourne le nombre de jours et d'heures restants
+        if heures_restantes <= 1:
+            minutes_restantes = difference.seconds // 60  # Nombre de minutes restantes jusqu'à la date de fin
+
+        return (jours_restants, heures_restantes, minutes_restantes
+                )  # Retourne le nombre de jours et d'heures restants
 
 
 class Activite(db.Model):
