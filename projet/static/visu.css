@@ -1,0 +1,51 @@
+.statistique {
+    text-align: center;
+    padding: 20px;
+    margin: 20px;
+    opacity: 1;
+    max-height: none;
+}
+
+.statistique h1 {
+    color: #8A5741;
+    font-size: 7vw;
+    padding: 2px;
+}
+
+#stats {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+#stats section {
+    display: flex;
+    width: 320px;
+    height: 500px;
+    margin: 2vw;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 15px;
+    background: rgba(138, 87, 65, 0.75);
+}
+
+#stats section h2 {
+    font-size: 10vw;
+    color: white;
+    text-align: center;
+}
+
+#stats section h3 {
+    color: #F0E4D4;
+    text-align: center;
+}
+
+#stats section#red h2 {
+    color: #f00;
+}
+
+@media screen and (max-width: 700px) {
+    #stats section {
+        height: 20vh;
+    }
+}

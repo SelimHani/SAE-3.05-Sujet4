@@ -10,9 +10,9 @@
 {% endblock styles %} {% block content %}
 <h1>Statistiques musiciens</h1>
 <div id="scroll">
-    {% for u in users %}
+  {% for user in users %}
       <div class="repetition">
-        <a href="{{ url_for("profil",id=u.mail)}}"><p> {{u.nom}} {{u.prenom}} </p></a>
+        <a href="{{ url_for("stat",id=user.mail)}}"><p> {{ user.nom }} {{user.prenom}}: {{ user_stats[user.mail]['nb_participees'] }}/{{ user_stats[user.mail]['ratees'] }} </p></a>
       </div>
     {% endfor %}
 </div>
