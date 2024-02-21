@@ -9,10 +9,15 @@
 
 
 {% endblock styles %} {% block content %}
-<button class="bouton" id="boutonRetour" onclick="location.href = '{{ url_for('sondages') }}';">RETOUR</button>
-<h1>{{sondage.activite.nom}}</h1>
+<button class="bouton" id="boutonRetour" onclick="history.go(-1);">RETOUR</button>
+{% if sondage.question %}<h1>{{sondage.question}}</h1>
+{% else %}
+<h1>{{sondage.activite.nom}} du {{sondage.activite.date}}</h1>
 
-{% if sondage.question %}<h1>{{sondage.question}}</h1>{% endif %}
+{% endif %}
+<h3>Sondage terminé le {{sondage.date_fin}}</h3>
+
+
 
 <p class="rep"> Réponses : {{sondage.nombre_reponses()[0]}} / {{sondage.nombre_reponses()[1]}}</p>
 
@@ -41,7 +46,6 @@
       </div>
       {%endfor%}
     </div>
-    <h2>Le {{sondage.activite.date}}</h2>
 </main>
 {% endblock content %}
 

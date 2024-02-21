@@ -27,12 +27,19 @@ def loadbd():
     r3 = Role(id=3, name="Responsable")
     r4 = Role(id=4, name="Proche")
 
-    e1 = Equipement(id=1, nom="Costume")
-    e2 = Equipement(id=2, nom="Piano")
-    e3 = Equipement(id=3, nom="Violon")
-    e4 = Equipement(id=4, nom="Flute")
-    e5 = Equipement(id=5, nom="Clarinette")
-    e6 = Equipement(id=6, nom="Tambour")
+    e1 = Accessoire(id=1, nom="Costume")
+    e2 = Accessoire(id=2, nom="Deguisement")
+    e3 = Accessoire(id=3, nom="Cape")
+    e4 = Accessoire(id=4, nom="Chapeau")
+    e5 = Accessoire(id=5, nom="Bottes")
+    e6 = Accessoire(id=6, nom="Masque")
+    
+    i1 = Instrument(id=1, name = "Violon")
+    i2 = Instrument(id=2, name = "Piano")
+    i3 = Instrument(id=3, name = "Flute")
+    i4 = Instrument(id=4, name = "Triangle")
+    i5 = Instrument(id=5, name = "Tamboure")
+    i6 = Instrument(id=6, name = "Trompette")
 
     re1 = Reponses_possibles(id=1, nom= "JE PARTICIPE")
     re2 = Reponses_possibles(id=2, nom="JE NE PARTICIPE PAS")
@@ -49,26 +56,29 @@ def loadbd():
     
     proche1 = Proche(id=1, musicien_mail ="a@gmail.com", proche_mail = "aaa@gmail.com")
 
-    user1 = User(mail="a@gmail.com", password=sha256("a".encode()).hexdigest(), num_tel="0871661865", nom="Poulet", prenom="Jule", role_id=1, ddn=datetime.strptime("1990-01-01", "%Y-%m-%d"))
-    user2 = User(mail="b@gmail.com", password=sha256("b".encode()).hexdigest(), num_tel="0871661865", nom="Monton", prenom="Christophe", role_id=1, ddn=datetime.strptime("1990-05-15", "%Y-%m-%d"))
-    user3 = User(mail="c@gmail.com", password=sha256("c".encode()).hexdigest(), num_tel="0871661865", nom="Doe", prenom="John", role_id=1, ddn=datetime.strptime("1985-10-20", "%Y-%m-%d"))
-    user4 = User(mail="d@gmail.com", password=sha256("d".encode()).hexdigest(), num_tel="0871661865", nom="Joie", prenom="Marie", role_id=1, ddn=datetime.strptime("1992-03-08", "%Y-%m-%d"))
-    user5 = User(mail="e@gmail.com", password=sha256("e".encode()).hexdigest(), num_tel="0871661865", nom="Laguitare", prenom="Joe", role_id=1, ddn=datetime.strptime("1994-07-12", "%Y-%m-%d"))
-    user6 = User(mail="f@gmail.com", password=sha256("f".encode()).hexdigest(), num_tel="0871661865", nom="Tou", prenom="Emma", role_id=1, ddn=datetime.strptime("1998-12-30", "%Y-%m-%d"))
-    user7 = User(mail="g@gmail.com", password=sha256("g".encode()).hexdigest(), num_tel="0871661865", nom="Macron", prenom="Emmanuel", role_id=1, ddn=datetime.strptime("1977-12-21", "%Y-%m-%d"))
+    user1 = User(mail="a@gmail.com", password=sha256("a".encode()).hexdigest(), num_tel="0871661865", nom="Poulet", prenom="Jule", role_id=1, ddn=datetime.strptime("1990-01-01", "%Y-%m-%d"),instrument_id=1)
+    user2 = User(mail="b@gmail.com", password=sha256("b".encode()).hexdigest(), num_tel="0871661865", nom="Monton", prenom="Christophe", role_id=1, ddn=datetime.strptime("1990-05-15", "%Y-%m-%d"),instrument_id=2)
+    user3 = User(mail="c@gmail.com", password=sha256("c".encode()).hexdigest(), num_tel="0871661865", nom="Doe", prenom="John", role_id=1, ddn=datetime.strptime("1985-10-20", "%Y-%m-%d"),instrument_id=3)
+    user4 = User(mail="d@gmail.com", password=sha256("d".encode()).hexdigest(), num_tel="0871661865", nom="Joie", prenom="Marie", role_id=1, ddn=datetime.strptime("1992-03-08", "%Y-%m-%d"),instrument_id=4)
+    user5 = User(mail="e@gmail.com", password=sha256("e".encode()).hexdigest(), num_tel="0871661865", nom="Laguitare", prenom="Joe", role_id=1, ddn=datetime.strptime("1994-07-12", "%Y-%m-%d"),instrument_id=5)
+    user6 = User(mail="f@gmail.com", password=sha256("f".encode()).hexdigest(), num_tel="0871661865", nom="Tou", prenom="Emma", role_id=1, ddn=datetime.strptime("1998-12-30", "%Y-%m-%d"),instrument_id=6)
+    user7 = User(mail="g@gmail.com", password=sha256("g".encode()).hexdigest(), num_tel="0871661865", nom="Macron", prenom="Emmanuel", role_id=1, ddn=datetime.strptime("1977-12-21", "%Y-%m-%d"),instrument_id=1)
 
 
-    r1 = Repetition(id=1, lieu="Gymnase Mozart, 123 rue de la Musique", date=datetime.strptime("2023-10-11 15:00", "%Y-%m-%d %H:%M"), equipements=[e1,e2], description="repetition des percussions")
-    r2 = Repetition(id=2, lieu="Gymnase Mozart, 123 rue de la Musique", date=datetime.strptime("2024-02-10 15:00", "%Y-%m-%d %H:%M"), equipements=[e1,e2,e4], description="repetition des instruments à vents")
-    r3 = Repetition(id=3, lieu="18 rue des Cuivres", date=datetime.strptime("2022-08-22 15:00", "%Y-%m-%d %H:%M"), equipements=[e3,e5], description="repetition des violons et clarinette")
-    r4 = Repetition(id=4, lieu="Gymnase Mozart, 123 rue de la Musique", date=datetime.strptime("2023-10-01 15:00", "%Y-%m-%d %H:%M"), equipements=[e1,e6], description="repetition orchestre")
-    r5 = Repetition(id=5, lieu="10 boulevard Beethoven", date=datetime.strptime("2023-12-22 15:00", "%Y-%m-%d %H:%M"), equipements=[e1,e2,e3,e4,e5], description="repetition avant le concert de noel")
+
+    r1 = Repetition(id=1, lieu="Gymnase Mozart, 123 rue de la Musique", date=datetime.strptime("2023-10-11", "%Y-%m-%d"), accessoires=[e1,e2], description="repetition des percussions")
+    r2 = Repetition(id=2, lieu="Gymnase Mozart, 123 rue de la Musique", date=datetime.strptime("2024-02-10", "%Y-%m-%d"), accessoires=[e1,e2,e4], description="repetition des instruments à vents")
+    r3 = Repetition(id=3, lieu="18 rue des Cuivres", date=datetime.strptime("2022-08-22", "%Y-%m-%d"), accessoires=[e3,e5], description="repetition des violons et clarinette")
+    r4 = Repetition(id=4, lieu="Gymnase Mozart, 123 rue de la Musique", date=datetime.strptime("2023-10-01", "%Y-%m-%d"), accessoires=[e1,e6], description="repetition orchestre")
+    r5 = Repetition(id=5, lieu="10 boulevard Beethoven", date=datetime.strptime("2023-12-22", "%Y-%m-%d"), accessoires=[e1,e2,e3,e4,e5], description="repetition avant le concert de noel")
 
 
-    a1 = Activite(id=1, nom="Concert de Noel", lieu="salle des fêtes", date=datetime.strptime("24/12/2023 15:00", "%d/%m/%Y %H:%M"), equipements=[e1,e2,e3,e4,e5,e6], description="concert de noel avec tout l'orchestre")
-    a2 = Activite(id=2, nom="Orchestre", lieu="studio Hollywood", date=datetime.strptime("12/03/2024 15:00", "%d/%m/%Y %H:%M"), equipements=[e1,e2,e3,e4,e5,e6], description="orchestre pour film à Hollywood")
-    a3 = Activite(id=3, nom="Concert de des percussions", lieu="gymnase sportif", date=datetime.strptime("28/12/2023 15:00", "%d/%m/%Y %H:%M"), equipements=[e6], description="concert de tambour, batterie, triangle")
-    a4 = Activite(id=4, nom="Carnaval", lieu="salle des fêtes", date=datetime.strptime("20/01/2024 15:00", "%d/%m/%Y %H:%M"), equipements=[e1,e2,e3,e4], description="défilé carnaval depart salle des fêtes")
+    a1 = Activite(id=1, nom="Concert de Noel", lieu="salle des fêtes", date=datetime.strptime("24/12/2023", "%d/%m/%Y"), accessoires=[e1,e2,e3,e4,e5,e6], description="concert de noel avec tout l'orchestre")
+    a2 = Activite(id=2, nom="Orchestre", lieu="studio Hollywood", date=datetime.strptime("12/03/2024", "%d/%m/%Y"), accessoires=[e1,e2,e3,e4,e5,e6], description="orchestre pour film à Hollywood")
+    a3 = Activite(id=3, nom="Concert de des percussions", lieu="gymnase sportif", date=datetime.strptime("28/12/2023", "%d/%m/%Y"), accessoires=[e6], description="concert de tambour, batterie, triangle")
+    a4 = Activite(id=4, nom="Carnaval", lieu="salle des fêtes", date=datetime.strptime("20/01/2024", "%d/%m/%Y"), accessoires=[e1,e2,e3,e4], description="défilé carnaval depart salle des fêtes")
+
+
 
 
     s1= Sondage(id=1, activite=a1, reponses_possibles=[re1,re2],date_fin=datetime.strptime("2023-12-23", "%Y-%m-%d"))
@@ -76,8 +86,6 @@ def loadbd():
     s3= Sondage(id=3, activite=a3, reponses_possibles=[re1,re2],date_fin=datetime.strptime("2023-12-30", "%Y-%m-%d"))
     s4= Sondage(id=4, activite=a4, reponses_possibles=[re1,re2],date_fin=datetime.strptime("2024-01-10", "%Y-%m-%d"))
 
-    s5= Sondage(id=5, question="Etes-vous satisfait de notre application web", reponses_possibles=[re3,re4,re5],date_fin=datetime.strptime("2023-12-24", "%Y-%m-%d"))
-    s6= Sondage(id=6, question="Quel est votre famille d'instruments favorite?", reponses_possibles=[re6,re7,re8,re9],date_fin=datetime.strptime("2024-01-01", "%Y-%m-%d"))
 
     db.session.add(user1)
     db.session.add(user2)
@@ -86,6 +94,12 @@ def loadbd():
     db.session.add(user5)
     db.session.add(user6)
     db.session.add(user7)
+    db.session.add(i1)
+    db.session.add(i2)
+    db.session.add(i3)
+    db.session.add(i4)
+    db.session.add(i5)
+    db.session.add(i6)
     db.session.add(r1)
     db.session.add(r2)
     db.session.add(r3)
@@ -99,8 +113,6 @@ def loadbd():
     db.session.add(s2)
     db.session.add(s3)
     db.session.add(s4)
-    db.session.add(s5)
-    db.session.add(s6)
     db.session.add(re1)
     db.session.add(re2)
     db.session.add(re3)

@@ -13,15 +13,15 @@ participer = db.Table('participer',
 necessiter = db.Table('necessiter',
     db.Column('repetition_id', db.Integer,
      db.ForeignKey('repetition.id')),
-    db.Column('equipement_id', db.Integer,
-     db.ForeignKey('equipement.id'))
+    db.Column('accessoire_id', db.Integer,
+     db.ForeignKey('accessoire.id'))
 )
 
 exiger = db.Table('exiger',
     db.Column('activite_id', db.Integer,
      db.ForeignKey('activite.id')),
-    db.Column('equipement_id', db.Integer,
-     db.ForeignKey('equipement.id'))
+    db.Column('accessoire_id', db.Integer,
+     db.ForeignKey('accessoire.id'))
 )
 
 repondre = db.Table('repondre',
@@ -38,6 +38,10 @@ class Role(db.Model):
 
     def get_name(self):
         return self.name
+    
+class Instrument(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(30))
 
 
 class Repetition(db.Model):
@@ -46,7 +50,7 @@ class Repetition(db.Model):
     date = db.Column(db.DateTime, default=datetime.utcnow)
     description = db.Column(db.String(200))
     type = db.Column(db.String(20), default='repetition')  # Ajoutez cette colonne pour indiquer le type (repetition ou activite)
-    equipements = db.relationship("Equipement",
+    accessoires = db.relationship("Accessoire",
                                   secondary=necessiter,
                                   backref='repetitions')
 
@@ -70,6 +74,7 @@ class Proche(db.Model):
     proche = db.relationship("User", foreign_keys=[proche_mail], backref='proches')
 
 
+
 class User(db.Model, UserMixin):
     mail = db.Column(db.String(50), primary_key=True)
     password = db.Column(db.String(200))
@@ -80,6 +85,9 @@ class User(db.Model, UserMixin):
     num_tel = db.Column(db.String(10))
     role_id = db.Column(db.Integer, db.ForeignKey("role.id"))
     role = db.relationship("Role", backref=db.backref("users", lazy="dynamic"))
+    instrument_id=  db.Column(db.Integer, db.ForeignKey("instrument.id"))
+    instrument = db.relationship("Instrument", backref= db.backref("users", lazy="dynamic"))
+    
     repetitions = db.relationship("Repetition",
                                   secondary=participer,
                                   backref='users')
@@ -99,6 +107,16 @@ class User(db.Model, UserMixin):
         if self.ddn is None:
             return "Pas de date de naissance"
         return self.ddn.strftime("%d/%m/%Y")
+    
+    def get_proches(self):
+        proches = Proche.query.filter_by(user=self).all()
+        res=[]
+        for p in proches:
+            res.append(User.query.get(p.proche_mail))
+        return res
+        
+            
+
 
 class Sondage(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -153,12 +171,12 @@ class Activite(db.Model):
     description = db.Column(db.String(100))
     type = db.Column(db.String(20), default='activite')  # Ajoutez cette colonne pour indiquer le type (repetition ou activite)
     sondage_id = db.Column(db.Integer, db.ForeignKey("sondage.id"))
-    equipements = db.relationship("Equipement",secondary=exiger,backref='activites')
+    accessoires = db.relationship("Accessoire",secondary=exiger,backref='activites')
 
     def get_date(self):
         return self.date.strftime("%d/%m/%Y")
 
-class Equipement(db.Model):
+class Accessoire(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nom = db.Column(db.String(100))
 
@@ -191,14 +209,20 @@ def get_calendrier():
     res = sorted(res,key=lambda item: item.date)
     return res
 
+def get_calendrier_all():
+    a= Activite.query.all()
+    b= Repetition.query.all()
+    res = a+b
+    return res
+
 def get_user_by_id(mail):
     return User.query.get(mail)
 
-def get_equipements():
-    return Equipement.query.all()
+def get_accessoires():
+    return Accessoire.query.all()
 
-def get_equipement_by_name(name):
-    res=Equipement.query.filter_by(nom=name).first()
+def get_accessoire_by_name(name):
+    res=Accessoire.query.filter_by(nom=name).first()
     return res
 
 def get_sondages():
@@ -235,3 +259,6 @@ def get_musiciens_pas_repetition(id):
     r= User.query.filter(~User.repetitions.any(Repetition.id ==id)).filter(User.role_id==1).all()
     res = sorted(r,key=lambda item: item.nom)
     return res
+
+def get_instruments():
+    return Instrument.query.all()
