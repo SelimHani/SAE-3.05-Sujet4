@@ -13,7 +13,11 @@
     {% else %}
     <a href="{{ url_for('reponse_sondage',id=s.id)}}">
     {% endif %}
-      <p>{{s.jours_restants()}} jours restants</p>
+      {% if s.jours_restants()[1] == -1 %}
+      <p>{{s.jours_restants()[0]}} jours restants</p>
+      {% else %}
+      <p>{{s.jours_restants()[1]}} heures restantes</p>
+      {% endif %}
       {% if s.question %}
       <p>{{s.question}}</p>
       <p>{{s.nombre_reponses()[0]}} / {{s.nombre_reponses()[1]}}</p>
