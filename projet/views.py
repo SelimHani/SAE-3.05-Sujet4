@@ -512,13 +512,13 @@ def ajoute_accessoire():
             nom = nom.upper()
             nom =unidecode.unidecode(nom)
             if nom == nom_accessoire:
-                return render_template("ajoute_accessoire.html", form=form ,erreur=1,user=current_user)         
+                return render_template("ajouter_accessoire.html", form=form ,erreur=1,user=current_user)         
         e = Accessoire(nom=form.nom.data)
         db.session.add(e)
         db.session.commit()
         form.nom.data  = ""
-        return render_template("ajoute_accessoire.html", form=form ,erreur=0,user=current_user)
-    return render_template("ajoute_accessoire.html", form=form,user=current_user)
+        return render_template("ajouter_accessoire.html", form=form ,erreur=0,user=current_user)
+    return render_template("ajouter_accessoire.html", form=form,user=current_user)
 
 
 @app.route("/delete-sondage/<id>")
