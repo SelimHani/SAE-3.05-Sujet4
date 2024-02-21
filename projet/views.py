@@ -360,6 +360,31 @@ def creer_repetition():
         return redirect(url_for("home"))
     return render_template("create_repetition.html", form=form,user=current_user )
 
+@app.route("/stat/<id>")
+def stat(id):
+    """Affiche la page de statistiques d'un utilisateur
+    """
+    try:
+        if current_user.get_id_role()==1:
+            pass
+    except AttributeError:
+        return redirect(url_for("home"))
+    u = get_user_by_id(id)
+    role = u.role_id
+    participees = u.repetitions
+    nb_participees = len(participees)
+    now = func.now()
+    passees = Repetition.query.filter(Repetition.date <= now).all()
+    ratees = len(passees)-nb_participees
+    if passees == []:
+        return render_template("statistique_musicien.html",user= u, role=role, nb_participees=nb_participees, ratees=ratees,pourcentage=0)
+    
+    pourcentage = int((nb_participees/len(passees))*100)
+
+    return render_template("statistique_musicien.html", user= u, role=role, nb_participees=nb_participees, ratees=ratees,pourcentage=pourcentage)
+
+
+
 @app.route("/profil/<id>")
 def profil(id):
     """Affiche la page de profil d'un utilisateur
@@ -633,8 +658,23 @@ def gerer_presences():
 def stats_musiciens():
     """Affiche les stats des musiciens
     """
-    u = User.query.filter_by(role_id=1)
-    return render_template("stats_musiciens.html", users=u,user=current_user)
+    users = User.query.filter_by(role_id=1).all()  # Fetch all users with role_id 1
+    user_stats = {}  # Dictionary to hold user stats
+
+    for user in users:
+        participees = user.repetitions
+        nb_participees = len(participees)
+        now = func.now()
+        passees = Repetition.query.filter(Repetition.date <= now).all()
+        ratees = len(passees)-nb_participees
+        pourcentage = int((nb_participees/len(passees))*100) if passees else 0
+        user_stats[user.mail] = {
+            'nb_participees': nb_participees,
+            'ratees': ratees,
+            'pourcentage': pourcentage
+        }
+
+    return render_template("stats_musiciens.html", users=users, user=current_user, user_stats=user_stats)
 
 @app.route("/supprimer-musicien/<id>")
 def supprimer_musicien(id):
