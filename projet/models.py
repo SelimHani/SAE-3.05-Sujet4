@@ -74,6 +74,7 @@ class Proche(db.Model):
     proche = db.relationship("User", foreign_keys=[proche_mail], backref='proches')
 
 
+
 class User(db.Model, UserMixin):
     mail = db.Column(db.String(50), primary_key=True)
     password = db.Column(db.String(200))
@@ -106,6 +107,15 @@ class User(db.Model, UserMixin):
         if self.ddn is None:
             return "Pas de date de naissance"
         return self.ddn.strftime("%d/%m/%Y")
+    
+    def get_proches(self):
+        proches = Proche.query.filter_by(user=self).all()
+        res=[]
+        for p in proches:
+            res.append(User.query.get(p.proche_mail))
+        return res
+        
+            
 
 
 class Sondage(db.Model):
