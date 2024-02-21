@@ -65,6 +65,7 @@ def loadbd():
     user7 = User(mail="g@gmail.com", password=sha256("g".encode()).hexdigest(), num_tel="0871661865", nom="Macron", prenom="Emmanuel", role_id=1, ddn=datetime.strptime("1977-12-21", "%Y-%m-%d"),instrument_id=1)
 
 
+
     r1 = Repetition(id=1, lieu="Gymnase Mozart, 123 rue de la Musique", date=datetime.strptime("2023-10-11", "%Y-%m-%d"), accessoires=[e1,e2], description="repetition des percussions")
     r2 = Repetition(id=2, lieu="Gymnase Mozart, 123 rue de la Musique", date=datetime.strptime("2024-02-10", "%Y-%m-%d"), accessoires=[e1,e2,e4], description="repetition des instruments à vents")
     r3 = Repetition(id=3, lieu="18 rue des Cuivres", date=datetime.strptime("2022-08-22", "%Y-%m-%d"), accessoires=[e3,e5], description="repetition des violons et clarinette")
@@ -77,10 +78,13 @@ def loadbd():
     a3 = Activite(id=3, nom="Concert de des percussions", lieu="gymnase sportif", date=datetime.strptime("28/12/2023", "%d/%m/%Y"), accessoires=[e6], description="concert de tambour, batterie, triangle")
     a4 = Activite(id=4, nom="Carnaval", lieu="salle des fêtes", date=datetime.strptime("20/01/2024", "%d/%m/%Y"), accessoires=[e1,e2,e3,e4], description="défilé carnaval depart salle des fêtes")
 
-    s1= Sondage(id=1, activite=a1, reponses_possibles=[re1,re2],date_fin ="2023-12-23")
-    s2= Sondage(id=2, activite=a2, reponses_possibles=[re1,re2],date_fin ="2024-01-20")
-    s3= Sondage(id=3, activite=a3, reponses_possibles=[re1,re2],date_fin ="2023-12-30")
-    s4= Sondage(id=4, activite=a4, reponses_possibles=[re1,re2],date_fin ="2024-01-10")
+
+
+
+    s1= Sondage(id=1, activite=a1, reponses_possibles=[re1,re2],date_fin=datetime.strptime("2023-12-23", "%Y-%m-%d"))
+    s2= Sondage(id=2, activite=a2, reponses_possibles=[re1,re2],date_fin=datetime.strptime("2024-01-20", "%Y-%m-%d"))
+    s3= Sondage(id=3, activite=a3, reponses_possibles=[re1,re2],date_fin=datetime.strptime("2023-12-30", "%Y-%m-%d"))
+    s4= Sondage(id=4, activite=a4, reponses_possibles=[re1,re2],date_fin=datetime.strptime("2024-01-10", "%Y-%m-%d"))
 
 
     db.session.add(user1)

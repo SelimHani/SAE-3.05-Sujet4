@@ -37,12 +37,16 @@
 
       <div class="divForm" id="dateActi">
         <h2>Date de l’activité</h2>
-        <div>{{ form.dateActivite (id_="formDate", placeholder="") }}</div>
+        <div>{{ form.dateActivite (id_="formDate", placeholder="") }}
+          {{ form.heureDebut (id_="formDate", placeholder="") }}
+        </div>
       </div>
 
       <div class="divForm" id="dateFin">
         <h2>Date limite du sondage</h2>
-        <div>{{ form.dateFin (id_="formDate", placeholder="") }}</div>
+        <div>{{ form.dateFin (id_="formDate", placeholder="") }}
+          {{ form.heureFin (id_="formDate", placeholder="") }}
+        </div>
       </div>
 
       <div class="divForm" id="matActi">

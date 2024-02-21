@@ -1,7 +1,7 @@
 from flask_login import UserMixin
 from .app import db, login_manager
 from sqlalchemy import func
-from datetime import datetime
+from datetime import datetime, timedelta
 
 participer = db.Table('participer',
     db.Column('user_id', db.String(50),
@@ -114,7 +114,7 @@ class Sondage(db.Model):
     users = db.relationship("Reponse_sondage",back_populates="sondage")
     reponses_possibles = db.relationship("Reponses_possibles", secondary=repondre, backref="sondages")
     question = db.Column(db.String(100))
-    date_fin = db.Column(db.String(100))
+    date_fin = db.Column(db.DateTime, default=datetime.utcnow()+timedelta(days=7))
 
     def get_id(self):
         return self.id
@@ -140,7 +140,7 @@ class Sondage(db.Model):
         return self.date_fin.strftime("%d/%m/%Y %H:%M")
 
     def jours_restants(self):
-        date_fin = datetime.strptime(self.date_fin, '%Y-%m-%d')  # Convertir la chaîne en objet datetime
+        date_fin = self.date_fin  # Date de fin du sondage
         aujourdhui = datetime.now()  # Date actuelle
 
         difference = date_fin - aujourdhui  # Calcul de la différence de dates
