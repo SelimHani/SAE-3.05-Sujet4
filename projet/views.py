@@ -167,6 +167,7 @@ class RegisterForm(FlaskForm):
     num = StringField("Numéro", validators=[InputRequired(),Regexp('^[0-9]{10}$', message="Le numéro doit contenir uniquement des chiffres."),Length(min=10, max=10, message="Le numéro doit contenir 10 chiffres.")])
     password = PasswordField("Password", validators=[InputRequired()])
     role = SelectField('Role', choices=[("1","Musicien"),("2","Directrice"),("3","Responsable")])
+    instrument = SelectField('Role', choices=[])
     next = HiddenField()
 
 class RepetitionForm(FlaskForm):
@@ -174,7 +175,7 @@ class RepetitionForm(FlaskForm):
     lieu = StringField("Lieu",validators=[InputRequired()])
     date = DateField("Date", validators=[InputRequired()])
     description = StringField("Description")
-    equipements = SelectMultipleField("Choisis des équipements", choices=[])
+    accessoires = SelectMultipleField("Choisis des équipements", choices=[])
 
 
 class SondageForm(FlaskForm):
@@ -182,7 +183,7 @@ class SondageForm(FlaskForm):
     lieuActivite = StringField("LieuActivite",validators=[InputRequired()])
     dateActivite = DateField(validators=[InputRequired()])
     descriptionActivite = TextAreaField("descriptionActivite")
-    equipements = SelectMultipleField("Choisis des équipements", choices=[])
+    accessoires = SelectMultipleField("Choisis des équipements", choices=[])
     dateFin = DateField(validators=[InputRequired()])
     next = HiddenField()
 
@@ -204,11 +205,11 @@ def creer_sondage_participation():
     except AttributeError:
         return redirect(url_for("home"))
     form = SondageForm()
-    equipements = get_equipements()
+    accessoires = get_accessoires()
     l = []
-    for e in equipements:
+    for e in accessoires:
         l.append(e.nom)
-    form.equipements.choices = l
+    form.accessoires.choices = l
     if not form.is_submitted():
         form.next.data = request.args.get("next")
     else:
@@ -219,11 +220,11 @@ def creer_sondage_participation():
         r2 = get_reponses_possibles_by_id(2)
         s.reponses_possibles.append(r1)
         s.reponses_possibles.append(r2)
-        noms_e = form.equipements.data
+        noms_e = form.accessoires.data
         for nom in noms_e:
-            equipement=get_equipement_by_name(nom)
-            a.equipements.append(equipement)
-            equipement.activites.append(a)
+            accessoire=get_accessoire_by_name(nom)
+            a.accessoires.append(accessoire)
+            accessoire.activites.append(a)
 
         db.session.add(a)
         db.session.add(s)
@@ -304,11 +305,17 @@ def creer_user():
     except AttributeError:
         return redirect(url_for("home"))
     form =RegisterForm()
+    instruments = get_instruments()
+    l = []
+    for i in instruments:
+        l.append((i.id,i.name))
+    form.instrument.choices = l
     if form.is_submitted():
         try:
             password_hash = sha256(form.password.data.encode()).hexdigest()
             role_id = int(form.role.data)
-            new_personne = User(mail=form.mail.data,password=password_hash,role_id=role_id,nom=form.nom.data,prenom=form.prenom.data,ddn=form.date_nais.data,num_tel=form.num.data)
+            instrument_id = int(form.instrument.data)
+            new_personne = User(mail=form.mail.data,password=password_hash,role_id=role_id,nom=form.nom.data,prenom=form.prenom.data,ddn=form.date_nais.data,num_tel=form.num.data, instrument_id=instrument_id)
 
             db.session.add(new_personne)
             db.session.commit()
@@ -338,23 +345,23 @@ def creer_repetition():
             return redirect(url_for("home"))
     except AttributeError:
         return redirect(url_for("home"))
-    equipements = get_equipements()
+    accessoires = get_accessoires()
     l = []
-    for e in equipements:
+    for e in accessoires:
         l.append(e.nom)
     form =RepetitionForm()
-    form.equipements.choices = l
+    form.accessoires.choices = l
     if form.is_submitted():
-        r = Repetition(lieu=form.lieu.data,date=form.date.data,description=form.description.data, equipements=[])
-        noms_e = form.equipements.data
+        r = Repetition(lieu=form.lieu.data,date=form.date.data,description=form.description.data, accessoires=[])
+        noms_e = form.accessoires.data
         print(noms_e)
         for nom in noms_e:
             print(type(nom))
-            equipement=get_equipement_by_name(nom)
-            print(equipement)
+            accessoire=get_accessoire_by_name(nom)
+            print(accessoire)
             print(r)
-            r.equipements.append(equipement)
-            equipement.repetitions.append(r)
+            r.accessoires.append(accessoire)
+            accessoire.repetitions.append(r)
         db.session.add(r)
         db.session.commit()
         return redirect(url_for("home"))
@@ -391,6 +398,7 @@ class ChangeProfilForm(FlaskForm):
     date_nais = DateField("Date_de_naissance")
     num = StringField("Numero")
     password = PasswordField("Password")
+    instrument  = SelectField("Instrument",choices = [])
     next = HiddenField()
 
 class RepondreSondageForm(FlaskForm):
@@ -407,6 +415,12 @@ def changer_profil(id):
         return redirect(url_for("home"))
     u  = get_user_by_id(id)
     f = ChangeProfilForm()
+    
+    instruments = get_instruments()
+    l = []
+    for i in instruments:
+        l.append((i.id,i.name))
+    f.instrument.choices = l
 
     if f.is_submitted():
         if f.password.data !="":
@@ -415,6 +429,7 @@ def changer_profil(id):
         u.nom = f.nom.data
         u.prenom = f.prenom.data
         u.num =  f.num.data
+        u.instrument_id = f.instrument.data
 
         db.session.commit()
         return redirect(url_for("profil",id = id))
@@ -472,12 +487,12 @@ def type_sondage():
     """
     return render_template("choix_type_sondage.html",user=current_user)
 
-class EquipementForm(FlaskForm):
+class accessoireForm(FlaskForm):
     nom = StringField("nom")
 
 
-@app.route("/ajouter-equipement",methods=("GET","POST",))
-def ajoute_equipement():
+@app.route("/ajouter-accessoire",methods=("GET","POST",))
+def ajoute_accessoire():
     """Affiche la page de formulaire pour créer un équipement
     """
     try:
@@ -485,25 +500,25 @@ def ajoute_equipement():
             return redirect(url_for("home"))
     except AttributeError:
         return redirect(url_for("home"))
-    form =EquipementForm()
+    form =accessoireForm()
     if form.is_submitted():
-        nom_equipement = form.nom.data
-        nom_equipement = nom_equipement.upper() # en majuscule
-        nom_equipement = unidecode.unidecode(nom_equipement) # suppression des accents qui restent
-        equipements = get_equipements()
+        nom_accessoire = form.nom.data
+        nom_accessoire = nom_accessoire.upper() # en majuscule
+        nom_accessoire = unidecode.unidecode(nom_accessoire) # suppression des accents qui restent
+        accessoires = get_accessoires()
 
-        for eq in equipements:
+        for eq in accessoires:
             nom = eq.get_nom()
             nom = nom.upper()
             nom =unidecode.unidecode(nom)
-            if nom == nom_equipement:
-                return render_template("ajoute_equipement.html", form=form ,erreur=1,user=current_user)         
-        e = Equipement(nom=form.nom.data)
+            if nom == nom_accessoire:
+                return render_template("ajoute_accessoire.html", form=form ,erreur=1,user=current_user)         
+        e = Accessoire(nom=form.nom.data)
         db.session.add(e)
         db.session.commit()
         form.nom.data  = ""
-        return render_template("ajouter_equipement.html", form=form ,erreur=0,user=current_user)
-    return render_template("ajouter_equipement.html", form=form,user=current_user)
+        return render_template("ajoute_accessoire.html", form=form ,erreur=0,user=current_user)
+    return render_template("ajoute_accessoire.html", form=form,user=current_user)
 
 
 @app.route("/delete-sondage/<id>")
@@ -519,10 +534,10 @@ def delete_sondage(id):
     reponses = Reponse_sondage.query.filter_by(sondage_id=id).all()
     if s.activite:
         a = s.activite
-        equipements = a.equipements
-        for e in equipements:
-            sql_query=text('DELETE FROM exiger WHERE activite_id = :activite_id AND equipement_id = :equipement_id')
-            db.session.execute(sql_query,{"activite_id":a.id,"equipement_id":e.id})
+        accessoires = a.accessoires
+        for e in accessoires:
+            sql_query=text('DELETE FROM exiger WHERE activite_id = :activite_id AND accessoire_id = :accessoire_id')
+            db.session.execute(sql_query,{"activite_id":a.id,"accessoire_id":e.id})
         db.session.commit()
         db.session.delete(a)
     for r in reponses:
@@ -668,7 +683,7 @@ def update_mode():
 
 @app.route('/calendrier')
 def calendrier():
-    events = get_calendrier()
+    events = get_calendrier_all()
 
     # Formattez les données pour les rendre compatibles avec FullCalendar
     events_data = []

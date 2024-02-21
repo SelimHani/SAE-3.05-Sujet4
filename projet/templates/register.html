@@ -11,7 +11,7 @@
 {% endblock styles %} {% block content %}
 <h1>Inscription</h1>
 <div id="formulaire">
-  <form role="form" method="POST" action="{{ url_for('creer_user') }}">
+  <form role="form" method="POST" action="{{ url_for('creer_user') }}" class="registration-form">
   {{ form.hidden_tag() }}
     <div>
     <p>Votre nom</p>
@@ -49,12 +49,22 @@
     </div>
     </div>
 
+    
+
     <div>
     <p>Votre role</p>
     <div>
-      {{ form.role(class_="test" ,placeholder ="role")}}
+      {{ form.role(id="role", class_="test" ,placeholder ="role")}}
     </div>
     </div>
+
+
+    <div id="instrument">
+      <p>Votre instrument</p>
+      <div>
+        {{ form.instrument(class_="test" ,placeholder ="instrument")}}
+      </div>
+      </div>
 
     <div>
     <p>Votre mot de passe</p>
@@ -70,4 +80,31 @@
   </form>
 </div>
 
+{% block scripts %}
+  <script>
+    // Attend que le document soit prêt
+    document.addEventListener("DOMContentLoaded", function () {
+      // Récupère l'élément select avec l'id 'role'
+      var roleSelect = document.getElementById('role');
+
+      // Récupère l'élément input avec l'id 'instrument'
+      var instrumentInput = document.getElementById('instrument');
+
+      // Écoute les changements dans la sélection du rôle
+      roleSelect.addEventListener('change', function () {
+        // Si la valeur sélectionnée est égale à 1, affiche le champ instrument, sinon cache-le
+        if (roleSelect.value === '1') {
+          instrumentInput.style.display = 'block';
+        } else {
+          instrumentInput.style.display = 'none';
+        }
+      });
+
+      // Initialise l'état initial du champ instrument
+      if (roleSelect.value !== '1') {
+        instrumentInput.style.display = 'none';
+      }
+    });
+  </script>
+{% endblock %}
 {% endblock content %}
