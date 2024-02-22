@@ -45,4 +45,24 @@
   {% endfor %}
 </div>
 
+
+<script>
+  // Récupération de la liste des options
+  var options = document.getElementById('form').options;
+  console.log("chargé");
+  // Ajout d'un gestionnaire d'événement clic à chaque option
+  for (var i = 0; i < options.length; i++) {
+      options[i].addEventListener('click', function() {
+          // Si l'option est sélectionnée, la désélectionner
+          if (this.hasAttribute('selected')) {
+              this.removeAttribute('selected');
+          } else {
+              // Sinon, sélectionner l'option
+              this.setAttribute('selected', 'selected');
+          }
+      });
+  }
+  </script>
+
 {% endblock content %}
+
