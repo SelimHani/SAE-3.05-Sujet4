@@ -13,7 +13,7 @@
 <div id="scroll">
   {% for user in users %}
       <div class="repetition">
-        <a href="{{ url_for("stat",id=user.mail)}}"><p>{{user.instrument.name}} {{ user.nom }} {{user.prenom}}: {{ user_stats[user.mail]['nb_participees'] }}/{{ user_stats[user.mail]['all'] }} </p></a>
+        <a href="{{ url_for("profil",id=user.mail)}}"><p>{{user.instrument.name}} {{ user.nom }} {{user.prenom}}: {{ user_stats[user.mail]['nb_participees'] }}/{{ user_stats[user.mail]['all'] }} </p></a>
       </div>
     {% endfor %}
 </div>
