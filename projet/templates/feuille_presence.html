@@ -12,7 +12,7 @@
 <div id="scroll">
     {% for repete in r %}
       <div class="repetition">
-        <a href="{{ url_for("presence_repetition",id=repete.id)}}"><p>Répétition du {{repete.date}} .</p></a>
+        <a href="{{ url_for("presence_repetition",id=repete.id)}}"><p>Répétition du {{repete.get_date()}} </p></a>
       </div>
     {% endfor %}
 </div>

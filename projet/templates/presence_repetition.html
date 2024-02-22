@@ -1,8 +1,5 @@
 {% extends 'home.html' %} {% block styles %}
-<link
-  rel="stylesheet"
-  href="{{ url_for('static', filename='presence_repetition.css')}}"
-/>
+<link rel="stylesheet" href="{{ url_for('static', filename='presence_repetition.css')}}" />
 
 {% if user.mode == "default" %}
 <link rel="stylesheet" href="{{ url_for('static', filename='presence_repetition.css')}}" />
@@ -10,39 +7,44 @@
 <link rel="stylesheet" href="{{ url_for('static', filename='dark/presence_repetition.css')}}" />
 {% endif%}
 
+<script src="../static/js/confirmation.js" defer></script>
 {% endblock styles %} {% block content %}
 
+
 <div id="formParent">
-  <form
-    role="form"
-    method="POST"
-    action="{{ url_for('presence_repetition',id=id) }}"
-  >
+  <form role="form" method="POST" action="{{ url_for('presence_repetition',id=id) }}">
     <div id="formulaireSondage">
       <div class="divForm" id="nomActi">
         <h2>Qui a participé à cette répétition ?</h2>
         <div id="Questions">
-          <div id="scroll"> 
+          <div id="scroll">
             {{ form.musicien(id_="form" ,placeholder ="musiciens")}}
           </div>
         </div>
         <div id="buttons">
-          <button type="submit" id="bValider">[ VALIDER ]</button>
-          <button
-            type="reset"
-            id="bAnnuler"
-            onclick="location.href = '{{ url_for('home') }}';"
-          >
-            [ RETOUR ]
-          </button>
+          <button type="submit" id="bValider">VALIDER</button>
+          <button type="reset" id="bAnnuler" onclick="location.href = '{{ url_for('home') }}';">RETOUR</button>
         </div>
       </div>
     </div>
   </form>
   <h2>Participants :</h2>
   {% for m in musiciens %}
-  <p>{{m.nom}} {{m.prenom}} ( {{m.instrument.name}} ) <a href="{{ url_for('retirer', email=m.mail, id=id) }}"> X </a></p>
+  <p>{{m.nom}} {{m.prenom}} ( {{m.instrument.name}} ) <a href="{{ url_for('retirer', email=m.mail, id=id) }}"> X </a>
+  </p>
   {% endfor %}
 </div>
+
+<script>
+  button = document.querySelector("#bAnnuler");
+
+button.onclick = function () {
+    if (confirm("Avez vous terminé l'appel ?")) {
+        location.href = '{{ url_for('feuille_presence') }}';
+    }
+};
+
+</script>
+
 
 {% endblock content %}
