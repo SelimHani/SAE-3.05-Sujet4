@@ -814,6 +814,35 @@ def gerer_presences():
     return render_template("gerer_presences.html", user=current_user)
 
 
+@app.route("/profil-musicien")
+def profil_mus():
+    """Affiche les stats des musiciens
+    """
+    users = User.query.filter_by(role_id=1).all()
+    user_stats = {}
+
+    for user in users:
+        instrument = Instrument.query.get(user.instrument_id) 
+        participees = user.repetitions
+        nb_participees = len(participees)
+        now = func.now()
+        passees = Repetition.query.filter(Repetition.date <= now).all()
+        ratees = len(passees)-nb_participees
+        pourcentage = int((nb_participees/len(passees))*100) if passees else 0
+        user_stats[user.mail] = {
+            'nb_participees': nb_participees,
+            'ratees': ratees,
+            'pourcentage': pourcentage,
+            'instrument': instrument,
+            'all' : int(len(passees))
+        }
+
+    return render_template("profil_mus.html", users=users, user=current_user, user_stats=user_stats)
+
+@app.route("/profil-musicien/<id>")
+def profil(id):
+
+
 @app.route("/stats-musiciens/")
 def stats_musiciens():
     """Affiche les stats des musiciens

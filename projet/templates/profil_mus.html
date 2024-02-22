@@ -1,0 +1,20 @@
+{% extends 'home.html' %} {% block styles %}
+
+{% if user.mode == "default" %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='repetitions.css')}}" />
+    {% else %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='dark/repetitions.css')}}" />
+    {% endif%}
+
+
+{% endblock styles %} {% block content %}
+
+<h1>Statistiques musiciens</h1>
+<div id="scroll">
+  {% for user in users %}
+      <div class="repetition">
+        <a href="{{ url_for("stat",id=user.mail)}}"><p>{{user.instrument.name}} {{ user.nom }} {{user.prenom}}: {{ user_stats[user.mail]['nb_participees'] }}/{{ user_stats[user.mail]['all'] }} </p></a>
+      </div>
+    {% endfor %}
+</div>
+{% endblock content %}
