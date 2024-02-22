@@ -4,6 +4,55 @@
   href="{{ url_for('static', filename='presence_repetition.css')}}"
 />
 
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<style>
+  /* Hide default checkboxes */
+  .form-check-input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none; /* Disable pointer events on the hidden checkbox */
+  }
+
+  /* Style the custom checkboxes */
+  .form-check-label {
+    position: relative;
+    padding-left: 30px; /* Adjust as needed */
+    cursor: pointer;
+    display: inline-block;
+  }
+
+  .form-check-label:before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 20px; /* Size of the custom checkbox */
+    height: 20px;
+    border: 1px solid #000; /* Border color of the checkbox */
+    background-color: #fff; /* Background color of the checkbox */
+    border-radius: 4px; /* Adjust as needed */
+    box-sizing: border-box;
+  }
+
+  /* Style the custom checkboxes when checked */
+  .form-check-input:checked + .form-check-label:before {
+    background-color: #428bca; /* Change to desired color */
+    border-color: #428bca; /* Change to desired color */
+  }
+
+  /* Style the checkmark inside the custom checkboxes */
+  .form-check-input:checked + .form-check-label:before:after {
+    content: "\2713"; /* Checkmark character */
+    position: absolute;
+    left: 5px; /* Adjust as needed */
+    top: 1px; /* Adjust as needed */
+    color: #fff; /* Checkmark color */
+    font-size: 14px; /* Adjust as needed */
+  }
+</style>
+
+
 {% if user.mode == "default" %}
 <link rel="stylesheet" href="{{ url_for('static', filename='presence_repetition.css')}}" />
 {% else %}
@@ -23,7 +72,14 @@
         <h2>Qui a participé à cette répétition ?</h2>
         <div id="Questions">
           <div id="scroll"> 
-            {{ form.musicien(id_="form" ,placeholder ="musiciens")}}
+            {% for choice in form.musicien.choices %}
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" name="{{ form.musicien.name }}" value="{{ choice[0] }}" id="{{ choice[0] }}">
+              <label class="form-check-label" for="{{ choice[0] }}">
+                {{ choice[1] }}
+              </label>
+            </div>
+          {% endfor %}
           </div>
         </div>
         <div id="buttons">
@@ -44,5 +100,12 @@
   <p>{{m.nom}} {{m.prenom}} ( {{m.instrument.name}} ) <a href="{{ url_for('retirer', email=m.mail, id=id) }}"> X </a></p>
   {% endfor %}
 </div>
+<script>
+  $(document).ready(function () {
+    $(".form-check-input").click(function () {
+      $(this).closest(".form-check").toggleClass("selected");
+    });
+  });
+</script>
 
 {% endblock content %}

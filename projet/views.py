@@ -895,3 +895,4 @@ def calendrier():
     return render_template('calendrier.html',
                            events_data=events_data,
                            user=current_user)
+
