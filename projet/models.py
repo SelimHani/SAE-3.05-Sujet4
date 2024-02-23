@@ -221,8 +221,8 @@ def get_calendrier():
     return res
 
 def get_calendrier_all():
-    a= Activite.query.all()
-    b= Repetition.query.all()
+    a= Activite.query.filter(Activite.date >= func.now()).all()
+    b= Repetition.query.filter(Repetition.date >= func.now()).all()
     res = a+b
     return res
 
