@@ -55,7 +55,7 @@ class Repetition(db.Model):
                                   backref='repetitions')
 
     def get_date(self):
-        return self.date.strftime("%d/%m/%Y ")
+        return self.date.strftime("%d/%m/%Y ")+" à " +self.date.strftime("%H:%M")
 
 
 class Reponse_sondage(db.Model):
@@ -106,7 +106,7 @@ class User(db.Model, UserMixin):
     def get_date(self):
         if self.ddn is None:
             return "Pas de date de naissance"
-        return self.ddn.strftime("%d/%m/%Y")
+        return self.ddn.strftime("%d/%m/%Y ")
 
     def get_proches(self):
         proches = Proche.query.filter_by(user=self).all()
@@ -154,7 +154,7 @@ class Sondage(db.Model):
         return reponses_possibless
 
     def get_date(self):
-        return self.date_fin.strftime("%d/%m/%Y %H:%M")
+        return self.date_fin.strftime("%d/%m/%Y ")+" à " +self.date_fin.strftime("%H:%M")
 
     def jours_restants(self):
         date_fin = self.date_fin  # Date de fin du sondage
@@ -185,8 +185,7 @@ class Activite(db.Model):
     accessoires = db.relationship("Accessoire",secondary=exiger,backref='activites')
 
     def get_date(self):
-        return self.date.strftime("%d/%m/%Y")
-
+        return self.date.strftime("%d/%m/%Y ")+" à " +self.date.strftime("%H:%M")
 class Accessoire(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nom = db.Column(db.String(100))

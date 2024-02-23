@@ -108,6 +108,27 @@ section p{
 }
 
 
+#boutonSupprimer{
+    width: 5.5rem;
+    height: 2rem;
+    flex-shrink: 0;
+    color: #F0E4D4;
+    font-family: Alata;
+    font-size: 1rem;
+    font-style: normal;
+    line-height: normal;
+    border: none;
+    border-radius: 0.625rem;
+    background: #bb380c;    
+    margin-top: 0.5em;
+    margin-left: 0.5em;
+}
+
+#boutonRetour:hover{
+    transform: scale(1.02);
+    cursor: pointer;
+}
+
 #reponse{
     border: 1px solid #ccc;
     width: 12em;
