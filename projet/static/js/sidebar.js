@@ -14,9 +14,10 @@ function openNav() {
         etat = true
     }
 
-
+    
     if (document.getElementById("calendar") != null) {
         document.getElementById("calendar").style.zIndex = "-1";
+        document.querySelector('nav').style.zIndex = "2";
     }
 
     else if (document.getElementById("tdb") != null) {
