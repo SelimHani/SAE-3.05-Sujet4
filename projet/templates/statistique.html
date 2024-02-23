@@ -21,9 +21,13 @@
         {% if user.get_proches() != [] %}
         <p>Proches :</p>
         <ul>
+          <select>
         {% for proche in user.get_proches()%}
-          <li><p>{{proche.nom}} {{proche.prenom}}</p></li>
+          
+            <option value=''>{{proche.nom}} {{proche.prenom}} </option>
+            
         {% endfor %}
+        <select>
       </ul>
         {% endif %}
         
