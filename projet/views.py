@@ -726,12 +726,13 @@ def presence_repetition(id):
 
     if form.is_submitted():
         reponse = form.musicien.data
-        for mail in reponse:
-            u = User.query.get(mail)
-            if u not in r.users:
-                r.users.append(u)
-                u.repetitions.append(r)
-        db.session.commit()
+        if reponse != None:
+            for mail in reponse:
+                u = User.query.get(mail)
+                if u not in r.users:
+                    r.users.append(u)
+                    u.repetitions.append(r)
+            db.session.commit()
     participent = get_musiciens_repetition(id)
     for m in musiciens:
         if m not in Repetition.query.get(id).users:
