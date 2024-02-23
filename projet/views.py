@@ -52,6 +52,12 @@ def home():
                            prochain_evenement=derniere_repetition,
                            user=current_user)
 
+@app.route("/gerer-presences")
+def service():
+    if current_user.get_id_role() == 3:
+        return render_template("gerer_presences.html",user=current_user)
+    return render_template("accueil_musicien.html",user=current_user)
+
 
 @app.route("/sondages/")
 def sondages():

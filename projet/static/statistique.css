@@ -120,7 +120,6 @@ h1{
   animation: animate 1700ms infinite alternate;
   height: 50vw;
   margin-top: 2vw;
-  z-index: -1;
 }
 
 @keyframes animate {
