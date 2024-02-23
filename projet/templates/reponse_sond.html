@@ -12,10 +12,10 @@
 <button class="bouton" id="boutonRetour" onclick="history.go(-1);">RETOUR</button>
 {% if sondage.question %}<h1>{{sondage.question}}</h1>
 {% else %}
-<h1>{{sondage.activite.nom}} du {{sondage.activite.date}}</h1>
+<h1>{{sondage.activite.nom}} du {{sondage.activite.get_date()}}</h1>
 
 {% endif %}
-<h3>Sondage terminé le {{sondage.date_fin}}</h3>
+<h3>Fin du sondage le {{sondage.get_date()}}</h3>
 
 
 

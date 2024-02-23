@@ -61,12 +61,17 @@
       </section>
       <h2 id="date">Le {{sondage.activite.get_date()}}</h2>
       {% endif%}
+      {% if current_user.role_id==1 %}
       <div id="consentement">
+        
+       
         {{form.reponse()}}
-        {% if current_user.role_id==1 %}
         <button id="boutonValider" type="submit">Valider</button>
-        {% endif %}
+       
       </div>
+      {% endif %}
+
+      
     </div>
   </form>
 
@@ -74,5 +79,10 @@
          <button class="bouton" id="boutonRetour" onclick="location.href = '{{ url_for('reponse_sondage', id=sondage.id) }}';">Reponse</button>
          <button class="bouton" id="boutonRetour" onclick="location.href = '{{ url_for('delete_sondage', id=sondage.id) }}';">Supprimer</button>
          {% endif %}
+
+  <script>
+    var map = document.getElementById("map");
+    map.src = "https://www.google.com/maps/embed/v1/place?key=AIzaSyD6OQZ9MSy_zphm1WHjcO4tSRvUue8Q93g&q=" + "{{sondage.activite.lieu}}";
+  </script>
 </main>
 {% endblock content %}

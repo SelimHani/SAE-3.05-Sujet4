@@ -149,7 +149,7 @@ def loadbd():
 
     union_musicalles = "Place de l'Église, 45150 Férolles"
 
-    iuto = "16 Rue d'Issoudun, 45100 Orléans"
+    iuto = "16 Rue Issoudun, 45100 Orléans"
     r1 = Repetition(id=1,
                     lieu=union_musicalles,
                     date=datetime.strptime("2024-03-10 16:00",
