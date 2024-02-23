@@ -823,24 +823,24 @@ def profil_mus():
 
     for user in users:
         instrument = Instrument.query.get(user.instrument_id) 
-        participees = user.repetitions
-        nb_participees = len(participees)
-        now = func.now()
-        passees = Repetition.query.filter(Repetition.date <= now).all()
-        ratees = len(passees)-nb_participees
-        pourcentage = int((nb_participees/len(passees))*100) if passees else 0
         user_stats[user.mail] = {
-            'nb_participees': nb_participees,
-            'ratees': ratees,
-            'pourcentage': pourcentage,
             'instrument': instrument,
-            'all' : int(len(passees))
         }
 
     return render_template("profil_mus.html", users=users, user=current_user, user_stats=user_stats)
 
 @app.route("/profil-musicien/<id>")
-def profil(id):
+def profil_admin(id):
+    try:
+        if current_user.get_id_role() == 1:
+            pass
+    except AttributeError:
+        return redirect(url_for("home"))
+    u = get_user_by_id(id)
+    r = u.role_id
+    role = get_role_by_id(r)
+    return render_template("musicien.html",user=u,role=role)
+
 
 
 @app.route("/stats-musiciens/")
