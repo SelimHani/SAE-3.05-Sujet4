@@ -10,9 +10,19 @@
 {% endblock styles %} {% block content %}
 
 <h1>Statistiques musiciens</h1>
+<select id='selectInstruments' onchange="filtrages()"> 
+  <option value="">
+    Tous les instruments
+  </option>
+  {% for user in users %}
+  <option value="{{user.instrument.name}}">
+    {{user.instrument.name}}
+  </option>
+  {% endfor %}
+</select>
 <div id="scroll">
   {% for user in users %}
-      <div class="repetition">
+      <div class="repetition"  id="{{user.instrument.name}}">
         <a href="{{ url_for("stat",id=user.mail)}}"><p>{{user.instrument.name}} {{ user.nom }} {{user.prenom}}: {{ user_stats[user.mail]['nb_participees'] }}/{{ user_stats[user.mail]['all'] }} </p></a>
       </div>
     {% endfor %}
@@ -20,4 +30,22 @@
 <div id="bouton">
   <button type="reset" id="bAnnuler" onclick="history.go(-1);">[ RETOUR ]</button>
 </div>
+<script defer>
+  function filtrages() {
+    let selectInstruments = document.getElementById('selectInstruments');
+    let filterOption = selectInstruments.value.toLowerCase();
+    let musicians = document.querySelectorAll('.repetition');
+    console.log("filtrage")
+    musicians.forEach(musician => {
+      let instrumentName = musician.id.toLowerCase();
+      if (filterOption === "" || instrumentName.includes(filterOption)) {
+        musician.style.display = "";
+      } else {
+        musician.style.display = "none";
+      }
+    });
+  }
+
+
+</script>
 {% endblock content %}
