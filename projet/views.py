@@ -814,6 +814,35 @@ def gerer_presences():
     return render_template("gerer_presences.html", user=current_user)
 
 
+@app.route("/profil-musicien")
+def profil_mus():
+    """Affiche les stats des musiciens
+    """
+    users = User.query.filter_by(role_id=1).all()
+    user_stats = {}
+
+    for user in users:
+        instrument = Instrument.query.get(user.instrument_id) 
+        user_stats[user.mail] = {
+            'instrument': instrument,
+        }
+
+    return render_template("profil_mus.html", users=users, user=current_user, user_stats=user_stats)
+
+@app.route("/profil-musicien/<id>")
+def profil_admin(id):
+    try:
+        if current_user.get_id_role() == 1:
+            pass
+    except AttributeError:
+        return redirect(url_for("home"))
+    u = get_user_by_id(id)
+    r = u.role_id
+    role = get_role_by_id(r)
+    return render_template("musicien.html",user=u,role=role)
+
+
+
 @app.route("/stats-musiciens/")
 def stats_musiciens():
     """Affiche les stats des musiciens
