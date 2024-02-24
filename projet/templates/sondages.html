@@ -1,4 +1,8 @@
+{% if user.mode == "default" %}
 <link rel="stylesheet" href="{{ url_for('static', filename='sondages.css')}}" />
+{% else %}
+<link rel="stylesheet" href="{{ url_for('static', filename='dark/sondages.css')}}" />
+{% endif%}
 {% extends 'home.html' %} {% block content %}
 <div id="scroll">
   <h1>Prochainement :</h1>
@@ -9,7 +13,14 @@
     {% else %}
     <a href="{{ url_for('reponse_sondage',id=s.id)}}">
     {% endif %}
-      <p>{{s.jours_restants()}} jours restants</p>
+    {% if s.jours_restants()[1] == -1 %}
+    <p>{{s.jours_restants()[0]}} jours restants</p>
+    {% else %}
+    {% if s.jours_restants()[1] <= 1 %} <p style="color: red;">{{s.jours_restants()[2]}} minutes restantes</p>
+      {% else %}
+      <p>{{s.jours_restants()[1]}} heures restantes</p>
+      {% endif %}
+      {% endif %}
       {% if s.question %}
       <p>{{s.question}}</p>
       <p>{{s.nombre_reponses()[0]}} / {{s.nombre_reponses()[1]}}</p>

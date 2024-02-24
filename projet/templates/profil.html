@@ -1,12 +1,18 @@
 {% extends 'home.html' %} {% block styles %}
+
+{% if user.mode == "default" %}
 <link rel="stylesheet" href="{{ url_for('static', filename='login.css')}}" />
+{% else %}
+<link rel="stylesheet" href="{{ url_for('static', filename='dark/login.css')}}" />
+{% endif%}
+
 {% endblock styles %} {% block content %}
 <h1>Profil</h1>
 <div id="formulaire">
   {{user.nom}}
   {{user.prenom}}
   {{user.mail}}
-  {{user.ddn}}
+  {{user.get_date()}}
   {{user.numtel}}
   {{role.name}}
   <button onclick="location.href = '{{ url_for('changer_profil',id=user.mail) }}';">Changer profil</button>

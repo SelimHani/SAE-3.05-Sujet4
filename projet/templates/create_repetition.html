@@ -1,7 +1,11 @@
 
 {% extends 'home.html' %} {% block styles %} 
   {{ bootstrap.load_css() }}
+{% if user.mode == "default" %}
 <link rel="stylesheet" href="{{ url_for('static', filename='create_repetition.css')}}" />
+{% else %}
+<link rel="stylesheet" href="{{ url_for('static', filename='dark/create_repetition.css')}}" />
+{% endif%}
 {% endblock styles %} {% block content %}
 <h1>Créer répétition</h1>
 <div id="formulaire">
@@ -20,6 +24,7 @@
     <p>date</p>
     <div>
       {{ form.date(class_="test" ,placeholder ="date")}}
+      {{ form.heureDébut(class_="test" ,placeholder ="heure")}}
     </div>
     </div>
     <div>
@@ -29,7 +34,7 @@
     </div>
     </div>
     <div>
-      {{ form.equipements(class_="test", placeholder="equipement")}}
+      {{ form.accessoires(class_="test", placeholder="accessoire")}}
     </div>
     <div id="bouton">
     <button type="submit">Enregistrer</button>

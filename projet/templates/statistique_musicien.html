@@ -1,0 +1,53 @@
+{% extends 'home.html' %} 
+{% block styles %}
+  {% if user.mode == "default" %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='visu.css')}}" />
+  {% else %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='dark/visu.css')}}" />
+  {% endif%}
+{% endblock styles %}
+
+
+{% block content %}
+  <div class="statistique">
+    <h1>Statistiques</h1>
+    <div id="stats">
+      <section> 
+          <h2> {{nb_participees}}</h2>
+          <h3> COURS PARTICIPÉS </h3>
+      </section>
+      <section id="red"> 
+          <h2> {{ratees}} </h2>
+          <h3> COURS MANQUÉS </h3>
+      </section>
+      <section> 
+          <h2> {{pourcentage}}% </h2>
+          <h3> SCORE DE PRESENCE </h3>
+      </section>
+    </div>
+  </div>
+
+  <div id="bouton">
+    <button type="reset" id="bAnnuler" onclick="history.go(-1);">[ RETOUR ]</button>
+  </div>
+  
+  <script>
+    document.getElementById("modeButton").addEventListener("click", function() {
+        fetch("/update_mode", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                new_mode: "sombre"
+            })
+        })
+        .then(response => {
+          location.reload();
+        })
+        .catch(error => {
+            console.error('Erreur lors de la requête:', error);
+        });
+    });
+  </script>
+{% endblock content %}

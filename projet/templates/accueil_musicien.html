@@ -1,5 +1,11 @@
 {% extends 'home.html' %} {% block styles %} 
+
+{% if user.mode == "default" %}
 <link rel="stylesheet" href="{{ url_for('static', filename='acceuil_musicien.css')}}" />
+{% else %}
+<link rel="stylesheet" href="{{ url_for('static', filename='dark/acceuil_musicien.css')}}" />
+{% endif%}
+
 {% endblock styles %} {% block content %}
 
 
@@ -17,8 +23,15 @@
         {% for s in sondages[::-1][0:6]%}
         <div class="sondage">
 
-            <p>{{s.jours_restants()}} jours restants</p>
-
+            {% if s.jours_restants()[1] == -1 %}
+                <p>{{s.jours_restants()[0]}} jours restants</p>
+            {% else %}
+            {% if s.jours_restants()[1] <= 1 %}
+                <p style="color: red;">{{s.jours_restants()[2]}} minutes restantes</p>
+                {% else %}
+                <p>{{s.jours_restants()[1]}} heures restantes</p>
+                {% endif %}
+            {% endif %}
             <a href="{{ url_for('repondre_sondage',id=s.id)}}">
             {% if s.question %}<p>{{s.question}}</p>
             {%else%}
@@ -49,14 +62,14 @@
             <a class="tiles" href="{{url_for("repondre_sondage",id=ra.id)}}">
                 <div class="repetition">
                     <p>{{ra.nom}}</p>
-                    <p>{{ra.date}}</p>
+                    <p>{{ra.get_date()}}</p>
                 </div>
             </a>
         {% else %}
             <a class="tiles" href="{{url_for("detail_repetition",id=ra.id)}}">
                 <div class="repetition">
                     <p>Repetition</p>
-                    <p>{{ra.date}}</p>
+                    <p>{{ra.get_date()}}</p>
                 </div>
             </a>  
         {% endif %}

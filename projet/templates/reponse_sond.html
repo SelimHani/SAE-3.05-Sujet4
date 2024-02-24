@@ -1,10 +1,23 @@
 {% extends 'home.html' %} {% block styles %} 
-<link rel="stylesheet" href="{{ url_for('static', filename='reponse_sondage.css')}}" />
-{% endblock styles %} {% block content %}
-<button class="bouton" id="boutonRetour" onclick="location.href = '{{ url_for('sondages') }}';">RETOUR</button>
-<h1>{{sondage.activite.nom}}</h1>
 
-{% if sondage.question %}<h1>{{sondage.question}}</h1>{% endif %}
+{% if user.mode == "default" %}
+<link rel="stylesheet" href="{{ url_for('static', filename='reponse_sondage.css')}}" />
+{% else %}
+<link rel="stylesheet" href="{{ url_for('static', filename='dark/reponse_sondage.css')}}" />
+{% endif%}
+
+
+
+{% endblock styles %} {% block content %}
+<button class="bouton" id="boutonRetour" onclick="history.go(-1);">RETOUR</button>
+{% if sondage.question %}<h1>{{sondage.question}}</h1>
+{% else %}
+<h1>{{sondage.activite.nom}} du {{sondage.activite.get_date()}}</h1>
+
+{% endif %}
+<h3>Fin du sondage le {{sondage.get_date()}}</h3>
+
+
 
 <p class="rep"> Réponses : {{sondage.nombre_reponses()[0]}} / {{sondage.nombre_reponses()[1]}}</p>
 
@@ -33,7 +46,6 @@
       </div>
       {%endfor%}
     </div>
-    <h2>Le {{sondage.activite.date}}</h2>
 </main>
 {% endblock content %}
 

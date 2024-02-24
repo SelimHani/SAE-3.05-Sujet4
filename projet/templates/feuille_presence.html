@@ -1,15 +1,25 @@
 {% extends 'home.html' %} {% block styles %}
-<link
-  rel="stylesheet"
-  href="{{ url_for('static', filename='repetitions.css')}}"
-/>
+
+
+{% if user.mode == "default" %}
+<link rel="stylesheet" href="{{ url_for('static', filename='repetitions.css')}}" />
+{% else %}
+<link rel="stylesheet" href="{{ url_for('static', filename='dark/repetitions.css')}}" />
+{% endif%}
+
 {% endblock styles %} {% block content %}
 <h1>Feuille de presence des répétitions passées</h1>
 <div id="scroll">
     {% for repete in r %}
       <div class="repetition">
-        <a href="{{ url_for("presence_repetition",id=repete.id)}}"><p>Répétition du {{repete.date}} .</p></a>
+        <a href="{{ url_for("presence_repetition",id=repete.id)}}"><p>Répétition du {{repete.get_date()}} </p></a>
       </div>
     {% endfor %}
+
+</div>
+<div id="bouton">
+  <form action="{{ url_for('service') }}">
+    <button type="submit">[ RETOUR ]</button>
+</form>
 </div>
 {% endblock content %}

@@ -3,6 +3,13 @@
   rel="stylesheet"
   href="{{ url_for('static', filename='new_sondage.css')}}"
 />
+
+{% if user.mode == "default" %}
+<link rel="stylesheet" href="{{ url_for('static', filename='new_sondage.css')}}" />
+{% else %}
+<link rel="stylesheet" href="{{ url_for('static', filename='dark/new_sondage.css')}}" />
+{% endif%}
+
 {% endblock styles %} {% block content %}
 
 <div>
@@ -30,20 +37,24 @@
 
       <div class="divForm" id="dateActi">
         <h2>Date de l’activité</h2>
-        <div>{{ form.dateActivite (id_="formDate", placeholder="") }}</div>
+        <div>{{ form.dateActivite (id_="formDate", placeholder="") }}
+          {{ form.heureDebut (id_="formDate", placeholder="") }}
+        </div>
       </div>
 
       <div class="divForm" id="dateFin">
         <h2>Date limite du sondage</h2>
-        <div>{{ form.dateFin (id_="formDate", placeholder="") }}</div>
+        <div>{{ form.dateFin (id_="formDate", placeholder="") }}
+          {{ form.heureFin (id_="formDate", placeholder="") }}
+        </div>
       </div>
 
       <div class="divForm" id="matActi">
         <h2>Materiel nécessaire</h2>
         <div id="gestionAdd">
           <div id="navRecherche">
-            {{form.equipements}}
-            <a href="{{ url_for('ajoute_equipement') }}"
+            {{form.accessoires}}
+            <a href="{{ url_for('ajoute_accessoire') }}"
               ><img
                 src="../static/images/addMat.png"
                 alt="Ajouter de l'équipement"

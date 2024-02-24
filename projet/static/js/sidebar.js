@@ -14,10 +14,18 @@ function openNav() {
         etat = true
     }
 
-    try {
-        document.getElementById("scroll").style.zIndex = "-1";
-    } catch (error) {
+    
+    if (document.getElementById("calendar") != null) {
+        document.getElementById("calendar").style.zIndex = "-1";
+        document.querySelector('nav').style.zIndex = "2";
+    }
+
+    else if (document.getElementById("tdb") != null) {
         document.getElementById("tdb").style.zIndex = "-1";
+    }
+
+    else if (document.getElementById("scroll") != null) {
+        document.getElementById("scroll").style.zIndex = "-1";
     }
     
 }
@@ -26,10 +34,17 @@ function closeNav() {
     
     etat = false
     setTimeout(function() {
-        try {
-            document.getElementById("scroll").style.zIndex = "0";
-        } catch (error) {
+
+        if (document.getElementById("tdb") != null) {
         document.getElementById("tdb").style.zIndex = "0";
+        }
+
+        if (document.getElementById("scroll") != null) {
+            document.getElementById("scroll").style.zIndex = "0";
+        }
+
+        if (document.getElementById("calendar") != null) {
+            document.getElementById("calendar").style.zIndex = "0";
         }
         
     }, 300);

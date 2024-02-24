@@ -1,8 +1,11 @@
 {% extends 'home.html' %} {% block styles %}
-<link
-  rel="stylesheet"
-  href="{{ url_for('static', filename='new_sondage_satis.css')}}"
-/>
+
+{% if user.mode == "default" %}
+<link rel="stylesheet" href="{{ url_for('static', filename='new_sondage_satis.css')}}" />
+{% else %}
+<link rel="stylesheet" href="{{ url_for('static', filename='dark/new_sondage_satis.css')}}" />
+{% endif%}
+
 {% endblock styles %} {% block content %}
 
 <div id="formParent">
@@ -18,6 +21,7 @@
         
         <div id="Questions">
           {{ form.dateFin(id_="form" ,placeholder ="")}}
+          {{ form.heureFin(id_="form" ,placeholder ="")}}
           {{ form.question(id_="form" ,placeholder ="Question ...")}}
           {{ form.reponses(id_="form" ,placeholder ="Réponse possible ...")}}
         </div>

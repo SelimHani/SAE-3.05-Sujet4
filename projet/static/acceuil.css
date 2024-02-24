@@ -39,6 +39,12 @@ main {
     
 }
 
+.repetition:hover{
+    cursor: pointer;
+    transform: scale(1.02);
+    box-shadow: 0 0 10px 5px #F0E4D4; /* Effet de lueur */
+
+}
 
 
 
@@ -136,6 +142,7 @@ li button {
     transform: scale(1.02);
     color: #af4f50;
     cursor: pointer;
+    box-shadow: 0 0 10px 5px #af4f50;
 }
 
 li{
@@ -224,6 +231,8 @@ h1> span{
         grid-row: 16 / 19;
     }
 }
+
+
 
 @media screen and (max-width: 480px) {
     main {

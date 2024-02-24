@@ -1,8 +1,12 @@
 {% extends 'home.html' %} {% block styles %}
-<link
-  rel="stylesheet"
-  href="{{ url_for('static', filename='repetitions.css')}}"
-/>
+
+
+{% if user.mode == "default" %}
+<link rel="stylesheet" href="{{ url_for('static', filename='repetitions.css')}}" />
+{% else %}
+<link rel="stylesheet" href="{{ url_for('static', filename='dark/repetitions.css')}}" />
+{% endif%}
+
 {% endblock styles %} {% block content %}
 <h1>Prochainement  :</h1>
 <div id="scroll">
@@ -11,14 +15,14 @@
             <a href="{{url_for("repondre_sondage",id=ra.id)}}">
                 <div class="repetition">
                     <p>{{ra.nom}}</p>
-                    <p>{{ra.date}}</p>
+                    <p>{{ra.get_date()}}</p>
                 </div>
             </a>
         {% else %}
             <a href="{{url_for("detail_repetition",id=ra.id)}}">
                 <div class="repetition">
                     <p>Repetition</p>
-                    <p>{{ra.date}}</p>
+                    <p>{{ra.get_date()}}</p>
                 </div>
             </a>  
         {% endif %}

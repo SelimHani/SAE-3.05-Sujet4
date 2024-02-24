@@ -1,12 +1,18 @@
 {% extends 'home.html' %} {% block styles %}
+
+{% if user.mode == "default" %}
 <link rel="stylesheet" href="{{ url_for('static', filename='detail_repetition.css')}}" />
+{% else %}
+<link rel="stylesheet" href="{{ url_for('static', filename='dark/detail_repetition.css')}}" />
+{% endif%}
+
 {% endblock styles %} {% block content %}
 <h1>Repetition</h1>
 <div id="formulaire">
   <h2>{{r.lieu}}</h2>
-  <p>{{r.date}}</p>
-  {% for e in r.equipements %}
+  <p>{{r.get_date()}}</p>
+  {% for e in r.accessoires %}
   <p>{{e.nom}}</p>{% endfor %}
-  <button onclick="location.href = '{{ url_for('repetitions') }}';">Retour</button>
+  <a href="" onclick="history.go(-1);">Retour</a>
 </div>
 {% endblock content %}
